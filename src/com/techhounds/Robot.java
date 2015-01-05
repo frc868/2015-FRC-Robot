@@ -53,4 +53,14 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+    
+    public static double checkRange(double curr, double min, double max) {
+    	
+    	if(curr < min) {
+    		return min;
+    	} else if(curr > max) {
+    		return max;
+    	} else
+    		return curr;
+    }
 }
