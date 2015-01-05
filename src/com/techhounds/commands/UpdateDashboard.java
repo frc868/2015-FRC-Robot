@@ -1,6 +1,6 @@
 package com.techhounds.commands;
 
-import com.techhounds.util.BasicSubsystem;
+import com.techhounds.subsystems.BasicSubsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
