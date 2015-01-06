@@ -16,8 +16,8 @@ public class OI {
 	
 	public OI() {
 		
-		driver = new ControllerMap(new Joystick(RobotConstants.DRIVER_PORT), ControllerMap.PS3);
-		operator = new ControllerMap(new Joystick(RobotConstants.OPERATOR_PORT), ControllerMap.LOGITECH);
+		driver = new ControllerMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.PS3);
+		operator = new ControllerMap(new Joystick(RobotMap.OPERATOR_PORT), ControllerMap.LOGITECH);
 		
 		isInit = false;
 	}
