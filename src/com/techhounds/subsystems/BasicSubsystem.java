@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /** 
- * @author Atif Niyaz, Alex Fleig, MAAAAAAATEOOOOOOO, Shrek ILIL, John Yin Yang
+ * @author Atif Niyaz
  */
 public abstract class BasicSubsystem extends Subsystem {
 	
 	public static ArrayList<BasicSubsystem> subsystems;
 	
-	public BasicSubsystem() { //this is a comment
+	public BasicSubsystem() { 
 		super();
 		addToArray();
 	}
@@ -29,5 +29,8 @@ public abstract class BasicSubsystem extends Subsystem {
 		subsystems.add(this);
 	}
 
+	/** 
+	 * This method is called repeatedly updating the SmartDashboard 
+	 */
 	public abstract void updateSmartDashboard();
 }

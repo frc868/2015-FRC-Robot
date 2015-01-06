@@ -1,6 +1,8 @@
 
 package com.techhounds;
 
+import com.techhounds.subsystems.DriveSubsystem;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -12,6 +14,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	initSubsystems();
 		OI.getInstance().init();
     }
 	
@@ -52,6 +55,13 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+    }
+    
+    /**
+     * This function is called to initialize the Subsystems
+     */
+    public void initSubsystems() {
+    	DriveSubsystem.getInstance();
     }
     
     public static double checkRange(double curr, double min, double max) {
