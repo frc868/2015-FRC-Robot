@@ -4,7 +4,7 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	private static DriveSubsystem instance;
 
-	public DriveSubsystem() {
+	private DriveSubsystem() {
 	
 	}
 	
