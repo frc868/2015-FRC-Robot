@@ -4,6 +4,7 @@ import com.techhounds.MultiMotor;
 import com.techhounds.OI;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
+import com.techhounds.commands.DriveWithGamepad;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -84,6 +85,6 @@ public class DriveSubsystem extends BasicSubsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
+		setDefaultCommand(new DriveWithGamepad());
 	}
 }
