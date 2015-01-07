@@ -1,5 +1,8 @@
 package com.techhounds;
 
+import com.techhounds.commands.lift.LiftDownToLimit;
+import com.techhounds.commands.lift.LiftUpToLimit;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -16,9 +19,6 @@ public class OI {
 	
 	private static final int LIFT_UP = 0;
 	private static final int LIFT_DOWN = 0;
-	
-	public static Button liftUp = new JoystickButton(gamepad, LIFT_UP);
-    public static Button liftDown = new JoystickButton(gamepad, LIFT_DOWN);
 	
 	private static ControllerMap driver;
 	private static ControllerMap operator;
@@ -56,7 +56,12 @@ public class OI {
     }
     
     public void initDriver() {
-    	// TODO: Put Driver Buttons and Commands;
+    	
+    	Button liftUp = new JoystickButton(gamepad, LIFT_UP);
+    	liftUp.whenPressed(new LiftUpToLimit());
+    	
+        Button liftDown = new JoystickButton(gamepad, LIFT_DOWN);
+        liftUp.whenPressed(new LiftDownToLimit());
     }
     
     public void initOperator() {
