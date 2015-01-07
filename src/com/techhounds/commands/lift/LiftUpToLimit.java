@@ -1,5 +1,6 @@
 package com.techhounds.commands.lift;
 
+import com.techhounds.RobotMap;
 import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,6 +24,7 @@ public class LiftUpToLimit extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	lift.setPower(RobotMap.LIFT_POWER);
     }
 
     // Make this return true when this Command no longer needs to run execute()

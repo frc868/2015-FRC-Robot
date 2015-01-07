@@ -37,14 +37,6 @@ public class LiftSubsystem extends BasicSubsystem{
 		return checkBottom.get();
 	}
 	
-	public static void liftToTop() {
-		liftMotor.set(RobotMap.LIFT_POWER);
-	}
-	
-	public static void liftToBottom() {
-		liftMotor.set(-RobotMap.LIFT_POWER);
-	}
-	
 	public static double getPower() {
 		return liftMotor.get();
 	}
