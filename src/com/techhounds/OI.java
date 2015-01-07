@@ -13,6 +13,7 @@ public class OI {
 	private static ControllerMap operator;
 	
 	private boolean isInit;
+	
 	private static final double DEADZONE = 0.05;
 	
 	public OI() {
@@ -34,7 +35,7 @@ public class OI {
     	
     	if(isInit)
     		return;
-    	
+
     	initDriver();
     	initOperator();
     	initSD();
@@ -55,55 +56,36 @@ public class OI {
     }
     
     public static double getDriverRightXAxis() {
-    	double val = driver.getRightStickX();
-    	if (Math.abs(val) < DEADZONE)
-    		return 0;
-    	return val;
+    	return checkDeadZone(driver.getRightStickX());
     }
     
     public static double getDriverRightYAxis() {
-    	double val = driver.getRightStickY();
-    	if (Math.abs(val) < DEADZONE)
-    		return 0;
-    	return val;
+    	return checkDeadZone(driver.getRightStickY());
     }
+    
     public static double getDriverleftXAxis() {
-    	double val = driver.getLeftStickX();
-    	if (Math.abs(val) < DEADZONE)
-    		return 0;
-    	return val;
+    	return checkDeadZone(driver.getLeftStickX());
     }
     public static double getDriverLeftYAxis() {
-    	double val = driver.getLeftStickY();
-    	if (Math.abs(val) < DEADZONE)
-    		return 0;
-    	return val;
+    	return checkDeadZone(driver.getLeftStickY());
     }
     
     public static double getOperatorRightXAxis() {
-    	double val = operator.getRightStickX();
-    	if (Math.abs(val) < DEADZONE)
-    		return 0;
-    	return val;
+    	return checkDeadZone(operator.getRightStickX());
     }
     
     public static double getOperatorRightYAxis() {
-    	double val = operator.getRightStickY();
-    	if (Math.abs(val) < DEADZONE)
-    		return 0;
-    	return val;
+    	return checkDeadZone(operator.getRightStickY());
     }
     public static double getOperatorLeftXAxis() {
-    	double val = operator.getLeftStickX();
-    	if (Math.abs(val) < DEADZONE)
-    		return 0;
-    	return val;
+    	return checkDeadZone(operator.getLeftStickX());
     }
     public static double getOperatorLeftYAxis() {
-    	double val = operator.getLeftStickY();
-    	if (Math.abs(val) < DEADZONE)
-    		return 0;
-    	return val;
+    	return checkDeadZone(operator.getLeftStickY());
+    }
+    
+    public static double checkDeadZone(double val) {
+    	return Math.abs(val) < DEADZONE ? 0 : val;
     }
 }
 

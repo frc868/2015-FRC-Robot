@@ -65,7 +65,6 @@ public class Robot extends IterativeRobot {
     }
     
     public static double checkRange(double curr, double min, double max) {
-    	
     	return Math.max(Math.min(curr, max), min);
     }
 }
