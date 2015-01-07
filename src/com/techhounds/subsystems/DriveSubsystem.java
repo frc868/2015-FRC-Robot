@@ -1,6 +1,7 @@
 package com.techhounds.subsystems;
 
 import com.techhounds.MultiMotor;
+import com.techhounds.OI;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
@@ -70,8 +71,10 @@ public class DriveSubsystem extends BasicSubsystem {
 	}
 	
 	public void driveWithGamepad() {
+		double magnitude = OI.getDriverLeftYAxis();
+		double steering = OI.getDriverRightXAxis();
 		
-		
+		robotDrive.arcadeDrive(magnitude, steering);
 	}
 	
 	@Override
