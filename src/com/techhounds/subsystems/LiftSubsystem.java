@@ -11,9 +11,12 @@ public class LiftSubsystem extends BasicSubsystem{
 	
 	private static LiftSubsystem instance;
 	
-	private static Victor liftMotor;
-	private static DigitalInput checkTop;
-	private static DigitalInput checkBottom;
+	public static final double LIFT_UP_POWER = 0.5;
+	public static final double LIFT_DOWN_POWER = -0.5;
+	
+	private Victor liftMotor;
+	private DigitalInput checkTop;
+	private DigitalInput checkBottom;
 	
 	private LiftSubsystem() {
 		liftMotor = new Victor(RobotMap.LIFT_MOTOR);
@@ -29,23 +32,23 @@ public class LiftSubsystem extends BasicSubsystem{
 		return instance;
 	}
 	
-	public static boolean getTop() {
+	public boolean getTop() {
 		return checkTop.get();
 	}
 	
-	public static boolean getBottom() {
+	public boolean getBottom() {
 		return checkBottom.get();
 	}
 	
-	public static double getPower() {
+	public double getPower() {
 		return liftMotor.get();
 	}
 	
-	public static void setPower(double power) {
+	public void setPower(double power) {
 		liftMotor.set(Robot.checkRange(power, -1, 1));
 	}
 	
-	public static void stopLift() {
+	public void stopLift() {
 		liftMotor.set(0);
 	}
 
