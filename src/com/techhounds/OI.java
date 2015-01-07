@@ -13,8 +13,12 @@ public class OI {
 	
 	static Joystick gamepad;
 	
+	
 	private static final int LIFT_UP = 0;
 	private static final int LIFT_DOWN = 0;
+	
+	public static Button liftUp = new JoystickButton(gamepad, LIFT_UP);
+    public static Button liftDown = new JoystickButton(gamepad, LIFT_DOWN);
 	
 	private static ControllerMap driver;
 	private static ControllerMap operator;
@@ -100,8 +104,7 @@ public class OI {
     	return Math.abs(val) < DEADZONE ? 0 : val;
     }
     
-    Button liftUp = new JoystickButton(gamepad, LIFT_UP);
-    Button liftDown = new JoystickButton(gamepad, LIFT_DOWN);
+    
     
 }
 

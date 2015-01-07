@@ -40,17 +40,23 @@ public class LiftSubsystem extends BasicSubsystem{
 	}
 	
 	public static void liftToTop() {
-		
+		liftPower = RobotMap.LIFT_POWER;
 	}
 	
 	public static void liftToBottom() {
+		liftPower = -RobotMap.LIFT_POWER;
+	}
+	
+	public static void liftWithGamepad() {
 		
 	}
 	
-	public static double setPower(double power) {
-		liftPower = Robot.checkRange(power, -1, 1);
-		if(getTop() || getBottom()) power = - power;
+	public static double getPower() {
 		return liftPower;
+	}
+	
+	public static void setPower(double power) {
+		
 	}
 	
 	public static void stopLift() {
