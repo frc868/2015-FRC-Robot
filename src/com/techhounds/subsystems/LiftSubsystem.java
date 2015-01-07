@@ -1,5 +1,6 @@
 package com.techhounds.subsystems;
 
+import com.techhounds.OI;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
@@ -9,7 +10,9 @@ import edu.wpi.first.wpilibj.Victor;
 public class LiftSubsystem extends BasicSubsystem{
 	
 	private static double liftPower;
+	
 	private static LiftSubsystem instance;
+	
 	private static Victor liftMotor;
 	private static DigitalInput checkTop;
 	private static DigitalInput checkBottom;
@@ -34,6 +37,14 @@ public class LiftSubsystem extends BasicSubsystem{
 	
 	public static boolean getBottom() {
 		return checkBottom.get();
+	}
+	
+	public static void liftToTop() {
+		
+	}
+	
+	public static void liftToBottom() {
+		
 	}
 	
 	public static double setPower(double power) {

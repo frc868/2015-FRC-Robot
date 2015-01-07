@@ -1,5 +1,7 @@
 package com.techhounds.commands.lift;
 
+import com.techhounds.subsystems.LiftSubsystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -7,13 +9,16 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LiftUpToLimit extends Command {
 
+	private static LiftSubsystem lift;
+	
     public LiftUpToLimit() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+       lift = LiftSubsystem.getInstance();
+       requires(lift);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run

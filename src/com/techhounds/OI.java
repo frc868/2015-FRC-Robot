@@ -1,6 +1,8 @@
 package com.techhounds;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * @author Atif Niyaz
@@ -9,12 +11,18 @@ public class OI {
 	
 	private static OI instance;
 	
+	static Joystick gamepad;
+	
+	private static final int LIFT_UP = 0;
+	private static final int LIFT_DOWN = 0;
+	
 	private static ControllerMap driver;
 	private static ControllerMap operator;
 	
 	private boolean isInit;
 	
 	private static final double DEADZONE = 0.05;
+		
 	
 	public OI() {
 		
@@ -77,15 +85,23 @@ public class OI {
     public static double getOperatorRightYAxis() {
     	return checkDeadZone(operator.getRightStickY());
     }
+    
     public static double getOperatorLeftXAxis() {
     	return checkDeadZone(operator.getLeftStickX());
     }
+    
     public static double getOperatorLeftYAxis() {
     	return checkDeadZone(operator.getLeftStickY());
     }
     
+    
+    
     public static double checkDeadZone(double val) {
     	return Math.abs(val) < DEADZONE ? 0 : val;
     }
+    
+    Button liftUp = new JoystickButton(gamepad, LIFT_UP);
+    Button liftDown = new JoystickButton(gamepad, LIFT_DOWN);
+    
 }
 
