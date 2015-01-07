@@ -7,9 +7,7 @@ import com.techhounds.RobotMap;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Victor;
 
-public class LiftSubsystem extends BasicSubsystem{
-	
-	private static double liftPower;
+public class LiftSubsystem extends BasicSubsystem{	
 	
 	private static LiftSubsystem instance;
 	
@@ -40,27 +38,23 @@ public class LiftSubsystem extends BasicSubsystem{
 	}
 	
 	public static void liftToTop() {
-		liftPower = RobotMap.LIFT_POWER;
+		liftMotor.set(RobotMap.LIFT_POWER);
 	}
 	
 	public static void liftToBottom() {
-		liftPower = -RobotMap.LIFT_POWER;
-	}
-	
-	public static void liftWithGamepad() {
-		
+		liftMotor.set(-RobotMap.LIFT_POWER);
 	}
 	
 	public static double getPower() {
-		return liftPower;
+		return liftMotor.get();
 	}
 	
 	public static void setPower(double power) {
-		
+		liftMotor.set(Robot.checkRange(power, -1, 1));
 	}
 	
 	public static void stopLift() {
-		liftPower = 0;
+		liftMotor.set(0);
 	}
 
 	@Override
