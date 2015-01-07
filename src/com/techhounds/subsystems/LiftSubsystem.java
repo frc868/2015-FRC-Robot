@@ -38,7 +38,12 @@ public class LiftSubsystem extends BasicSubsystem{
 	
 	public static double setPower(double power) {
 		liftPower = Robot.checkRange(power, -1, 1);
+		if(getTop() || getBottom()) power = - power;
 		return liftPower;
+	}
+	
+	public static void stopLift() {
+		liftPower = 0;
 	}
 
 	@Override
