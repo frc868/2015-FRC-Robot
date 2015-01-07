@@ -13,6 +13,7 @@ public class OI {
 	private ControllerMap operator;
 	
 	private boolean isInit;
+	private static final double DEADZONE = 0.05;
 	
 	public OI() {
 		
@@ -51,6 +52,58 @@ public class OI {
     
     public void initSD() {
     	// TODO: Put SmartDashboard Values;
+    }
+    
+    public double getDriverRightXAxis() {
+    	double val = driver.getRightStickX();
+    	if (Math.abs(val) < DEADZONE)
+    		return 0;
+    	return val;
+    }
+    
+    public double getDriverRightYAxis() {
+    	double val = driver.getRightStickY();
+    	if (Math.abs(val) < DEADZONE)
+    		return 0;
+    	return val;
+    }
+    public double getDriverleftXAxis() {
+    	double val = driver.getLeftStickX();
+    	if (Math.abs(val) < DEADZONE)
+    		return 0;
+    	return val;
+    }
+    public double getDriverLeftYAxis() {
+    	double val = driver.getLeftStickY();
+    	if (Math.abs(val) < DEADZONE)
+    		return 0;
+    	return val;
+    }
+    
+    public double getOperatorRightXAxis() {
+    	double val = operator.getRightStickX();
+    	if (Math.abs(val) < DEADZONE)
+    		return 0;
+    	return val;
+    }
+    
+    public double getOperatorRightYAxis() {
+    	double val = operator.getRightStickY();
+    	if (Math.abs(val) < DEADZONE)
+    		return 0;
+    	return val;
+    }
+    public double getOperatorLeftXAxis() {
+    	double val = operator.getLeftStickX();
+    	if (Math.abs(val) < DEADZONE)
+    		return 0;
+    	return val;
+    }
+    public double getOperatorLeftYAxis() {
+    	double val = operator.getLeftStickY();
+    	if (Math.abs(val) < DEADZONE)
+    		return 0;
+    	return val;
     }
 }
 

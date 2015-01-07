@@ -4,12 +4,14 @@ import com.techhounds.MultiMotor;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 
 public class DriveSubsystem extends BasicSubsystem {
 	
 	private static DriveSubsystem instance;
+	private RobotDrive robotDrive;
 	private MultiMotor leftMotors;
 	private MultiMotor rightMotors;
 
@@ -29,6 +31,8 @@ public class DriveSubsystem extends BasicSubsystem {
 						new Victor(RobotMap.RIGHT_DRIVE_MOTOR_3),
 					},
 				new boolean[]{false, false, false});
+		
+		robotDrive = new RobotDrive(leftMotors, rightMotors);
 	}
 	
 	public static DriveSubsystem getInstance() {
@@ -45,19 +49,29 @@ public class DriveSubsystem extends BasicSubsystem {
 	}
 	
 	public double getAveragePower() {
-		return (leftMotors.get() + rightMotors.get())/2;
+		return (getLeftPower() + getRightPower())/2;
 	}
 	public void setRightPower(double newVal) {
 		rightMotors.set(Robot.checkRange(newVal, -1, 1));
 	}
 	
 	public void setLeftPower(double newVal) {
-		leftMotors.set(Robot.checkRange(newVal, -1, 1));
+		rightMotors.set(Robot.checkRange(newVal, -1, 1));
+	}
+	
+	public void setPower(double newVal) {
+		setRightPower(newVal);
+		setLeftPower(newVal);
 	}
 	
 	public void stopMotors() {
 		leftMotors.set(0);
 		rightMotors.set(0);
+	}
+	
+	public void driveWithGamepad() {
+		
+		
 	}
 	
 	@Override
