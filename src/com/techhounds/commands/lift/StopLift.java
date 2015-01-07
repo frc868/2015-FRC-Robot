@@ -1,15 +1,20 @@
 package com.techhounds.commands.lift;
 
+import com.techhounds.subsystems.LiftSubsystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * @author Clayton Detke
  */
 public class StopLift extends Command {
+	
+	private LiftSubsystem lift;
 
     public StopLift() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	lift = lift.getInstance();
+    	requires(lift);
+    	lift.stopLift();
     }
 
     // Called just before this Command runs the first time
