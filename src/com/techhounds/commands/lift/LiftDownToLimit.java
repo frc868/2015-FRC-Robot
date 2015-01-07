@@ -1,5 +1,6 @@
 package com.techhounds.commands.lift;
 //victor, 2 limit switches = digital input high / low final booleans, COMMANDS: up till limit, down till limit, stop
+import com.techhounds.OI;
 import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,7 +28,7 @@ public class LiftDownToLimit extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	while (lower == false) {
-    		lift.setPower(1);
+    		lift.setPower(lift.getPower());
     	}
     }
 
