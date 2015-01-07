@@ -46,6 +46,7 @@ public class DriveSubsystem extends BasicSubsystem {
 	public double getRightPower() {
 		return rightMotors.get();
 	}
+	
 	public double getLeftPower() {
 		return leftMotors.get();
 	}
@@ -53,6 +54,7 @@ public class DriveSubsystem extends BasicSubsystem {
 	public double getAveragePower() {
 		return (getLeftPower() + getRightPower())/2;
 	}
+	
 	public void setRightPower(double newVal) {
 		rightMotors.set(Robot.checkRange(newVal, -1, 1));
 	}
