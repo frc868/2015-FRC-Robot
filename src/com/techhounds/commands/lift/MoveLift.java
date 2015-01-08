@@ -82,7 +82,7 @@ public class MoveLift extends Command {
 
     protected boolean isFinished() {
         return direction == LiftSubsystem.Direction.STOP || 
-        		(direction == LiftSubsystem.Direction.UP ? lift.getTop() : lift.getBottom());
+        		(direction == LiftSubsystem.Direction.UP ? lift.isAtTop() : lift.isAtBottom());
     }
 
     protected void end() {

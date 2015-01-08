@@ -33,11 +33,11 @@ public class LiftSubsystem extends BasicSubsystem {
 		return instance;
 	}
 	
-	public boolean getTop() {
+	public boolean isAtTop() {
 		return checkTop.get();
 	}
 	
-	public boolean getBottom() {
+	public boolean isAtBottom() {
 		return checkBottom.get();
 	}
 	
