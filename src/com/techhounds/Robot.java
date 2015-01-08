@@ -2,6 +2,7 @@
 package com.techhounds;
 
 import com.techhounds.subsystems.DriveSubsystem;
+import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -62,6 +63,7 @@ public class Robot extends IterativeRobot {
      */
     public void initSubsystems() {
     	DriveSubsystem.getInstance();
+    	LiftSubsystem.getInstance();
     }
     
     public static double checkRange(double curr, double min, double max) {

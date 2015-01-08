@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 
+/**
+ * @author Alex Fleig, Matt Simmons, Ayon Mitra, Clayton Detke
+ */
 public class DriveSubsystem extends BasicSubsystem {
 	
 	private static DriveSubsystem instance;

@@ -1,20 +1,22 @@
 package com.techhounds.subsystems;
 
-import com.techhounds.OI;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Victor;
 
-public class LiftSubsystem extends BasicSubsystem{	
+/**
+ * @author Alex Fleig, Matt Simmons, Ayon Mitra, Clayton Detke
+ */
+public class LiftSubsystem extends BasicSubsystem {	
 	
 	private static LiftSubsystem instance;
 	
-	public static final double LIFT_UP_POWER = 0.5;
-	public static final double LIFT_DOWN_POWER = -0.5;
+	public static final double LIFT_POWER = 0.5;
 	
 	private Victor liftMotor;
+	
 	private DigitalInput checkTop;
 	private DigitalInput checkBottom;
 	
@@ -22,7 +24,6 @@ public class LiftSubsystem extends BasicSubsystem{
 		liftMotor = new Victor(RobotMap.LIFT_MOTOR);
 		checkTop = new DigitalInput(RobotMap.DIGITAL_INPUT_TOP);
 		checkBottom = new DigitalInput(RobotMap.DIGITAL_INPUT_BOTTOM);
-		
 	}
 	
 	public static LiftSubsystem getInstance() {
@@ -44,12 +45,29 @@ public class LiftSubsystem extends BasicSubsystem{
 		return liftMotor.get();
 	}
 	
-	public void setPower(double power) {
-		liftMotor.set(Robot.checkRange(power, -1, 1));
+	private void setPower(double power) {
+		liftMotor.set(Robot.checkRange(power, 0, 1));
+	}
+	
+	/**
+	 * Sets Lift Direction
+	 * @param dir Pass either UP, DOWN, or STOP from LiftSubsystem.Direction
+	 * @param power Power to set, regardless of direction, has to be from 0 to 1
+	 */
+	public void setLiftDirection(Direction dir, double power) {
+		
+		Math.abs(power);
+		
+		if(dir == Direction.UP)
+			setPower(power);
+		else if(dir == Direction.DOWN)
+			setPower(-power);
+		else
+			stopLift();
 	}
 	
 	public void stopLift() {
-		liftMotor.set(0);
+		setPower(0);
 	}
 
 	@Override
@@ -62,6 +80,10 @@ public class LiftSubsystem extends BasicSubsystem{
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public static enum Direction {
+		UP, DOWN, STOP
 	}
 
 }
