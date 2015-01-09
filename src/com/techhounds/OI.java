@@ -1,5 +1,6 @@
 package com.techhounds;
 
+import com.techhounds.commands.lift.RunLift;
 import com.techhounds.notSureIfWorks.MoveLift;
 import com.techhounds.subsystems.LiftSubsystem;
 
@@ -83,13 +84,13 @@ public class OI {
     	 */
     	
     	Button liftUp = driver.createButton(ControllerMap.A);
-    	liftUp.whenPressed(new MoveLift(LiftSubsystem.UP));
+    	liftUp.whenPressed(new RunLift());
     	
     	Button liftDown = driver.createButton(ControllerMap.B);
-    	liftDown.whenPressed(new MoveLift(LiftSubsystem.Direction.DOWN));
+    	liftDown.whenPressed(new RunLift());
     	
     	Button liftStop = driver.createButton(ControllerMap.X);
-    	liftStop.whenPressed(new MoveLift(LiftSubsystem.Direction.STOP));
+    	liftStop.whenPressed(new RunLift());
     }
     
     public void initOperator() {

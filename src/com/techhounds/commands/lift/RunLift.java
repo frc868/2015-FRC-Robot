@@ -8,7 +8,7 @@ public class RunLift extends Command{
 	
 	LiftSubsystem lift;
 	
-	private RunLift() {
+	public RunLift() {
 		lift = lift.getInstance();
 		requires(lift);		
 	}
