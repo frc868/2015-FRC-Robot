@@ -1,6 +1,6 @@
 package com.techhounds;
 
-import com.techhounds.commands.lift.MoveLift;
+import com.techhounds.notSureIfWorks.MoveLift;
 import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -83,7 +83,7 @@ public class OI {
     	 */
     	
     	Button liftUp = driver.createButton(ControllerMap.A);
-    	liftUp.whenPressed(new MoveLift(LiftSubsystem.Direction.UP));
+    	liftUp.whenPressed(new MoveLift(LiftSubsystem.UP));
     	
     	Button liftDown = driver.createButton(ControllerMap.B);
     	liftDown.whenPressed(new MoveLift(LiftSubsystem.Direction.DOWN));

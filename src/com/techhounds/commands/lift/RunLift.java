@@ -9,17 +9,21 @@ public class RunLift extends Command{
 	LiftSubsystem lift;
 	
 	private RunLift() {
-		
+		lift = lift.getInstance();
+		requires(lift);		
 	}
 
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	protected void execute() {
-		// TODO Auto-generated method stub
-		
+		if ((lift.getDirection() == lift.UP && !lift.isAtTop()) ||
+				(lift.getDirection() == lift.DOWN && !lift.isAtBottom())){
+		} else {
+			lift.stopLift();			
+		}
+		lift.setPower();
 	}
 
 	protected boolean isFinished() {

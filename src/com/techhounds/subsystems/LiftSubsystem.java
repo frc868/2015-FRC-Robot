@@ -57,7 +57,7 @@ public class LiftSubsystem extends BasicSubsystem {
 		return direction;
 	}
 	
-	private void setPower() {
+	public void setPower() {
 		liftMotor.set(power);
 	}
 	
