@@ -1,8 +1,16 @@
 package com.techhounds.commands.lift;
 
+import com.techhounds.subsystems.LiftSubsystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class RunLift extends Command{
+	
+	LiftSubsystem lift;
+	
+	private RunLift() {
+		
+	}
 
 	protected void initialize() {
 		// TODO Auto-generated method stub

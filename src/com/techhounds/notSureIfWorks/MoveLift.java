@@ -1,4 +1,4 @@
-package com.techhounds.commands.lift;
+package com.techhounds.notSureIfWorks;
 
 import com.techhounds.subsystems.LiftSubsystem;
 
@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveLift extends Command {
 
-	private LiftSubsystem lift;
-	private LiftSubsystem.Direction direction;
+	private LiftSubsystemAtif lift;
+	private LiftSubsystemAtif.Direction direction;
 	
-    public MoveLift(LiftSubsystem.Direction direction) {
+    public MoveLift(LiftSubsystemAtif.Direction direction) {
         super("Move Lift");
         
-    	lift = LiftSubsystem.getInstance();
+    	lift = LiftSubsystemAtif.getInstance();
     	requires(lift);
     	
     	this.direction = direction;
@@ -81,8 +81,8 @@ public class MoveLift extends Command {
     }
 
     protected boolean isFinished() {
-        return direction == LiftSubsystem.Direction.STOP || 
-        		(direction == LiftSubsystem.Direction.UP ? lift.isAtTop() : lift.isAtBottom());
+        return direction == LiftSubsystemAtif.Direction.STOP || 
+        		(direction == LiftSubsystemAtif.Direction.UP ? lift.isAtTop() : lift.isAtBottom());
     }
 
     protected void end() {

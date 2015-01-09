@@ -2,6 +2,7 @@ package com.techhounds.subsystems;
 
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
+import com.techhounds.notSureIfWorks.LiftSubsystemAtif;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Victor;
@@ -14,6 +15,13 @@ public class LiftSubsystem extends BasicSubsystem {
 	private static LiftSubsystem instance;
 	
 	public static final double LIFT_POWER = 0.5;
+	
+	public static final int UP = 1;
+	public static final int DOWN = 2;
+	public static final int STOPPED = 3;
+	
+	private int direction = STOPPED;
+	private double power = 0;
 	
 	private Victor liftMotor;
 	
@@ -42,32 +50,33 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public double getPower() {
-		return liftMotor.get();
+		return Math.abs(liftMotor.get());
 	}
 	
-	private void setPower(double power) {
-		liftMotor.set(Robot.checkRange(power, 0, 1));
+	public int getDirection(){
+		return direction;
 	}
 	
-	/**
-	 * Sets Lift Direction
-	 * @param dir Pass either UP, DOWN, or STOP from LiftSubsystem.Direction
-	 * @param power Power to set, regardless of direction, has to be from 0 to 1
-	 */
-	public void setLiftDirection(Direction dir, double power) {
+	private void setPower() {
+		liftMotor.set(power);
+	}
+	
+	public void setLift(int dir, double power) {
 		
-		Math.abs(power);
+		power = Math.max(Math.min(power, 1), -1);
 		
-		if(dir == Direction.UP)
-			setPower(power);
-		else if(dir == Direction.DOWN)
-			setPower(-power);
-		else
-			stopLift();
+		if (dir == UP){
+			power *= -1;
+		}else if (dir == STOPPED){
+			power = 0;
+		}
+		
+		this.direction = dir;
+		this.power = power;
 	}
 	
 	public void stopLift() {
-		setPower(0);
+		setLift(STOPPED, 0);
 	}
 
 	@Override
@@ -82,8 +91,5 @@ public class LiftSubsystem extends BasicSubsystem {
 		
 	}
 	
-	public static enum Direction {
-		UP, DOWN, STOP
-	}
 
 }
