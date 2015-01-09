@@ -5,7 +5,7 @@ import com.techhounds.subsystems.LiftSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * @author Alex Fleig, Matt Simmons, Ayon Mitra, Clayton Detke
+ * @author Alex Fleig, Matt Simons, Ayon Mitra, Clayton Detke
  */
 public class MoveLift extends Command {
 
