@@ -2,7 +2,6 @@ package com.techhounds.subsystems;
 
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
-import com.techhounds.notSureIfWorks.LiftSubsystemAtif;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Victor;
