@@ -93,7 +93,7 @@ public class OI {
     	liftStop.whenPressed(new RunLift());
     }
     
-    public void initOperator() {
+    public  initOperator() {
     	// TODO: Put Operator Buttons and Commands;
     }
     
