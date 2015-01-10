@@ -1,8 +1,6 @@
 package com.techhounds;
 
 import com.techhounds.commands.lift.RunLift;
-import com.techhounds.notSureIfWorks.MoveLift;
-import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;

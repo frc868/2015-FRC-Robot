@@ -9,7 +9,7 @@ public class RunLift extends Command{
 	LiftSubsystem lift;
 	
 	public RunLift() {
-		lift = lift.getInstance();
+		lift = LiftSubsystem.getInstance();
 		requires(lift);		
 	}
 
@@ -18,8 +18,8 @@ public class RunLift extends Command{
 	}
 
 	protected void execute() {
-		if ((lift.getDirection() == lift.UP && !lift.isAtTop()) ||
-				(lift.getDirection() == lift.DOWN && !lift.isAtBottom())){
+		if ((lift.getDirection() == LiftSubsystem.UP && !lift.isAtTop()) ||
+				(lift.getDirection() == LiftSubsystem.DOWN && !lift.isAtBottom())){
 		} else {
 			lift.stopLift();			
 		}
