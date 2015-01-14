@@ -28,9 +28,9 @@ public class LiftSubsystem extends BasicSubsystem {
 	private DigitalInput checkBottom;
 	
 	private LiftSubsystem() {
-		liftMotor = new Victor(RobotMap.LIFT_MOTOR);
-		checkTop = new DigitalInput(RobotMap.DIGITAL_INPUT_TOP);
-		checkBottom = new DigitalInput(RobotMap.DIGITAL_INPUT_BOTTOM);
+		liftMotor = new Victor(RobotMap.Lift.LIFT_MOTOR);
+		checkTop = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_TOP);
+		checkBottom = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_BOTTOM);
 	}
 	
 	public static LiftSubsystem getInstance() {

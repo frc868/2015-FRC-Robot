@@ -14,6 +14,7 @@ public class ArmsSubsystem extends Subsystem {
 	
 	public static final double FEED_IN = 0.5;
 	public static final double FEED_OUT = -0.5;
+	public static final boolean OPEN = true;
 	
 	private Victor left;
 	private Victor right;
@@ -21,9 +22,9 @@ public class ArmsSubsystem extends Subsystem {
 	private Solenoid sol;
 	
 	private ArmsSubsystem() {
-		left = new Victor(RobotMap.LEFT_ARM);
-		right = new Victor(RobotMap.RIGHT_ARM);
-		sol = new Solenoid(RobotMap.DIRECTION);
+		left = new Victor(RobotMap.Arms.LEFT_ARM);
+		right = new Victor(RobotMap.Arms.RIGHT_ARM);
+		sol = new Solenoid(RobotMap.Arms.DIRECTION);
 	}
 	
 	public static ArmsSubsystem getInstance() {
@@ -45,6 +46,10 @@ public class ArmsSubsystem extends Subsystem {
 	
 	public boolean getPosition() {
 		return sol.get();
+	}
+	
+	public void setPosition(boolean direction) {
+		sol.set(direction);
 	}
 	
 	public void stopArms() {
