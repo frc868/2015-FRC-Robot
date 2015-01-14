@@ -23,7 +23,7 @@ public class RobotMap {
 	public static class Arms{
 		public static final int LEFT_ARM = 0;
 		public static final int RIGHT_ARM = 1;
-		public static final int DIRECTION = 0;
+		public static final int ARM_SOL = 0;
 	}
 	
 }

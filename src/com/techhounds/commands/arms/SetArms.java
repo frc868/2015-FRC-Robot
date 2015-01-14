@@ -10,18 +10,21 @@ public class SetArms extends Command {
 	
 	public ArmsSubsystem arms;
 	public double power;
+	
+	private boolean position;
 
-    public SetArms(double power) {
+    public SetArms(double power, boolean position) {
         super("Set Arms");
         arms = ArmsSubsystem.getInstance();
         this.power = power;
         requires(arms);
+        this.position = position;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	arms.setPower(power);
-    	arms.setPosition(arms.OPEN);
+    	arms.setPosition(position);
     }
 
     // Called repeatedly when this Command is scheduled to run
