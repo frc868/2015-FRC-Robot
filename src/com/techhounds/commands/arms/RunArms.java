@@ -1,26 +1,19 @@
 package com.techhounds.commands.arms;
 
 import edu.wpi.first.wpilibj.command.Command;
-import com.techhounds.subsystems.ArmsSubsystem;;
 
 /**
  *
  */
-public class SetArms extends Command {
-	
-	public ArmsSubsystem arms;
-	public double power;
+public class RunArms extends Command {
 
-    public SetArms(double power) {
-        super("Set Arms");
-        arms = ArmsSubsystem.getInstance();
-        this.power = power;
-        requires(arms);
+    public RunArms() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	arms.setPower(power);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,7 +22,7 @@ public class SetArms extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
