@@ -26,4 +26,8 @@ public class RobotMap {
 		public static final int ARM_SOL = 0;
 	}
 	
+	public static class Compressor {
+		public static final int COMP = 0;
+	}
+	
 }
