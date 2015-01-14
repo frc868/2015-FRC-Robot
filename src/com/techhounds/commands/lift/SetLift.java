@@ -22,7 +22,7 @@ public class SetLift extends Command {
     public SetLift(int direction, double pwr){
     	super("Set lift");
     	this.direction = direction;
-    	lift = lift.getInstance();
+    	lift = LiftSubsystem.getInstance();
     	this.power = pwr;
     	requires(lift);
     }

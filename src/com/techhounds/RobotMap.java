@@ -14,5 +14,7 @@ public class RobotMap {
 	public static final int DIGITAL_INPUT_TOP = 0;
 	public static final int DIGITAL_INPUT_BOTTOM = 0;
 	public static final int LIFT_POWER = 1;
+	public static final int LEFT_ARM = 0;
+	public static final int RIGHT_ARM = 1;
 	
 }
