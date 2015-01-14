@@ -15,51 +15,46 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutonLift extends Command {
 	
 	public LiftSubsystem lift;
-	boolean goingUp = true;
-	boolean goingDown = false;
-	public int direction;
+	public boolean goingUp;
 
-    public AutonLift() {
+    public AutonLift(int direction) {
         lift = LiftSubsystem.getInstance();
         requires(lift);
         
-        
+        goingUp = direction == LiftSubsystem.UP;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if (goingUp){
+    		lift.setLift(LiftSubsystem.UP, LiftSubsystem.LIFT_POWER);
+    	}else{
+    		lift.setLift(LiftSubsystem.DOWN, LiftSubsystem.LIFT_POWER);    		
+    	}
+    	lift.setPower();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (goingUp) {
-    		lift.power = lift.LIFT_POWER;
-    		lift.setPower();
-        	if (lift.isAtTop())
-        		lift.stopLift();
-    	}
     	
-    	if (goingDown) {
-    		lift.power = -lift.LIFT_POWER;
-    		lift.setPower();
-    		if (lift.isAtBottom()) {
-    			lift.stopLift();
-    		}
-    	}
-
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        if (goingUp){
+        	return lift.isAtTop();
+        }
+        return lift.isAtBottom();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	lift.stopLift();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
