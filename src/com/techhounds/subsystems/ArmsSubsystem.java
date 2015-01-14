@@ -14,6 +14,7 @@ public class ArmsSubsystem extends Subsystem {
 	
 	public static final double FEED_IN = 0.5;
 	public static final double FEED_OUT = -0.5;
+	public static final double STOPPED = 0;
 	public static final boolean OPEN = true;
 	public static final boolean CLOSED = false;
 	
