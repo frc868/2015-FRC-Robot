@@ -20,7 +20,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final int STOPPED = 3;
 	
 	private int direction = STOPPED;
-	private double power = 0;
+	public double power = 0;
 	
 	private Victor liftMotor;
 	
