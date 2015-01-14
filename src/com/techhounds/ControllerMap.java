@@ -27,7 +27,7 @@ public class ControllerMap {
     /** TOMEE Cannot get the whole DPad */
     private static final int[] tomee =      { 3, 2, 4, 1, 8, 6, 7, 5, 10, 9, 1, 3, 2, 5, -1, -1};
     
-    private static final int[] logitech =   { 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 1, 3, 2, 4, 5, 6};
+    private static final int[] logitech =   { 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 0, 2, 1, 3, 4, 5};
     
     /** PS3 Cannot get DPAD UP and DOWN) */
     private static final int[] ps3 =        { 1, 2, 3, 4, 6, 10, 5, 9, 8, 7, 1, 4, 2, 5, 6, -1};
@@ -82,14 +82,6 @@ public class ControllerMap {
         return joystick.getRawAxis(index(RIGHT_VERTICAL));
     }
     
-    private double getDPADHorizontal() {
-        return joystick.getRawAxis(index(D_PAD_HORIZONTAL));
-    }
-    
-    private double getDPADVertical() {
-        return joystick.getRawAxis(index(D_PAD_VERTICAL));
-    }
-    
     public Button createButton(int buttonID){
         return new JoystickButton(joystick, index(buttonID));
     }
@@ -107,14 +99,17 @@ public class ControllerMap {
         }
 
         public boolean get() {
+        	
+        	int angle = joystick.getPOV();
+        	
             if (button == ControllerMap.RIGHT) {
-                return getDPADHorizontal() > 0.3;
+                return angle == 270 || angle == 315 || angle == 225;
             } else if (button == ControllerMap.LEFT) {
-                return getDPADHorizontal() < -0.3;
+                return angle == 90 || angle == 45 || angle== 135;
             } else if (button == ControllerMap.UP) {
-                return getDPADVertical() < -0.3;
+                return angle == 0 || angle == 45 || angle == 315;
             } else if (button == ControllerMap.DOWN) {
-                return getDPADVertical() > 0.3;
+                return angle == 180 || angle == 135 || angle == 225;
             } else {
                 return false;
             }

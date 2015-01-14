@@ -19,6 +19,7 @@ public class DriveSubsystem extends BasicSubsystem {
 	private RobotDrive robotDrive;
 	private MultiMotor leftMotors;
 	private MultiMotor rightMotors;
+	private static boolean inverted = false;
 
 	private DriveSubsystem() {
 		leftMotors = new MultiMotor(
@@ -67,8 +68,9 @@ public class DriveSubsystem extends BasicSubsystem {
 	}
 	
 	public void setPower(double newVal) {
-		setRightPower(newVal);
-		setLeftPower(newVal);
+		if (inverted) newVal *= -1;
+			setRightPower(newVal);
+			setLeftPower(newVal);
 	}
 	
 	public void stopMotors() {
