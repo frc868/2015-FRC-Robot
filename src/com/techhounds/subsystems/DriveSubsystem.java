@@ -85,6 +85,10 @@ public class DriveSubsystem extends BasicSubsystem {
 		robotDrive.arcadeDrive(magnitude, steering);
 	}
 	
+	public void invert() {
+		inverted = !inverted;
+	}
+	
 	@Override
 	public void updateSmartDashboard() {
 		// TODO Auto-generated method stub
