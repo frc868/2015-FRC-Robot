@@ -68,7 +68,6 @@ public class DriveSubsystem extends BasicSubsystem {
 	}
 	
 	public void setPower(double newVal) {
-		if (inverted) newVal *= -1;
 			setRightPower(newVal);
 			setLeftPower(newVal);
 	}
@@ -82,6 +81,7 @@ public class DriveSubsystem extends BasicSubsystem {
 		double magnitude = OI.getDriverLeftYAxis();
 		double steering = OI.getDriverRightXAxis();
 		
+		if (inverted) magnitude = -magnitude;
 		robotDrive.arcadeDrive(magnitude, steering);
 	}
 	
