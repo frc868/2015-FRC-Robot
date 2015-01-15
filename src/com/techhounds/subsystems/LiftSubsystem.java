@@ -20,6 +20,9 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final int DOWN = 2;
 	public static final int STOPPED = 3;
 	
+	public static final boolean IN = true;
+	public static final boolean OUT = false;
+	
 	private int direction = STOPPED;
 	public double power = 0;
 	
@@ -79,6 +82,14 @@ public class LiftSubsystem extends BasicSubsystem {
 	
 	public void stopLift() {
 		setLift(STOPPED, 0);
+	}
+	
+	public boolean getPosition() {
+		return sol.get();
+	}
+	
+	public void setPosition(boolean position) {
+		sol.set(position);
 	}
 
 	@Override
