@@ -4,6 +4,7 @@ import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 
 /**
@@ -23,6 +24,8 @@ public class LiftSubsystem extends BasicSubsystem {
 	public double power = 0;
 	
 	private Victor liftMotor;
+	
+	private Solenoid sol;
 	
 	private DigitalInput checkTop;
 	private DigitalInput checkBottom;
