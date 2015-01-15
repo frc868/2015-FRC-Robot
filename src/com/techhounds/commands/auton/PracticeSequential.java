@@ -1,9 +1,7 @@
-/*Ayon Mitra, Matt Simons, the interns
- * after school
- * 1/14/15
- * this program autons a series of stuff without User Input.  It will go on until the sequential ends
- * or the driver hits stop on his/her laptop
+/*
+ * Ayon Mitra, Matt Simons, the interns
 */
+
 package com.techhounds.commands.auton;
 
 import com.techhounds.commands.DriveTime;
@@ -15,13 +13,11 @@ import com.techhounds.subsystems.LiftSubsystem;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-/**
- *
- */
 public class PracticeSequential extends CommandGroup {
     
     public  PracticeSequential() {
     	
+    	addSequential(new SetArms(ArmsSubsystem.STOPPED, ArmsSubsystem.OPEN));
     	addSequential(new SetLift(LiftSubsystem.DOWN));
     	addSequential(new DriveTime(5 , 1));
     	addSequential(new SetArms(ArmsSubsystem.FEED_IN, ArmsSubsystem.CLOSED));
