@@ -34,15 +34,17 @@ public class EncoderDrive extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return drive.getLeftDistance() >= 10;
+        return drive.getLeftDistance() >= dist;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	drive.setPower(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
