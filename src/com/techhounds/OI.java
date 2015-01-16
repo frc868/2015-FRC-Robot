@@ -1,6 +1,8 @@
 package com.techhounds;
 
 import com.techhounds.commands.lift.RunLift;
+import com.techhounds.commands.lift.SetLift;
+import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -19,6 +21,10 @@ public class OI {
 	
 	private static final double DEADZONE = 0.05;
 		
+	//Driver buttons
+	private int setLiftIn = ControllerMap.X;
+	private int setLiftOut = ControllerMap.Y;
+	
 	public OI() {
 		
 		driver = new ControllerMap(new Joystick(RobotMap.Drive.DRIVER_PORT), ControllerMap.PS3);
@@ -48,14 +54,11 @@ public class OI {
     
     public void initDriver() {
     	
-    	Button liftUp = driver.createButton(ControllerMap.A);
-    	liftUp.whenPressed(new RunLift());
+    	Button liftIn = driver.createButton(setLiftIn);
+    	liftIn.whenPressed(new SetLift(LiftSubsystem.IN));
     	
-    	Button liftDown = driver.createButton(ControllerMap.B);
-    	liftDown.whenPressed(new RunLift());
-    	
-    	Button liftStop = driver.createButton(ControllerMap.X);
-    	liftStop.whenPressed(new RunLift());
+    	Button liftOut = driver.createButton(setLiftOut);
+    	liftOut.whenPressed(new SetLift(LiftSubsystem.OUT));
     }
     
     public void initOperator() {

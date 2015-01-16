@@ -2,6 +2,7 @@ package com.techhounds.subsystems;
 
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
+import com.techhounds.commands.lift.RunLift;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -37,6 +38,7 @@ public class LiftSubsystem extends BasicSubsystem {
 		liftMotor = new Victor(RobotMap.Lift.LIFT_MOTOR);
 		checkTop = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_TOP);
 		checkBottom = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_BOTTOM);
+		sol = new Solenoid(RobotMap.Lift.LIFT_SOL);
 	}
 	
 	public static LiftSubsystem getInstance() {
@@ -100,7 +102,7 @@ public class LiftSubsystem extends BasicSubsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
+		setDefaultCommand(new RunLift());
 		
 	}
 	
