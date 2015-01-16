@@ -6,19 +6,25 @@ import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 import com.techhounds.commands.DriveWithGamepad;
 
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 
 /**
- * @author Alex Fleig, Matt Simmons, Ayon Mitra, Clayton Detke
+ * @author Alex Fleig, Matt Simons, Ayon Mitra, Clayton Detke
  */
 public class DriveSubsystem extends BasicSubsystem {
 	
 	private static DriveSubsystem instance;
+	
 	private RobotDrive robotDrive;
 	private MultiMotor leftMotors;
 	private MultiMotor rightMotors;
+	
+	private Counter leftEnc;
+	private Counter rightEnc;
+	
 	private static boolean inverted = false;
 
 	private DriveSubsystem() {
@@ -39,6 +45,9 @@ public class DriveSubsystem extends BasicSubsystem {
 				new boolean[]{false, false, false});
 		
 		robotDrive = new RobotDrive(leftMotors, rightMotors);
+		
+		leftEnc = new Counter(RobotMap.Drive.LEFT_ENC);
+		rightEnc = new Counter(RobotMap.Drive.RIGHT_ENC);
 	}
 	
 	public static DriveSubsystem getInstance() {
@@ -57,6 +66,30 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	public double getAveragePower() {
 		return (getLeftPower() + getRightPower())/2;
+	}
+	
+	public double getLeftDistance() {
+		return leftEnc.get();
+	}
+	
+	public double getRightDistance() {
+		return rightEnc.get();
+	}
+	
+	public double getAvgDistance() {
+		return (getLeftDistance() + getRightDistance())/2;
+	}
+	
+	public double getLeftVelocity() {
+		return leftEnc.getRate();
+	}
+	
+	public double getRightVelocity() {
+		return rightEnc.getRate();
+	}
+	
+	public double getAvgVelocity() {
+		return (getLeftVelocity() + getRightVelocity())/2;
 	}
 	
 	public void setRightPower(double newVal) {

@@ -14,6 +14,9 @@ public class RobotMap {
 		public static final int LEFT_DRIVE_MOTOR_1 = 16;
 		public static final int LEFT_DRIVE_MOTOR_2 = 15;
 		public static final int LEFT_DRIVE_MOTOR_3 = 14;
+		
+		public static final int LEFT_ENC = DOES_NOT_EXIST;
+		public static final int RIGHT_ENC = DOES_NOT_EXIST;
 	}
 	
 	public static class Lift{
