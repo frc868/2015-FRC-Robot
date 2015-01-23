@@ -67,74 +67,181 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	public void driveWithGamepad() {
 		double powerMag;
-		double steerMag;
-		boolean posPower;
-		boolean posSteer;
-		
-		double onePower = OI.getInstance().getDriverLeftYAxis();
+    	double steerMag;
+    	boolean posPower;
+    	boolean posSteer;
+    	
+    	double onePower = OI.getDriverLeftYAxis();
+    	double oneSteer = OI.getDriverRightXAxis();
+    	double twoPower = OI.getOperatorLeftYAxis();
+    	double twoSteer = OI.getOperatorRightXAxis();
+    	
+    	if (!getTwoPersonDrive()){
+	        powerMag = onePower;
+	        steerMag = oneSteer;
+	        posPower = powerMag >= 0;
+	        posSteer = steerMag >= 0;
+    	}else{
+    		powerMag = Math.max(Math.abs(onePower), Math.abs(twoPower));
+    		steerMag = Math.max(Math.abs(oneSteer), Math.abs(twoSteer));
+    		if ((onePower > 0 && twoPower < 0) || (onePower < 0 && twoPower > 0))
+    			powerMag = 0;
+    		if ((oneSteer > 0 && twoSteer < 0) || (oneSteer < 0 && twoSteer > 0))
+    			steerMag= 0;
+    		posPower = onePower >= 0 && twoPower >= 0;
+    		posSteer = oneSteer >= 0 && twoSteer >= 0;
+    	}
+        
+        powerMag = Math.abs(powerMag);
+        steerMag = Math.abs(steerMag);
+        
+        powerMag *= powerMag * powerMag;
+        steerMag *= steerMag * steerMag;
+        
+        if (!isForward)
+        	powerMag *= -1;
+        
+        if (isHalfSpeed){
+        	powerMag *= .5;
+        	steerMag *= .3;
+        }
+        
+        if (!posPower)
+        	powerMag *= -1;
+        if (!posSteer)
+        	steerMag *= -1;
+        
+        double left = powerMag + steerMag;
+        double right = powerMag - steerMag;
+        
+        setPower(left, -right);
 	}
 	
-	public double getRightPower() {
-		return rightMotors.get();
+	public double getLeftDistance(){
+    	return leftEnc.getDistance();
+    }
+    
+    public double getRightDistance(){
+    	return rightEnc.getDistance();
+    }
+
+	public double getAvgDistance(){
+		return (getLeftDistance() + getRightDistance()) / 2;
 	}
-	
-	public double getLeftPower() {
-		return leftMotors.get();
-	}
-	
-	public double getAveragePower() {
-		return (getLeftPower() + getRightPower())/2;
-	}
-	
-	public double getLeftDistance() {
+    
+	public double getLeftCount(){
 		return leftEnc.get();
 	}
 	
-	public double getRightDistance() {
+	public double getRightCount(){
 		return rightEnc.get();
 	}
 	
-	public double getAvgDistance() {
-		return (getLeftDistance() + getRightDistance())/2;
+	public double getAvgCount(){
+		return (getLeftCount() + getRightCount()) / 2;
 	}
 	
-	public double getLeftVelocity() {
+	//feet per second
+	public double getLeftSpeed(){
 		return leftEnc.getRate();
 	}
 	
-	public double getRightVelocity() {
+	public double getRightSpeed(){
 		return rightEnc.getRate();
 	}
-	
-	public double getAvgVelocity() {
-		return (getLeftVelocity() + getRightVelocity())/2;
-	}
-	
-	public void setRightPower(double newVal) {
-		rightMotors.set(Robot.checkRange(newVal, -1, 1));
-	}
-	
-	public void setLeftPower(double newVal) {
-		rightMotors.set(Robot.checkRange(newVal, -1, 1));
-	}
-	
-	public void setPower(double newVal) {
-			setRightPower(newVal);
-			setLeftPower(newVal);
-	}
-	
-	public void stopMotors() {
-		leftMotors.set(0);
-		rightMotors.set(0);
-	}
-	
-	@Override
-	public void updateSmartDashboard() {
-		// TODO Auto-generated method stub
-	}
 
-	@Override
-	protected void initDefaultCommand() {
-		setDefaultCommand(new DriveWithGamepad());
+	public double getAvgSpeed(){
+		return (getLeftSpeed() + getRightCount()) / 2;
 	}
+	
+    public void setDriveMode(boolean forward){
+        isForward = forward;
+        updateLEDCommand();
+    }
+    
+    public void setHalfSpeed(boolean isHalfSpeed){
+    	this.isHalfSpeed = isHalfSpeed;
+    	updateLEDCommand();
+    }
+    
+    public void toggleDriveMode(){
+        setDriveMode(!isForward);
+    }
+    
+    public void setTwoPersonDrive(boolean isTwoPeople){
+    	twoPersonDrive = isTwoPeople;
+    }
+    
+    public void setOverrideOperator(boolean override){
+    	overrideOperatorButton = override;
+    }
+    
+    public boolean getOverrideOperator(){
+    	return overrideOperatorButton;
+    }
+    
+    public void updateLEDCommand(){
+    	if (isForward){
+	        if (isHalfSpeed){
+	        	LEDSubsystem.getInstance().forwardHalf();
+	        }else{
+	        	LEDSubsystem.getInstance().forwardFull();
+	        }
+        }else{
+        	if (isHalfSpeed){
+	        	LEDSubsystem.getInstance().backwardHalf();
+	        }else{
+	        	LEDSubsystem.getInstance().backwardFull();
+	        }
+        }
+    }
+    
+    public boolean getTwoPersonDrive(){
+    	return twoPersonDrive;
+    }
+    
+    public boolean getDriveForward(){
+    	return isForward;
+    }
+    
+    public boolean getHalfSpeed(){
+    	return isHalfSpeed;
+    }
+    
+    public void stopMotors(){
+        setPower(0, 0);
+    }
+    
+    public void setPower(double power){
+        setPower(power, power);
+    }
+    
+    public void setPower(double leftPower, double rightPower){
+    	
+    	leftPower = Math.max(Math.min(leftPower, 1), -1);
+    	rightPower = Math.max(Math.min(rightPower, 1), -1);
+    	
+        leftMotors.set(leftPower);
+        rightMotors.set(rightPower);
+    }
+    
+    public double getRightPower(){
+        return -rightMotors.get();
+    }
+    
+    public double getLeftPower(){
+        return leftMotors.get();
+    }
+    
+    public double getAvgPower(){
+        return (getLeftPower() + getRightPower()) / 2;
+    }
+    
+    public void updateSmartDashboard(){
+        
+    }
+    
+    public void initDefaultCommand() {
+        setDefaultCommand(new DriveWithGamepad());
+    }
 }

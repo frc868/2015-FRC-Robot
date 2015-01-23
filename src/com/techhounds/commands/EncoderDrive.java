@@ -24,8 +24,7 @@ public class EncoderDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	drive.setLeftPower(leftPower);
-    	drive.setRightPower(rightPower);
+    	drive.setPower(leftPower, rightPower);
     }
 
     // Called repeatedly when this Command is scheduled to run
