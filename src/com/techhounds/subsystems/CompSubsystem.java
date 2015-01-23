@@ -24,6 +24,10 @@ public class CompSubsystem extends Subsystem {
 		comp = new Compressor(RobotMap.Compressor.COMP);
 		comp.start();
 	}
+	
+	public void updateSmartDashboard() {
+		
+	}
 
     public void initDefaultCommand() {
        

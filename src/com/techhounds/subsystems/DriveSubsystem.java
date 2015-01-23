@@ -18,14 +18,18 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	private static DriveSubsystem instance;
 	
-	private RobotDrive robotDrive;
+	private boolean overrideOperatorButton = false;
+	private boolean twoPersonDrive = true;
+	private boolean isForward = true;
+	private boolean isHalfSpeed = false;
+
 	private MultiMotor leftMotors;
 	private MultiMotor rightMotors;
 	
 	private Counter leftEnc;
 	private Counter rightEnc;
 	
-	private static boolean inverted = false;
+	private final double COUNTS_TO_FEET = 0;
 
 	private DriveSubsystem() {
 		leftMotors = new MultiMotor(
@@ -44,16 +48,30 @@ public class DriveSubsystem extends BasicSubsystem {
 					},
 				new boolean[]{false, false, false});
 		
-		robotDrive = new RobotDrive(leftMotors, rightMotors);
+		if(RobotMap.Drive.LEFT_ENC != RobotMap.DOES_NOT_EXIST){
+			leftEnc = new Counter(RobotMap.Drive.LEFT_ENC);
+			leftEnc.setDistancePerPulse(COUNTS_TO_FEET);
+		}
 		
-		leftEnc = new Counter(RobotMap.Drive.LEFT_ENC);
-		rightEnc = new Counter(RobotMap.Drive.RIGHT_ENC);
+		if(RobotMap.Drive.RIGHT_ENC != RobotMap.DOES_NOT_EXIST){
+			rightEnc = new Counter(RobotMap.Drive.RIGHT_ENC);
+			rightEnc.setDistancePerPulse(COUNTS_TO_FEET);
+		}
 	}
 	
 	public static DriveSubsystem getInstance() {
 		if(instance == null)
 			instance = new DriveSubsystem();
 		return instance;
+	}
+	
+	public void driveWithGamepad() {
+		double powerMag;
+		double steerMag;
+		boolean posPower;
+		boolean posSteer;
+		
+		double onePower = OI.getInstance().getDriverLeftYAxis();
 	}
 	
 	public double getRightPower() {
@@ -108,18 +126,6 @@ public class DriveSubsystem extends BasicSubsystem {
 	public void stopMotors() {
 		leftMotors.set(0);
 		rightMotors.set(0);
-	}
-	
-	public void driveWithGamepad() {
-		double magnitude = OI.getDriverLeftYAxis();
-		double steering = OI.getDriverRightXAxis();
-		
-		if (inverted) magnitude = -magnitude;
-		robotDrive.arcadeDrive(magnitude, steering);
-	}
-	
-	public void invert() {
-		inverted = !inverted;
 	}
 	
 	@Override
