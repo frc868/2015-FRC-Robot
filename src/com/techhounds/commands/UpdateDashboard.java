@@ -35,7 +35,9 @@ public class UpdateDashboard extends Command {
 	}
 
 	@Override
-	protected boolean isFinished() { 	return false;	}
+	protected boolean isFinished() {
+		return false;
+	}
 
 	@Override
 	protected void end() {	}

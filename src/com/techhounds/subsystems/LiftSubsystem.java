@@ -21,8 +21,8 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final int DOWN = 2;
 	public static final int STOPPED = 3;
 	
-	public static final boolean IN = true;
-	public static final boolean OUT = false;
+	public static final boolean IN = false;
+	public static final boolean OUT = true;
 	
 	private int direction = STOPPED;
 	public double power = 0;
@@ -49,11 +49,11 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public boolean isAtTop() {
-		return checkTop.get();
+		return !checkTop.get();
 	}
 	
 	public boolean isAtBottom() {
-		return checkBottom.get();
+		return !checkBottom.get();
 	}
 	
 	public double getPower() {
@@ -70,7 +70,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	
 	public void setLift(int dir, double power) {
 		
-		power = Math.max(Math.min(power, 1), -1);
+		power = Math.max(Math.min(power, 1), 0);
 		
 		if (dir == UP){
 			power *= -1;

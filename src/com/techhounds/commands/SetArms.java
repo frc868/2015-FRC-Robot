@@ -1,4 +1,4 @@
-package com.techhounds.commands.arms;
+package com.techhounds.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import com.techhounds.subsystems.ArmsSubsystem;;
@@ -9,22 +9,33 @@ import com.techhounds.subsystems.ArmsSubsystem;;
 public class SetArms extends Command {
 	
 	public ArmsSubsystem arms;
-	public double power;
+	public Double power;
 	
-	private boolean position;
+	private Boolean position;
 
     public SetArms(double power, boolean position) {
-        super("Set Arms");
-        arms = ArmsSubsystem.getInstance();
-        this.power = power;
-        requires(arms);
+        this(power);
         this.position = position;
+    }
+    
+    public SetArms(double power){
+    	arms = ArmsSubsystem.getInstance();
+    	requires(arms);
+    	this.power = power;
+    }
+    
+    public SetArms(boolean position){
+    	arms = ArmsSubsystem.getInstance();
+    	requires(arms);
+    	this.position = position;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	arms.setPower(power);
-    	arms.setPosition(position);
+    	if (power != null)
+    		arms.setPower(power);
+    	if (position != null)
+    		arms.setPosition(position);
     }
 
     // Called repeatedly when this Command is scheduled to run

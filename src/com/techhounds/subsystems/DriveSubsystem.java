@@ -4,7 +4,7 @@ import com.techhounds.MultiMotor;
 import com.techhounds.OI;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
-import com.techhounds.commands.DriveWithGamepad;
+import com.techhounds.commands.driving.DriveWithGamepad;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.RobotDrive;

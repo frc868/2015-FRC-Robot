@@ -1,25 +1,30 @@
+package com.techhounds.commands.driving;
 
-package com.techhounds.commands;
+import com.techhounds.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import com.techhounds.subsystems.*;
 /**
  *
  */
-public class ElevateUp extends Command {
-
-	private ElevatorSubsystem elevate;
+public class EncoderDrive extends Command {
 	
-    public ElevateUp() {
-    	elevate = ElevatorSubsystem.getInstance();
-        requires(elevate);
+	DriveSubsystem drive;
+	
+	private double dist;
+	private double leftPower;
+	private double rightPower;
+
+    public EncoderDrive(double dist, double power) {
+       drive = DriveSubsystem.getInstance();
+       this.dist = dist;
+       leftPower = power;
+       rightPower = power;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	elevate.startRaisingElevator();
-    	
+    	drive.setPower(leftPower, rightPower);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,13 +33,12 @@ public class ElevateUp extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return !elevate.getTopSwitch();
+        return drive.getLeftDistance() >= dist;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	elevate.stopElevator();
-    	elevate.setLed(ElevatorSubsystem.ON);
+    	drive.setPower(0);
     }
 
     // Called when another command which requires one or more of the same

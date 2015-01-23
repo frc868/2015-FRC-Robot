@@ -36,7 +36,7 @@ public class RobotMap {
 		public static final int COMP = 0;
 	}
 	
-	private static class LED {
+	public static class LED {
 		public static final int LEDS = 36;
 		public static final int LED_1 = 1;
 	}

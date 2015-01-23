@@ -4,8 +4,8 @@
 
 package com.techhounds.commands.auton;
 
-import com.techhounds.commands.DriveTime;
-import com.techhounds.commands.arms.SetArms;
+import com.techhounds.commands.SetArms;
+import com.techhounds.commands.driving.DriveTime;
 import com.techhounds.commands.lift.SetLift;
 import com.techhounds.subsystems.ArmsSubsystem;
 import com.techhounds.subsystems.LiftSubsystem;
