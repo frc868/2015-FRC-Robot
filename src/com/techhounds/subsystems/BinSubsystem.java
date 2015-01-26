@@ -2,6 +2,7 @@ package com.techhounds.subsystems;
 
 import com.techhounds.RobotMap;
 
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
@@ -30,10 +31,22 @@ public class BinSubsystem extends Subsystem {
 	public static double power;
 	
 	public BinSubsystem() {
-		motor = new Talon(RobotMap.Bin.BIN_MOTOR);
-		sol = new Solenoid(RobotMap.Bin.BIN_SOL);
-		checkTop = new DigitalInput(RobotMap.Bin.BIN_TOP_CHECK);
-		checkBottom = new DigitalInput(RobotMap.Bin.BIN_DOWN_CHECK);
+		
+		if(RobotMap.Bin.BIN_MOTOR != RobotMap.DOES_NOT_EXIST){
+			motor = new Talon(RobotMap.Bin.BIN_MOTOR);
+		}
+		
+		if(RobotMap.Bin.BIN_SOL != RobotMap.DOES_NOT_EXIST){
+			sol = new Solenoid(RobotMap.Bin.BIN_SOL);
+		}
+		
+		if(RobotMap.Bin.BIN_DOWN_CHECK != RobotMap.DOES_NOT_EXIST){
+			checkBottom = new DigitalInput(RobotMap.Bin.BIN_DOWN_CHECK);
+		}
+		
+		if(RobotMap.Bin.BIN_TOP_CHECK != RobotMap.DOES_NOT_EXIST){
+			checkTop = new DigitalInput(RobotMap.Bin.BIN_TOP_CHECK);
+		}
 	}
 	
 	public static BinSubsystem getInstance() {
