@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * @author Alex Fleig, Matt Simones, Ayon Mitra, Clayton Detke, Adam Foster
  */
-public class BinSubsystem extends Subsystem {
+public class BinSubsystem extends BasicSubsystem {
     
 	public static BinSubsystem instance;
 	
@@ -27,8 +27,8 @@ public class BinSubsystem extends Subsystem {
 	public static final boolean OPEN = true;
 	public static final boolean CLOSED = false;
 	
-	public static int direction;
-	public static double power;
+	private int direction;
+	private double power;
 	
 	public BinSubsystem() {
 		
@@ -50,16 +50,17 @@ public class BinSubsystem extends Subsystem {
 	}
 	
 	public static BinSubsystem getInstance() {
-		if(instance == null) instance = new BinSubsystem();
+		if(instance == null)
+			instance = new BinSubsystem();
 		return instance;
 	}
 	
 	public double getPower() {
-		return motor.get();
+		return Math.abs(motor.get());
 	}
 	
-	public void setPower(double power) {
-		motor.set(Math.max(Math.min(power, 1), 0));
+	public void setPower() {
+		motor.set(power);
 	}
 	
 	public int getDirection() {
@@ -74,22 +75,24 @@ public class BinSubsystem extends Subsystem {
 			power = 0;
 		}
 		
+		this.power = power;
 		direction = dir;
 	}
 	
-	public void setSolenoid(boolean toggle) {
-		sol.set(toggle);
+	public void setSolenoid(boolean position) {
+		sol.set(position);
 	}
-	
-	
-	
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+
+	@Override
+	public void updateSmartDashboard() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
 
