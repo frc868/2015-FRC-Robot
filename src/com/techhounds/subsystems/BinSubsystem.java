@@ -27,6 +27,7 @@ public class BinSubsystem extends Subsystem {
 	public static final boolean CLOSED = false;
 	
 	public static int direction;
+	public static double power;
 	
 	public BinSubsystem() {
 		motor = new Talon(RobotMap.Bin.BIN_MOTOR);
