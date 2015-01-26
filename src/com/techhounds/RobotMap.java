@@ -40,4 +40,9 @@ public class RobotMap {
 		public static final int LEDS = 36;
 		public static final int LED_1 = 1;
 	}
+	
+	public static class Bin{
+		public static final int BIN_SOL = DOES_NOT_EXIST;
+		public static final int BIN_MOTOR = DOES_NOT_EXIST;
+	}
 }
