@@ -23,6 +23,9 @@ public class BinSubsystem extends Subsystem {
 	public static final int DOWN = 1;
 	public static final int UP = 2;
 	
+	public static final boolean OPEN = true;
+	public static final boolean CLOSED = false;
+	
 	public static int direction;
 	
 	public BinSubsystem() {
@@ -49,7 +52,7 @@ public class BinSubsystem extends Subsystem {
 		return direction;
 	}
 	
-	public static void setBin(int dir, double power) {
+	public void setBin(int dir, double power) {
 		power = Math.max(Math.min(power, 1), 0);
 		if(dir == UP) {
 			power *= -1;
@@ -58,6 +61,10 @@ public class BinSubsystem extends Subsystem {
 		}
 		
 		direction = dir;
+	}
+	
+	public void setSolenoid(boolean toggle) {
+		sol.set(toggle);
 	}
 	
 	
