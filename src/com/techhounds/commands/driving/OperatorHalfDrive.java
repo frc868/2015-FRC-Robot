@@ -12,7 +12,7 @@ public class OperatorHalfDrive extends Command {
 	DriveSubsystem drive;
 	boolean halfSpeed;
 
-    public OperatorHalfDrive() {
+    public OperatorHalfDrive(boolean halfSpeed) {
         drive = DriveSubsystem.getInstance();
         this.halfSpeed = halfSpeed;
     }

@@ -1,6 +1,9 @@
 package com.techhounds;
 
+import com.techhounds.commands.Debug;
 import com.techhounds.commands.auton.AutonChooser;
+import com.techhounds.commands.driving.OperatorHalfDrive;
+import com.techhounds.commands.driving.ToggleDriveMode;
 import com.techhounds.commands.lift.RunLift;
 import com.techhounds.commands.lift.SetLift;
 import com.techhounds.subsystems.LiftSubsystem;
@@ -27,8 +30,23 @@ public class OI {
 	private static final double DEADZONE = 0.05;
 		
 	//Driver buttons
-	private int setLiftIn = ControllerMap.X;
-	private int setLiftOut = ControllerMap.Y;
+	private final int toggleForward = ControllerMap.START;
+    private final int toggleHalf = ControllerMap.BACK;
+//    private final int toggleLEDs = ControllerMap.BACK;
+    private final int liftUp = ControllerMap.Y;
+    private final int liftDown = ControllerMap.A;
+    private final int liftIn = ControllerMap.X;
+    private final int liftOut = ControllerMap.B;
+    
+    //Tweaker buttons
+  	private final int opToggleForward = ControllerMap.START;
+    private final int opToggleHalf = ControllerMap.BACK;
+    private final int operatorPushHalf = ControllerMap.LB;
+//    private final int toggleLEDs = ControllerMap.BACK;
+    private final int opLiftUp = ControllerMap.Y;
+    private final int opLiftDown = ControllerMap.A;
+    private final int opLiftIn = ControllerMap.X;
+    private final int opLiftOut = ControllerMap.B;
 	
 	public OI() {
 		
@@ -60,16 +78,67 @@ public class OI {
     }
     
     public void initDriver() {
-    	
-    	Button liftIn = driver.createButton(setLiftIn);
-    	liftIn.whenPressed(new SetLift(LiftSubsystem.IN));
-    	
-    	Button liftOut = driver.createButton(setLiftOut);
-    	liftOut.whenPressed(new SetLift(LiftSubsystem.OUT));
+
+        Button toggleDriveForward = driver.createButton(toggleForward);
+        toggleDriveForward.whenPressed(new ToggleDriveMode(true, false));
+        
+        Button toggleHalfSpeed = driver.createButton(toggleHalf);
+        toggleHalfSpeed.whenPressed(new ToggleDriveMode(false, true));
+        
+//        Button toggleLEDS = driverGamepad.createButton(toggleLEDs);
+//        toggleLEDS.whenPressed(new ToggleLEDMode());
+
+        Button setLiftUp = driver.createButton(liftUp);
+        setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
+        setLiftUp.whenReleased(new SetLift(LiftSubsystem.UP, 0));
+        
+        Button setLiftDown = driver.createButton(liftDown);
+        setLiftDown.whenPressed(new SetLift(LiftSubsystem.DOWN));
+        setLiftDown.whenReleased(new SetLift(LiftSubsystem.DOWN, 0));
+
+        Button setLiftIn = driver.createButton(liftIn);
+        setLiftIn.whenPressed(new SetLift(LiftSubsystem.IN));
+        
+        Button setLiftOut = driver.createButton(liftOut);
+        setLiftOut.whenPressed(new SetLift(LiftSubsystem.OUT));
+        
+//		Button nudgeLift = driver.createDPadButton(liftNudgeDown);
+//		nudgeLift.whenPressed(new NudgeLiftDown());
+//		nudgeLift.whenPressed(new Debug("Lift"));
+        
+		Button test = driver.createDPadButton(ControllerMap.UP);
+		test.whenPressed(new Debug("Up"));
     }
     
     public void initOperator() {
-    	// TODO: Put Operator Buttons and Commands;
+    	
+    	Button toggleDriveForward = operator.createButton(toggleForward);
+        toggleDriveForward.whenPressed(new ToggleDriveMode(true, false));
+        
+        Button pushHalfSpeed = operator.createButton(operatorPushHalf);
+        pushHalfSpeed.whenPressed(new OperatorHalfDrive(true));
+        pushHalfSpeed.whenReleased(new OperatorHalfDrive(false));
+
+        Button setLiftUp = operator.createButton(liftUp);
+        setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
+        setLiftUp.whenReleased(new SetLift(LiftSubsystem.UP, 0));
+        
+        Button setLiftDown = operator.createButton(liftDown);
+        setLiftDown.whenPressed(new SetLift(LiftSubsystem.DOWN));
+        setLiftDown.whenReleased(new SetLift(LiftSubsystem.DOWN, 0));
+
+        Button setLiftIn = operator.createButton(liftIn);
+        setLiftIn.whenPressed(new SetLift(LiftSubsystem.IN));
+        
+        Button setLiftOut = operator.createButton(liftOut);
+        setLiftOut.whenPressed(new SetLift(LiftSubsystem.OUT));
+        
+//		Button nudgeLift = operator.createDPadButton(liftNudgeDown);
+//		nudgeLift.whenPressed(new NudgeLiftDown());
+//		nudgeLift.whenPressed(new Debug("Lift"));
+        
+		Button test = operator.createDPadButton(ControllerMap.UP);
+		test.whenPressed(new Debug("Up"));
     }
     
     public void initSD() {
@@ -78,23 +147,23 @@ public class OI {
     
     public int getAutonChoice() {
         return ((Integer) this.autonChoice.getSelected()).intValue();
-   }
+    }
    
-   private SendableChooser createChoices(String label, String [] choices) {
-       SendableChooser send = new SendableChooser();
-       
-       if(choices.length > 0) {
-           send.addDefault(choices[0], new Integer(0));
-           
-           for(int i = 1; i < choices.length; i++) {
-               send.addObject(choices[i], new Integer(i));
-           }
-           
-           SmartDashboard.putData(label, send);
-       }
-       
-       return send;
-   }
+    private SendableChooser createChoices(String label, String [] choices) {
+        SendableChooser send = new SendableChooser();
+	       
+	       if(choices.length > 0) {
+	           send.addDefault(choices[0], new Integer(0));
+	           
+	           for(int i = 1; i < choices.length; i++) {
+	               send.addObject(choices[i], new Integer(i));
+	           }
+	           
+	           SmartDashboard.putData(label, send);
+	       }
+	       
+	       return send;
+	    }
     
     public static double getDriverRightXAxis() {
     	return checkDeadZone(driver.getRightStickX());

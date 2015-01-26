@@ -8,7 +8,6 @@ import com.techhounds.subsystems.BinSubsystem;
 public class RunBin extends Command {
 	
 	private BinSubsystem bin;
-	private boolean dir;
 
     public RunBin() {
     	bin = BinSubsystem.getInstance();
@@ -17,8 +16,8 @@ public class RunBin extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(bin.getDirection() == BinSubsystem.UP && dir == !bin.isAtTop() ||
-    		bin.getDirection() == BinSubsystem.DOWN && dir == !bin.isAtBottom()){
+    	if(bin.getDirection() == BinSubsystem.UP && !bin.isAtTop() ||
+    		bin.getDirection() == BinSubsystem.DOWN && !bin.isAtBottom()){
     	}else{
     		bin.stopLift();
     	}
