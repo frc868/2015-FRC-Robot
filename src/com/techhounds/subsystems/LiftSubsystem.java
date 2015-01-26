@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 
 /**
- * @author Alex Fleig, Matt Simmons, Ayon Mitra, Clayton Detke
+ * @author Alex Fleig, Matt Simons, Ayon Mitra, Clayton Detke
  */
 public class LiftSubsystem extends BasicSubsystem {	
 	
