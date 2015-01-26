@@ -40,9 +40,7 @@ public class OI {
     
     //Tweaker buttons
   	private final int opToggleForward = ControllerMap.START;
-    private final int opToggleHalf = ControllerMap.BACK;
     private final int operatorPushHalf = ControllerMap.LB;
-//    private final int toggleLEDs = ControllerMap.BACK;
     private final int opLiftUp = ControllerMap.Y;
     private final int opLiftDown = ControllerMap.A;
     private final int opLiftIn = ControllerMap.X;
@@ -112,30 +110,26 @@ public class OI {
     
     public void initOperator() {
     	
-    	Button toggleDriveForward = operator.createButton(toggleForward);
+    	Button toggleDriveForward = operator.createButton(opToggleForward);
         toggleDriveForward.whenPressed(new ToggleDriveMode(true, false));
         
         Button pushHalfSpeed = operator.createButton(operatorPushHalf);
         pushHalfSpeed.whenPressed(new OperatorHalfDrive(true));
         pushHalfSpeed.whenReleased(new OperatorHalfDrive(false));
 
-        Button setLiftUp = operator.createButton(liftUp);
+        Button setLiftUp = operator.createButton(opLiftUp);
         setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
         setLiftUp.whenReleased(new SetLift(LiftSubsystem.UP, 0));
         
-        Button setLiftDown = operator.createButton(liftDown);
+        Button setLiftDown = operator.createButton(opLiftDown);
         setLiftDown.whenPressed(new SetLift(LiftSubsystem.DOWN));
         setLiftDown.whenReleased(new SetLift(LiftSubsystem.DOWN, 0));
 
-        Button setLiftIn = operator.createButton(liftIn);
+        Button setLiftIn = operator.createButton(opLiftIn);
         setLiftIn.whenPressed(new SetLift(LiftSubsystem.IN));
         
-        Button setLiftOut = operator.createButton(liftOut);
+        Button setLiftOut = operator.createButton(opLiftOut);
         setLiftOut.whenPressed(new SetLift(LiftSubsystem.OUT));
-        
-//		Button nudgeLift = operator.createDPadButton(liftNudgeDown);
-//		nudgeLift.whenPressed(new NudgeLiftDown());
-//		nudgeLift.whenPressed(new Debug("Lift"));
         
 		Button test = operator.createDPadButton(ControllerMap.UP);
 		test.whenPressed(new Debug("Up"));
