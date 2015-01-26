@@ -1,7 +1,6 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.OI;
-import com.techhounds.commands.auton.options.DoNothing;
 
 import edu.wpi.first.wpilibj.command.Command;
 
