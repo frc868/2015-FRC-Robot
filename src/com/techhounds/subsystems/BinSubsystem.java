@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * @author Alex Fleig, Matt Simons, Ayon Mitra, Clayton Detke, Adam Foster
+ * @author Alex Fleig, Matt Simones, Ayon Mitra, Clayton Detke, Adam Foster
  */
 public class BinSubsystem extends Subsystem {
     
