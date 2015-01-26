@@ -60,11 +60,11 @@ public class BinSubsystem extends BasicSubsystem {
 	}
 	
 	public boolean isAtTop(){
-		return !checkTop.get();
+		return checkTop.get();
 	}
 	
 	public boolean isAtBottom(){
-		return !checkBottom.get();
+		return checkBottom.get();
 	}
 	
 	public int getDirection() {
@@ -85,6 +85,10 @@ public class BinSubsystem extends BasicSubsystem {
 	
 	public void setSolenoid(boolean position) {
 		sol.set(position);
+	}
+	
+	public void stopLift(){
+		setBin(STOPPED, 0);
 	}
 
     public void initDefaultCommand() {

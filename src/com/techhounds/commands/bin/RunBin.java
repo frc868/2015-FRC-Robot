@@ -8,18 +8,21 @@ import com.techhounds.subsystems.BinSubsystem;
 public class RunBin extends Command {
 	
 	private BinSubsystem bin;
-	private double power;
 	private boolean dir;
 
-    public RunBin(double power) {
+    public RunBin() {
     	bin = BinSubsystem.getInstance();
     	requires(bin);
-    	this.power = power;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(bin.getDirection() == BinSubsystem.UP && !bin.)
+    	if(bin.getDirection() == BinSubsystem.UP && dir == !bin.isAtTop() ||
+    		bin.getDirection() == BinSubsystem.DOWN && dir == !bin.isAtBottom()){
+    	}else{
+    		bin.stopLift();
+    	}
+    	bin.setPower();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -38,5 +41,6 @@ public class RunBin extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
