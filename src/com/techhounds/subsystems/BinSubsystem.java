@@ -27,6 +27,8 @@ public class BinSubsystem extends BasicSubsystem {
 	public static final boolean OPEN = true;
 	public static final boolean CLOSED = false;
 	
+	public static final double LIFT_POWER = 1;
+	
 	private int direction;
 	private double power;
 	
