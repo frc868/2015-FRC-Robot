@@ -1,11 +1,14 @@
 package com.techhounds;
 
+import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.lift.RunLift;
 import com.techhounds.commands.lift.SetLift;
 import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Atif Niyaz, Alex Fleig, Matt Simmons, Ayon Mitra, Clayton Detke
@@ -16,6 +19,8 @@ public class OI {
 	
 	private static ControllerMap driver;
 	private static ControllerMap operator;
+	
+	private SendableChooser autonChoice;
 	
 	private boolean isInit;
 	
@@ -29,6 +34,8 @@ public class OI {
 		
 		driver = new ControllerMap(new Joystick(RobotMap.Drive.DRIVER_PORT), ControllerMap.LOGITECH);
 		operator = new ControllerMap(new Joystick(RobotMap.Drive.OPERATOR_PORT), ControllerMap.LOGITECH);
+		
+		autonChoice = createChoices("Auton Choices", AutonChooser.AUTON_CHOICES);
 		
 		isInit = false;
 	}
@@ -68,6 +75,26 @@ public class OI {
     public void initSD() {
     	// TODO: Put SmartDashboard Values;
     }
+    
+    public int getAutonChoice() {
+        return ((Integer) this.autonChoice.getSelected()).intValue();
+   }
+   
+   private SendableChooser createChoices(String label, String [] choices) {
+       SendableChooser send = new SendableChooser();
+       
+       if(choices.length > 0) {
+           send.addDefault(choices[0], new Integer(0));
+           
+           for(int i = 1; i < choices.length; i++) {
+               send.addObject(choices[i], new Integer(i));
+           }
+           
+           SmartDashboard.putData(label, send);
+       }
+       
+       return send;
+   }
     
     public static double getDriverRightXAxis() {
     	return checkDeadZone(driver.getRightStickX());

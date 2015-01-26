@@ -2,16 +2,20 @@
 package com.techhounds;
 
 import com.techhounds.commands.UpdateDashboard;
+import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.subsystems.BasicSubsystem;
 import com.techhounds.subsystems.DriveSubsystem;
 import com.techhounds.subsystems.LEDSubsystem;
 import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class Robot extends IterativeRobot {
+	
+	private Command auton;
 	
     public void robotInit() {
     	initSubsystems();
@@ -30,6 +34,9 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
 
+    	auton = AutonChooser.getSelected();
+    	auton.start();
+    	
 		System.out.println("*******\n"+
 							"TEAM 868 CAN AUTON NOW!\n" +
 							"*******");
@@ -44,6 +51,9 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
 
+    	if (auton != null)
+    		auton.cancel();
+    	
 		System.out.println("*******\n"+
 							"TEAM 868 CAN TELEOP NOW!\n" +
 							"*******");
