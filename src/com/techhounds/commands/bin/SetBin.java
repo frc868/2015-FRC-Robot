@@ -11,24 +11,24 @@ public class SetBin extends Command {
 	
 	private BinSubsystem bin;
 	private int direction;
-	private double power = bin.getPower();
+	private Double power;
 
-    public SetBin(int direction, double power) {
+    public SetBin(int direction, Double power) {
     	super("Set Bin");
-    	bin = bin.getInstance();
-    	requires(bin);
+    	bin = BinSubsystem.getInstance();
     	this.direction = direction;
     	this.power = power;
     }
     
     public SetBin(int direction) {
-    	this.direction = direction;
+    	this(direction, null);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	bin.direction = direction;
-    	bin.power = power;
+    	if (power != null)
+    		bin.power = power;
     }
 
     // Called repeatedly when this Command is scheduled to run
