@@ -1,19 +1,25 @@
 package com.techhounds.commands.bin;
 
 import edu.wpi.first.wpilibj.command.Command;
+import com.techhounds.subsystems.BinSubsystem;
 
-/**
- *
- */
+/*Author Shaurya doger*/
+
 public class RunBin extends Command {
+	
+	private BinSubsystem bin;
+	private double power;
+	private boolean dir;
 
-    public RunBin() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    public RunBin(double power) {
+    	bin = BinSubsystem.getInstance();
+    	requires(bin);
+    	this.power = power;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if(bin.getDirection() == BinSubsystem.UP && !bin.)
     }
 
     // Called repeatedly when this Command is scheduled to run

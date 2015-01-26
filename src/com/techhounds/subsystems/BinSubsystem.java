@@ -32,21 +32,17 @@ public class BinSubsystem extends BasicSubsystem {
 	
 	public BinSubsystem() {
 		
-		if(RobotMap.Bin.BIN_MOTOR != RobotMap.DOES_NOT_EXIST){
+		if(RobotMap.Bin.BIN_MOTOR != RobotMap.DOES_NOT_EXIST)
 			motor = new Talon(RobotMap.Bin.BIN_MOTOR);
-		}
 		
-		if(RobotMap.Bin.BIN_SOL != RobotMap.DOES_NOT_EXIST){
+		if(RobotMap.Bin.BIN_SOL != RobotMap.DOES_NOT_EXIST)
 			sol = new Solenoid(RobotMap.Bin.BIN_SOL);
-		}
 		
-		if(RobotMap.Bin.BIN_DOWN_CHECK != RobotMap.DOES_NOT_EXIST){
+		if(RobotMap.Bin.BIN_DOWN_CHECK != RobotMap.DOES_NOT_EXIST)
 			checkBottom = new DigitalInput(RobotMap.Bin.BIN_DOWN_CHECK);
-		}
 		
-		if(RobotMap.Bin.BIN_TOP_CHECK != RobotMap.DOES_NOT_EXIST){
+		if(RobotMap.Bin.BIN_TOP_CHECK != RobotMap.DOES_NOT_EXIST)
 			checkTop = new DigitalInput(RobotMap.Bin.BIN_TOP_CHECK);
-		}
 	}
 	
 	public static BinSubsystem getInstance() {
@@ -61,6 +57,14 @@ public class BinSubsystem extends BasicSubsystem {
 	
 	public void setPower() {
 		motor.set(power);
+	}
+	
+	public boolean isAtTop(){
+		return !checkTop.get();
+	}
+	
+	public boolean isAtBottom(){
+		return !checkBottom.get();
 	}
 	
 	public int getDirection() {
