@@ -44,5 +44,7 @@ public class RobotMap {
 	public static class Bin{
 		public static final int BIN_SOL = DOES_NOT_EXIST;
 		public static final int BIN_MOTOR = DOES_NOT_EXIST;
+		public static final int BIN_TOP_CHECK = DOES_NOT_EXIST;
+		public static final int BIN_DOWN_CHECK = DOES_NOT_EXIST;
 	}
 }
