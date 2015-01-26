@@ -10,23 +10,32 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SetBin extends Command {
 	
 	private BinSubsystem bin;
-	private int direction;
-	private double power;
+	private Integer direction;
+	private Double power;
+	private Boolean pos;
 
     public SetBin(int direction, double power) {
     	this(direction);
     	this.power = power;
     }
     
-    public SetBin(int direction) {
+    public SetBin(Integer direction) {
     	bin = BinSubsystem.getInstance();
     	this.direction = direction;
-    	power = bin.getPower();
+    	power = BinSubsystem.LIFT_POWER;
+    }
+    
+    public SetBin(boolean position){
+    	this(null);
+    	pos = position;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	bin.setBin(direction, power);
+    	if (direction != null)
+    		bin.setBin(direction, power);
+    	if (pos != null)
+    		bin.setSolenoid(pos);
     }
 
     // Called repeatedly when this Command is scheduled to run
