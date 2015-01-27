@@ -2,10 +2,12 @@ package com.techhounds;
 
 import com.techhounds.commands.Debug;
 import com.techhounds.commands.auton.AutonChooser;
+import com.techhounds.commands.bin.SetBin;
 import com.techhounds.commands.driving.OperatorHalfDrive;
 import com.techhounds.commands.driving.ToggleDriveMode;
 import com.techhounds.commands.lift.RunLift;
 import com.techhounds.commands.lift.SetLift;
+import com.techhounds.subsystems.BinSubsystem;
 import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -37,6 +39,10 @@ public class OI {
     private final int liftDown = ControllerMap.A;
     private final int liftIn = ControllerMap.X;
     private final int liftOut = ControllerMap.B;
+    private final int binsUp = ControllerMap.LT;
+    private final int binsDown = ControllerMap.RT;
+    private final int binsOpen = ControllerMap.LB;
+    private final int binsClose = ControllerMap.RB;
     
     //Tweaker buttons
   	private final int opToggleForward = ControllerMap.START;
@@ -45,7 +51,7 @@ public class OI {
     private final int opLiftDown = ControllerMap.A;
     private final int opLiftIn = ControllerMap.X;
     private final int opLiftOut = ControllerMap.B;
-	
+    
 	public OI() {
 		
 		driver = new ControllerMap(new Joystick(RobotMap.Drive.DRIVER_PORT), ControllerMap.LOGITECH);
@@ -133,6 +139,21 @@ public class OI {
         
 		Button test = operator.createDPadButton(ControllerMap.UP);
 		test.whenPressed(new Debug("Up"));
+		
+		Button binsButtonUp = driver.createButton(binsUp);
+		binsButtonUp.whenPressed(new SetBin(BinSubsystem.UP));
+		binsButtonUp.whenReleased(new SetBin(BinSubsystem.STOPPED));
+		
+		Button binsButtonDown = driver.createButton(binsDown);
+		binsButtonDown.whenPressed(new SetBin(BinSubsystem.DOWN));
+		binsButtonDown.whenReleased(new SetBin(BinSubsystem.STOPPED));
+		
+		Button binsButtonOpen = driver.createButton(binsOpen);
+		binsButtonOpen.whenPressed(new SetBin(BinSubsystem.OPEN));
+		
+		Button binsButtonClosed = driver.createButton(binsClose);
+		binsButtonClosed.whenPressed(new SetBin(BinSubsystem.CLOSED));
+		
     }
     
     public void initSD() {
