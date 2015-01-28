@@ -7,9 +7,13 @@ import com.techhounds.RobotMap;
 import com.techhounds.commands.driving.DriveWithGamepad;
 
 import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Alex Fleig, Matt Simons, Ayon Mitra, Clayton Detke
@@ -22,6 +26,11 @@ public class DriveSubsystem extends BasicSubsystem {
 	private boolean twoPersonDrive = true;
 	private boolean isForward = true;
 	private boolean isHalfSpeed = false;
+	private static final double Kp = 0;
+	private static final double Ki = 0;
+	private static final double Kd = 0;
+	private PIDController drivePID;
+	
 
 	private MultiMotor leftMotors;
 	private MultiMotor rightMotors;
@@ -57,6 +66,21 @@ public class DriveSubsystem extends BasicSubsystem {
 			rightEnc = new Counter(RobotMap.Drive.RIGHT_ENC);
 			rightEnc.setDistancePerPulse(COUNTS_TO_FEET);
 		}
+		
+		drivePID = new PIDController(
+				Kp, Ki, Kd, 
+				new PIDSource() {
+					public double pidGet() {
+						return getAvgDistance();
+					}
+				}, 
+				new PIDOutput() {
+					public void pidWrite(double output) {
+						setPower(output);
+					}
+				});
+		drivePID.setOutputRange(-1, 1);
+		drivePID.setAbsoluteTolerance(1);
 	}
 	
 	public static DriveSubsystem getInstance() {
@@ -237,8 +261,27 @@ public class DriveSubsystem extends BasicSubsystem {
         return (getLeftPower() + getRightPower()) / 2;
     }
     
+    public void driveWithEncoder(double dist) {
+    	leftEnc.reset();
+    	rightEnc.reset();
+    	drivePID.setSetpoint(dist);
+    	drivePID.enable();
+    }
+    
+    public void stopDriveWithEncoder() {
+    	drivePID.disable();
+    }
+    
+    public double getSetPoint() {
+    	return drivePID.getSetpoint();
+    }
+    
+    public boolean drivePIDOnTarget() {
+    	return drivePID.onTarget();
+    }
+    
     public void updateSmartDashboard(){
-        
+        SmartDashboard.putData("drivePID", drivePID);
     }
     
     public void initDefaultCommand() {
