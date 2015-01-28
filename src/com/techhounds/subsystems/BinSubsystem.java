@@ -19,6 +19,7 @@ public class BinSubsystem extends BasicSubsystem {
 	
 	static Talon motor;
 	Solenoid sol;
+	Solenoid sol2;
 	
 	public static final int STOPPED = 0;
 	public static final int DOWN = 1;
@@ -39,6 +40,9 @@ public class BinSubsystem extends BasicSubsystem {
 		
 		if(RobotMap.Bin.BIN_SOL != RobotMap.DOES_NOT_EXIST)
 			sol = new Solenoid(RobotMap.Bin.BIN_SOL);
+		
+		if(RobotMap.Bin.BIN_SOL2 != RobotMap.DOES_NOT_EXIST)
+			sol2 = new Solenoid(RobotMap.Bin.BIN_SOL2);
 		
 		if(RobotMap.Bin.BIN_DOWN_CHECK != RobotMap.DOES_NOT_EXIST)
 			checkBottom = new DigitalInput(RobotMap.Bin.BIN_DOWN_CHECK);
@@ -87,6 +91,10 @@ public class BinSubsystem extends BasicSubsystem {
 	
 	public void setSolenoid(boolean position) {
 		sol.set(position);
+	}
+	
+	public void setSolenoid2(boolean position) {
+		sol2.set(position);
 	}
 	
 	public void stopLift(){
