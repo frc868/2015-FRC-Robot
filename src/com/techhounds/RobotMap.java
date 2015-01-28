@@ -20,7 +20,8 @@ public class RobotMap {
 	}
 	
 	public static class Lift{
-		public static final int LIFT_MOTOR = 9;
+		public static final int LIFT_MOTOR_1 = 9;
+		public static final int LIFT_MOTOR_2 = DOES_NOT_EXIST;
 		public static final int DIGITAL_INPUT_TOP = 0;
 		public static final int DIGITAL_INPUT_BOTTOM = 1;
 		public static final int LIFT_SOL = 0;

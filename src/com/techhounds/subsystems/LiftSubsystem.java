@@ -1,5 +1,6 @@
 package com.techhounds.subsystems;
 
+import com.techhounds.MultiMotor;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 import com.techhounds.commands.lift.RunLift;
@@ -27,7 +28,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	private int direction = STOPPED;
 	public double power = 0;
 	
-	private Victor liftMotor;
+	private MultiMotor motors;
 	
 	private Solenoid sol;
 	
@@ -35,7 +36,12 @@ public class LiftSubsystem extends BasicSubsystem {
 	private DigitalInput checkBottom;
 	
 	private LiftSubsystem() {
-		liftMotor = new Victor(RobotMap.Lift.LIFT_MOTOR);
+		motors = new MultiMotor(
+					new Victor[]{
+							new Victor(RobotMap.Lift.LIFT_MOTOR_1),
+							new Victor(RobotMap.Lift.LIFT_MOTOR_2)},
+					new boolean[]{false, false}
+				);
 		checkTop = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_TOP);
 		checkBottom = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_BOTTOM);
 		sol = new Solenoid(RobotMap.Lift.LIFT_SOL);
@@ -57,7 +63,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public double getPower() {
-		return Math.abs(liftMotor.get());
+		return Math.abs(motors.get());
 	}
 	
 	public int getDirection(){
@@ -65,7 +71,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public void setPower() {
-		liftMotor.set(power);
+		motors.set(power);
 	}
 	
 	public void setLift(int dir, double power) {
