@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 //add second solonoid
 /**
@@ -17,9 +18,9 @@ public class BinSubsystem extends BasicSubsystem {
 	
 	private DigitalInput checkTop, checkBottom;
 	
-	static Talon motor;
-	Solenoid sol;
-	Solenoid sol2;
+	Victor motor;
+	Solenoid grabSol; //grab
+	Solenoid tiltSol;//tilt
 	
 	public static final int STOPPED = 0;
 	public static final int DOWN = 1;
@@ -36,13 +37,13 @@ public class BinSubsystem extends BasicSubsystem {
 	public BinSubsystem() {
 		
 		if(RobotMap.Bin.BIN_MOTOR != RobotMap.DOES_NOT_EXIST)
-			motor = new Talon(RobotMap.Bin.BIN_MOTOR);
+			motor = new Victor(RobotMap.Bin.BIN_MOTOR);
 		
-		if(RobotMap.Bin.BIN_SOL != RobotMap.DOES_NOT_EXIST)
-			sol = new Solenoid(RobotMap.Bin.BIN_SOL);
+		if(RobotMap.Bin.BIN_GRABSOL != RobotMap.DOES_NOT_EXIST)
+			grabSol = new Solenoid(RobotMap.Bin.BIN_GRABSOL);
 		
-		if(RobotMap.Bin.BIN_SOL2 != RobotMap.DOES_NOT_EXIST)
-			sol2 = new Solenoid(RobotMap.Bin.BIN_SOL2);
+		if(RobotMap.Bin.BIN_TILTSOL != RobotMap.DOES_NOT_EXIST)
+			tiltSol = new Solenoid(RobotMap.Bin.BIN_TILTSOL);
 		
 		if(RobotMap.Bin.BIN_DOWN_CHECK != RobotMap.DOES_NOT_EXIST)
 			checkBottom = new DigitalInput(RobotMap.Bin.BIN_DOWN_CHECK);
@@ -90,11 +91,11 @@ public class BinSubsystem extends BasicSubsystem {
 	}
 	
 	public void setSolenoid(boolean position) {
-		sol.set(position);
+		grabSol.set(position);
 	}
 	
 	public void setSolenoid2(boolean position) {
-		sol2.set(position);
+		tiltSol.set(position);
 	}
 	
 	public void stopLift(){
