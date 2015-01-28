@@ -3,11 +3,7 @@ package com.techhounds;
 
 import com.techhounds.commands.UpdateDashboard;
 import com.techhounds.commands.auton.AutonChooser;
-import com.techhounds.subsystems.BasicSubsystem;
-import com.techhounds.subsystems.DriveSubsystem;
-import com.techhounds.subsystems.LEDSubsystem;
-import com.techhounds.subsystems.LiftSubsystem;
-
+import com.techhounds.subsystems.*;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;

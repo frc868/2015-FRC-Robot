@@ -7,8 +7,7 @@ import com.techhounds.commands.driving.OperatorHalfDrive;
 import com.techhounds.commands.driving.ToggleDriveMode;
 import com.techhounds.commands.lift.RunLift;
 import com.techhounds.commands.lift.SetLift;
-import com.techhounds.subsystems.BinSubsystem;
-import com.techhounds.subsystems.LiftSubsystem;
+import com.techhounds.subsystems.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
