@@ -1,5 +1,5 @@
 /*
- * Ayon Mitra, Matt Simons, the interns
+ * Ayon Mitra, Matt Simons, Clayton Detke, the interns
 */
 
 package com.techhounds.commands.auton;

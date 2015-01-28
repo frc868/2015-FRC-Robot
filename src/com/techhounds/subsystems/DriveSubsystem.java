@@ -78,7 +78,8 @@ public class DriveSubsystem extends BasicSubsystem {
 				}, 
 				new PIDOutput() {
 					public void pidWrite(double output) {
-						setPower(output);
+						double drift = 0.05 * (getLeftDistance() - getRightDistance());
+						setPower(output - drift, output + drift);
 					}
 				});
 		drivePID.setOutputRange(-1, 1);
