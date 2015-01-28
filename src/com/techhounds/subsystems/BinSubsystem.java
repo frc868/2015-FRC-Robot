@@ -29,6 +29,9 @@ public class BinSubsystem extends BasicSubsystem {
 	public static final boolean OPEN = true;
 	public static final boolean CLOSED = false;
 	
+	public static final boolean TILTUP = true;
+	public static final boolean TILTDOWN = false;
+	
 	public static final double LIFT_POWER = 1;
 	
 	private int direction;
@@ -66,6 +69,14 @@ public class BinSubsystem extends BasicSubsystem {
 		motor.set(power);
 	}
 	
+	public boolean getGrabSol() {
+		return grabSol.get();
+	}
+	
+	public boolean getTiltSol() {
+		return tiltSol.get();
+	}
+	
 	public boolean isAtTop(){
 		return checkTop.get();
 	}
@@ -90,11 +101,11 @@ public class BinSubsystem extends BasicSubsystem {
 		direction = dir;
 	}
 	
-	public void setSolenoid(boolean position) {
+	public void setGrabSol(boolean position) {
 		grabSol.set(position);
 	}
 	
-	public void setSolenoid2(boolean position) {
+	public void setTiltSol(boolean position) {
 		tiltSol.set(position);
 	}
 	

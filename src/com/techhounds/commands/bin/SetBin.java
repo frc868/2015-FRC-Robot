@@ -12,7 +12,8 @@ public class SetBin extends Command {
 	private BinSubsystem bin;
 	private Integer direction;
 	private Double power;
-	private Boolean pos;
+	private Boolean grabPos;
+	private Boolean tiltPos;
 
     public SetBin(int direction, double power) {
     	this(direction);
@@ -25,17 +26,24 @@ public class SetBin extends Command {
     	power = BinSubsystem.LIFT_POWER;
     }
     
-    public SetBin(boolean position){
-    	this(null);
-    	pos = position;
+    public SetBin(boolean grabPosition){
+    	bin = BinSubsystem.getInstance();
+    	grabPos = grabPosition;
+    }
+    
+    public SetBin(boolean tiltPosition, int DOESNT_MATTER){
+    	bin = BinSubsystem.getInstance();
+    	tiltPos = tiltPosition;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	if (direction != null)
     		bin.setBin(direction, power);
-    	if (pos != null)
-    		bin.setSolenoid(pos);
+    	if (grabPos != null)
+    		bin.setGrabSol(grabPos);
+    	if (tiltPos != null)
+    		bin.setTiltSol(tiltPos);
     }
 
     // Called repeatedly when this Command is scheduled to run
