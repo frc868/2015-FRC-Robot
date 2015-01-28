@@ -42,6 +42,8 @@ public class OI {
     private final int binsDown = ControllerMap.RT;
     private final int binsOpen = ControllerMap.LB;
     private final int binsClose = ControllerMap.RB;
+    private final int binsTiltUp = ControllerMap.UP;
+    private final int binsTiltDown = ControllerMap.DOWN;
     
     //Tweaker buttons
   	private final int opToggleForward = ControllerMap.START;
