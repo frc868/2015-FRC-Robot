@@ -106,7 +106,27 @@ public class OI {
         
         Button setLiftOut = driver.createButton(liftOut);
         setLiftOut.whenPressed(new SetLift(LiftSubsystem.OUT));
-        
+
+		Button binsButtonUp = driver.createButton(binsUp);
+		binsButtonUp.whenPressed(new SetBin(BinSubsystem.UP));
+		binsButtonUp.whenReleased(new SetBin(BinSubsystem.STOPPED));
+		
+		Button binsButtonDown = driver.createButton(binsDown);
+		binsButtonDown.whenPressed(new SetBin(BinSubsystem.DOWN));
+		binsButtonDown.whenReleased(new SetBin(BinSubsystem.STOPPED));
+		
+		Button binsButtonOpen = driver.createButton(binsOpen);
+		binsButtonOpen.whenPressed(new SetBin(BinSubsystem.OPEN));
+		
+		Button binsButtonClosed = driver.createButton(binsClose);
+		binsButtonClosed.whenPressed(new SetBin(BinSubsystem.CLOSED));
+		
+		Button binTiltUp= driver.createButton(binsTiltUp);
+		binTiltUp.whenInactive(new SetBin(BinSubsystem.TILT_UP, 0));
+		
+		Button binTiltDown= driver.createButton(binsTiltDown);
+		binTiltDown.whenInactive(new SetBin(BinSubsystem.TILT_DOWN, 0));
+		
 //		Button nudgeLift = driver.createDPadButton(liftNudgeDown);
 //		nudgeLift.whenPressed(new NudgeLiftDown());
 //		nudgeLift.whenPressed(new Debug("Lift"));
@@ -141,19 +161,6 @@ public class OI {
 		Button test = operator.createDPadButton(ControllerMap.UP);
 		test.whenPressed(new Debug("Up"));
 		
-		Button binsButtonUp = driver.createButton(binsUp);
-		binsButtonUp.whenPressed(new SetBin(BinSubsystem.UP));
-		binsButtonUp.whenReleased(new SetBin(BinSubsystem.STOPPED));
-		
-		Button binsButtonDown = driver.createButton(binsDown);
-		binsButtonDown.whenPressed(new SetBin(BinSubsystem.DOWN));
-		binsButtonDown.whenReleased(new SetBin(BinSubsystem.STOPPED));
-		
-		Button binsButtonOpen = driver.createButton(binsOpen);
-		binsButtonOpen.whenPressed(new SetBin(BinSubsystem.OPEN));
-		
-		Button binsButtonClosed = driver.createButton(binsClose);
-		binsButtonClosed.whenPressed(new SetBin(BinSubsystem.CLOSED));
 		
     }
     

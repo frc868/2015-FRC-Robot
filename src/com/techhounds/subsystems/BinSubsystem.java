@@ -29,8 +29,8 @@ public class BinSubsystem extends BasicSubsystem {
 	public static final boolean OPEN = true;
 	public static final boolean CLOSED = false;
 	
-	public static final boolean TILTUP = true;
-	public static final boolean TILTDOWN = false;
+	public static final boolean TILT_UP = true;
+	public static final boolean TILT_DOWN = false;
 	
 	public static final double LIFT_POWER = 1;
 	
