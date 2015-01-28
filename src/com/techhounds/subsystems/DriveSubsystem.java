@@ -39,6 +39,8 @@ public class DriveSubsystem extends BasicSubsystem {
 	private Counter rightEnc;
 	
 	private final double COUNTS_TO_FEET = 0;
+	
+	private double tolerance;
 
 	private DriveSubsystem() {
 		leftMotors = new MultiMotor(
@@ -274,6 +276,15 @@ public class DriveSubsystem extends BasicSubsystem {
     
     public double getSetPoint() {
     	return drivePID.getSetpoint();
+    }
+    
+    public void setTolerance(double tol) {
+    	drivePID.setAbsoluteTolerance(tol);
+    	tolerance = tol;
+    }
+    
+    public double getTolerance() {
+    	return tolerance;
     }
     
     public boolean drivePIDOnTarget() {

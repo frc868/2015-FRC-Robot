@@ -12,6 +12,7 @@ import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.command.WaitForChildren;
 
 public class PracticeSequential extends CommandGroup {
     
@@ -19,13 +20,14 @@ public class PracticeSequential extends CommandGroup {
     	
     	addSequential(new SetArms(ArmsSubsystem.STOPPED, ArmsSubsystem.OPEN));
     	addSequential(new SetLift(LiftSubsystem.DOWN));
-    	addSequential(new DriveTime(5 , 1));
+    	addSequential(new AutonDrive(10));
     	addSequential(new SetArms(ArmsSubsystem.FEED_IN, ArmsSubsystem.CLOSED));
     	addSequential(new WaitCommand(.5));
     	addSequential(new SetArms(ArmsSubsystem.STOPPED , ArmsSubsystem.OPEN));
     	addSequential(new SetLift(LiftSubsystem.UP));
     	addSequential(new WaitCommand(1));
-    	addSequential(new DriveTime(5 , -1));
+    	addSequential(new AutonDrive(10));
+
     	
     }
 }
