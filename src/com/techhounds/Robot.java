@@ -82,8 +82,14 @@ public class Robot extends IterativeRobot {
      * This function is called to initialize the Subsystems
      */
     public void initSubsystems() {
-    	for(BasicSubsystem sub : BasicSubsystem.subsystems)
-    		sub.updateSmartDashboard();
+    	
+    	// Init Subsystems
+    	ArmsSubsystem.getInstance();
+    	BinSubsystem.getInstance();
+    	CompSubsystem.getInstance();
+    	DriveSubsystem.getInstance();
+    	LEDSubsystem.getInstance();
+    	LiftSubsystem.getInstance();
     }
     
     public static double checkRange(double curr, double min, double max) {
