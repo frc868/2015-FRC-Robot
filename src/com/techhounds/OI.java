@@ -42,7 +42,7 @@ public class OI {
     
     //Tweaker buttons
   	private final int opToggleForward = ControllerMap.START;
-    private final int operatorPushHalf = ControllerMap.RT;
+    private final int opPushHalf = ControllerMap.RT;
     private final int opLiftUp = ControllerMap.Y;
     private final int opLiftDown = ControllerMap.A;
     private final int opLiftIn = ControllerMap.X;
@@ -120,7 +120,7 @@ public class OI {
     	Button toggleDriveForward = operator.createButton(opToggleForward);
         toggleDriveForward.whenPressed(new ToggleDriveMode(true, false));
         
-        Button pushHalfSpeed = operator.createButton(operatorPushHalf);
+        Button pushHalfSpeed = operator.createButton(opPushHalf);
         pushHalfSpeed.whenPressed(new OperatorHalfDrive(true));
         pushHalfSpeed.whenReleased(new OperatorHalfDrive(false));
 
