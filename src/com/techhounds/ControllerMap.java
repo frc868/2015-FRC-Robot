@@ -35,7 +35,7 @@ public class ControllerMap {
     /** PS4 Controller */
     private static final int[] ps4 =		{};
     
-    private boolean fourDirectional;
+    private boolean eightDirectional;
     int[] controller;
     private Joystick joystick;
     
@@ -58,12 +58,12 @@ public class ControllerMap {
         else
             controller = logitech;
         
-        fourDirectional = true;
+        eightDirectional = false;
     }
     
-    public ControllerMap(Joystick joystick, int type, boolean isFourDirectional){
+    public ControllerMap(Joystick joystick, int type, boolean isEightDirectional){
     	this(joystick, type);
-    	fourDirectional = isFourDirectional;
+    	eightDirectional = isEightDirectional;
     }
     
     public int index(int id) {
@@ -115,7 +115,7 @@ public class ControllerMap {
         	
         	int angle = joystick.getPOV();
         	
-        	if (fourDirectional){
+        	if (!eightDirectional){
 	            if (button == ControllerMap.RIGHT) {
 	                return angle == 270 || angle == 315 || angle == 225;
 	            } else if (button == ControllerMap.LEFT) {

@@ -33,17 +33,16 @@ public class OI {
 	//Driver buttons
 	private final int toggleForward = ControllerMap.START;
     private final int toggleHalf = ControllerMap.BACK;
-//    private final int toggleLEDs = ControllerMap.BACK;
     private final int liftUp = ControllerMap.Y;
     private final int liftDown = ControllerMap.A;
     private final int liftIn = ControllerMap.X;
     private final int liftOut = ControllerMap.B;
-    private final int binsUp = ControllerMap.LT;
-    private final int binsDown = ControllerMap.RT;
-    private final int binsOpen = ControllerMap.LB;
-    private final int binsClose = ControllerMap.RB;
-    private final int binsTiltUp = ControllerMap.UP;
-    private final int binsTiltDown = ControllerMap.DOWN;
+    private final int binsUp = ControllerMap.UP;
+    private final int binsDown = ControllerMap.DOWN;
+    private final int binsOpen = ControllerMap.LEFT;
+    private final int binsClose = ControllerMap.RIGHT;
+    private final int binsTiltUp = ControllerMap.LB;
+    private final int binsTiltDown = ControllerMap.LT;
     
     //Tweaker buttons
   	private final int opToggleForward = ControllerMap.START;
@@ -52,12 +51,17 @@ public class OI {
     private final int opLiftDown = ControllerMap.A;
     private final int opLiftIn = ControllerMap.X;
     private final int opLiftOut = ControllerMap.B;
+    private final int opBinsUp = ControllerMap.UP;
+    private final int opBinsDown = ControllerMap.DOWN;
+    private final int opBinsOpen = ControllerMap.LEFT;
+    private final int opBinsClose = ControllerMap.RIGHT;
+    private final int opBinsTiltUp = ControllerMap.LB;
+    private final int opBinsTiltDown = ControllerMap.LT;
     
 	public OI() {
 		
-		driver = new ControllerMap(new Joystick(RobotMap.Drive.DRIVER_PORT), ControllerMap.LOGITECH, false);
-		//driver = new ControllerMap(new Joystick(RobotMap.Drive.DRIVER_PORT), ControllerMap.PS4, false);
-		operator = new ControllerMap(new Joystick(RobotMap.Drive.OPERATOR_PORT), ControllerMap.LOGITECH, false);
+		driver = new ControllerMap(new Joystick(RobotMap.Drive.DRIVER_PORT), ControllerMap.LOGITECH, true);
+		operator = new ControllerMap(new Joystick(RobotMap.Drive.OPERATOR_PORT), ControllerMap.LOGITECH, true);
 		
 		autonChoice = createChoices("Auton Choices", AutonChooser.AUTON_CHOICES);
 		
@@ -90,9 +94,6 @@ public class OI {
         
         Button toggleHalfSpeed = driver.createButton(toggleHalf);
         toggleHalfSpeed.whenPressed(new ToggleDriveMode(false, true));
-        
-//        Button toggleLEDS = driverGamepad.createButton(toggleLEDs);
-//        toggleLEDS.whenPressed(new ToggleLEDMode());
 
         Button setLiftUp = driver.createButton(liftUp);
         setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
@@ -127,13 +128,6 @@ public class OI {
 		
 		Button binTiltDown= driver.createButton(binsTiltDown);
 		binTiltDown.whenInactive(new SetBin(BinSubsystem.TILT_DOWN, 0));
-		
-//		Button nudgeLift = driver.createDPadButton(liftNudgeDown);
-//		nudgeLift.whenPressed(new NudgeLiftDown());
-//		nudgeLift.whenPressed(new Debug("Lift"));
-        
-		Button test = driver.createDPadButton(ControllerMap.UP);
-		test.whenPressed(new Debug("Up"));
     }
     
     public void initOperator() {
@@ -158,10 +152,26 @@ public class OI {
         
         Button setLiftOut = operator.createButton(opLiftOut);
         setLiftOut.whenPressed(new SetLift(LiftSubsystem.OUT));
-        
-		Button test = operator.createDPadButton(ControllerMap.UP);
-		test.whenPressed(new Debug("Up"));
 		
+		Button opBinsButtonUp = operator.createButton(opBinsUp);
+		opBinsButtonUp.whenPressed(new SetBin(BinSubsystem.UP));
+		opBinsButtonUp.whenReleased(new SetBin(BinSubsystem.STOPPED));
+		
+		Button opBinsButtonDown = operator.createButton(opBinsDown);
+		opBinsButtonDown.whenPressed(new SetBin(BinSubsystem.DOWN));
+		opBinsButtonDown.whenReleased(new SetBin(BinSubsystem.STOPPED));
+		
+		Button opBinsButtonOpen = operator.createButton(opBinsOpen);
+		opBinsButtonOpen.whenPressed(new SetBin(BinSubsystem.OPEN));
+		
+		Button opBinsButtonClosed = operator.createButton(opBinsClose);
+		opBinsButtonClosed.whenPressed(new SetBin(BinSubsystem.CLOSED));
+		
+		Button opBinTiltUp= operator.createButton(opBinsTiltUp);
+		opBinTiltUp.whenInactive(new SetBin(BinSubsystem.TILT_UP, 0));
+		
+		Button opBinTiltDown= operator.createButton(opBinsTiltDown);
+		opBinTiltDown.whenInactive(new SetBin(BinSubsystem.TILT_DOWN, 0));
 		
     }
     
