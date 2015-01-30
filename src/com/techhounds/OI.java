@@ -25,10 +25,6 @@ public class OI {
 	private static ControllerMap operator;
 	
 	private SendableChooser autonChoice;
-	
-	private boolean isInit;
-	
-	private static final double DEADZONE = 0.05;
 		
 	//Driver buttons
 	private final int toggleForward = ControllerMap.START;
@@ -60,32 +56,21 @@ public class OI {
     
 	public OI() {
 		
-		driver = new ControllerMap(new Joystick(RobotMap.Drive.DRIVER_PORT), ControllerMap.LOGITECH, true);
-		operator = new ControllerMap(new Joystick(RobotMap.Drive.OPERATOR_PORT), ControllerMap.LOGITECH, true);
+		driver = new ControllerMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.LOGITECH, true);
+		operator = new ControllerMap(new Joystick(RobotMap.OPERATOR_PORT), ControllerMap.LOGITECH, true);
 		
 		autonChoice = createChoices("Auton Choices", AutonChooser.AUTON_CHOICES);
-		
-		isInit = false;
+
+    	initDriver();
+    	initOperator();
+    	initSD();
 	}
 	
 	public static OI getInstance() {
 		if(instance == null)
 			instance = new OI();
-		
 		return instance;
 	}
-
-    public void init() {
-    	
-    	if(isInit)
-    		return;
-
-    	initDriver();
-    	initOperator();
-    	initSD();
-    	
-    	isInit = true;
-    }
     
     public void initDriver() {
 

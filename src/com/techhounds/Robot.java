@@ -15,19 +15,24 @@ public class Robot extends IterativeRobot {
 	
     public void robotInit() {
     	initSubsystems();
-		OI.getInstance().init();
+		OI.getInstance();
 		(new UpdateDashboard()).start();
 		
 		System.out.println("*******\n"+
 							"TEAM 868 CAN ROBOT NOW!\n" +
 							"*******");
-		LEDSubsystem.getInstance().standby();
     }
-	
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
-
+    
+    public void initSubsystems() {
+    	
+    	ArmsSubsystem.getInstance();
+    	BinSubsystem.getInstance();
+    	CompSubsystem.getInstance();
+    	DriveSubsystem.getInstance();
+    	LEDSubsystem.getInstance().standby();
+    	LiftSubsystem.getInstance();
+    }	
+    
     public void autonomousInit() {
 
     	auton = AutonChooser.getSelected();
@@ -37,14 +42,7 @@ public class Robot extends IterativeRobot {
 							"TEAM 868 CAN AUTON NOW!\n" +
 							"*******");
     }
-
-    /**
-     * This function is called periodically during autonomous
-     */
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-    }
-
+    
     public void teleopInit() {
 
     	if (auton != null)
@@ -53,44 +51,29 @@ public class Robot extends IterativeRobot {
 		System.out.println("*******\n"+
 							"TEAM 868 CAN TELEOP NOW!\n" +
 							"*******");
+		
 		DriveSubsystem.getInstance().updateLEDCommand();
     }
-
-    /**
-     * This function is called when the disabled button is hit.
-     * You can use it to reset subsystems before shutting down.
-     */
+    
     public void disabledInit(){
     	LEDSubsystem.getInstance().standby();
     }
+    
+    public void autonomousPeriodic() {
+        Scheduler.getInstance().run();
+    }
 
-    /**
-     * This function is called periodically during operator control
-     */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
     
-    /**
-     * This function is called periodically during test mode
-     */
     public void testPeriodic() {
         LiveWindow.run();
     }
     
-    /**
-     * This function is called to initialize the Subsystems
-     */
-    public void initSubsystems() {
-    	
-    	// Init Subsystems
-    	ArmsSubsystem.getInstance();
-    	BinSubsystem.getInstance();
-    	CompSubsystem.getInstance();
-    	DriveSubsystem.getInstance();
-    	LEDSubsystem.getInstance();
-    	LiftSubsystem.getInstance();
-    }
+	public void disabledPeriodic() {
+		Scheduler.getInstance().run();
+	}
     
     public static double checkRange(double curr, double min, double max) {
     	return Math.max(Math.min(curr, max), min);

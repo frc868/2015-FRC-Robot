@@ -27,6 +27,8 @@ public class ArmsSubsystem extends Subsystem {
 	private double rightMotorMult = .8;
 	
 	private ArmsSubsystem() {
+		super("ArmsSubsystem");
+		
 		if(RobotMap.Arms.LEFT_ARM != RobotMap.DOES_NOT_EXIST)
 			left = new Victor(RobotMap.Arms.LEFT_ARM);
 		if(RobotMap.Arms.RIGHT_ARM != RobotMap.DOES_NOT_EXIST)

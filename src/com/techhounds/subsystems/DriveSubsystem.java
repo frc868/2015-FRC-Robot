@@ -43,6 +43,8 @@ public class DriveSubsystem extends BasicSubsystem {
 	private double tolerance;
 
 	private DriveSubsystem() {
+		super("DriveSubsystem");
+		
 		leftMotors = new MultiMotor(
 				new SpeedController[]{
 						new Victor(RobotMap.Drive.LEFT_DRIVE_MOTOR_1),

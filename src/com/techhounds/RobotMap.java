@@ -4,9 +4,10 @@ public class RobotMap {
 	
 	public static final int DOES_NOT_EXIST = -1;
 	
+	public static final int DRIVER_PORT = 0;
+	public static final int OPERATOR_PORT = 1;
+	
 	public static class Drive{
-		public static final int DRIVER_PORT = 0;
-		public static final int OPERATOR_PORT = 1;
 		
 		public static final int RIGHT_DRIVE_MOTOR_1 = 16;
 		public static final int RIGHT_DRIVE_MOTOR_2 = 15;
@@ -26,11 +27,19 @@ public class RobotMap {
 		public static final int DIGITAL_INPUT_BOTTOM = 1;
 		public static final int LIFT_SOL = 0;
 	}
+
+	public static class Bin{
+		public static final int BIN_GRABSOL = DOES_NOT_EXIST;
+		public static final int BIN_TILTSOL = DOES_NOT_EXIST;
+		public static final int BIN_MOTOR = DOES_NOT_EXIST;
+		public static final int BIN_TOP_CHECK = DOES_NOT_EXIST;
+		public static final int BIN_DOWN_CHECK = DOES_NOT_EXIST;
+	}
 	
 	public static class Arms{
-		public static final int LEFT_ARM = DOES_NOT_EXIST;//8
-		public static final int RIGHT_ARM = DOES_NOT_EXIST;//7
-		public static final int ARM_SOL = DOES_NOT_EXIST;//3
+		public static final int LEFT_ARM = DOES_NOT_EXIST;
+		public static final int RIGHT_ARM = DOES_NOT_EXIST;
+		public static final int ARM_SOL = DOES_NOT_EXIST;
 	}
 	
 	public static class Compressor {
@@ -40,13 +49,5 @@ public class RobotMap {
 	public static class LED {
 		public static final int LEDS = 36;
 		public static final int LED_1 = 1;
-	}
-	
-	public static class Bin{
-		public static final int BIN_GRABSOL = DOES_NOT_EXIST;
-		public static final int BIN_TILTSOL = DOES_NOT_EXIST;
-		public static final int BIN_MOTOR = DOES_NOT_EXIST;
-		public static final int BIN_TOP_CHECK = DOES_NOT_EXIST;
-		public static final int BIN_DOWN_CHECK = DOES_NOT_EXIST;
 	}
 }

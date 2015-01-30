@@ -31,6 +31,8 @@ public class LEDSubsystem extends BasicSubsystem {
     public static final byte BRIGHT_CMD = 10;
 	
 	private LEDSubsystem() {
+		super("LEDSubsystem");
+		
 		leds = new I2C(Port.kMXP, RobotMap.LED.LEDS);
 		setBrightness(DEFAULT_BRIGHTNESS);
 		off();

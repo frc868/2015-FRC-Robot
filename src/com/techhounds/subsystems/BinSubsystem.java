@@ -19,8 +19,8 @@ public class BinSubsystem extends BasicSubsystem {
 	private DigitalInput checkTop, checkBottom;
 	
 	Victor motor;
-	Solenoid grabSol; //grab
-	Solenoid tiltSol;//tilt
+	Solenoid grabSol;
+	Solenoid tiltSol;
 	
 	public static final int STOPPED = 0;
 	public static final int DOWN = 1;
@@ -38,6 +38,7 @@ public class BinSubsystem extends BasicSubsystem {
 	private double power;
 	
 	public BinSubsystem() {
+		super("BinSubsystem");
 		
 		if(RobotMap.Bin.BIN_MOTOR != RobotMap.DOES_NOT_EXIST)
 			motor = new Victor(RobotMap.Bin.BIN_MOTOR);

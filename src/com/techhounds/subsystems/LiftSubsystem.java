@@ -36,15 +36,22 @@ public class LiftSubsystem extends BasicSubsystem {
 	private DigitalInput checkBottom;
 	
 	private LiftSubsystem() {
-		motors = new MultiMotor(
-					new Victor[]{
-							new Victor(RobotMap.Lift.LIFT_MOTOR_1),
-							new Victor(RobotMap.Lift.LIFT_MOTOR_2)},
-					new boolean[]{false, false}
-				);
-		checkTop = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_TOP);
-		checkBottom = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_BOTTOM);
-		sol = new Solenoid(RobotMap.Lift.LIFT_SOL);
+		super("LiftSubsystem");
+		
+		if (RobotMap.Lift.LIFT_MOTOR_1 != RobotMap.DOES_NOT_EXIST &&
+				RobotMap.Lift.LIFT_MOTOR_2 != RobotMap.DOES_NOT_EXIST)
+			motors = new MultiMotor(
+						new Victor[]{
+								new Victor(RobotMap.Lift.LIFT_MOTOR_1),
+								new Victor(RobotMap.Lift.LIFT_MOTOR_2)},
+						new boolean[]{false, false}
+					);
+		if (RobotMap.Lift.DIGITAL_INPUT_TOP != RobotMap.DOES_NOT_EXIST)
+			checkTop = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_TOP);
+		if (RobotMap.Lift.DIGITAL_INPUT_BOTTOM != RobotMap.DOES_NOT_EXIST)
+			checkBottom = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_BOTTOM);
+		if (RobotMap.Lift.LIFT_SOL != RobotMap.DOES_NOT_EXIST)
+			sol = new Solenoid(RobotMap.Lift.LIFT_SOL);
 	}
 	
 	public static LiftSubsystem getInstance() {

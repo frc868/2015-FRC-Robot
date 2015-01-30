@@ -21,6 +21,7 @@ public class CompSubsystem extends Subsystem {
 	}
 	
 	private CompSubsystem() {
+		super("CompSubsystem");
 		comp = new Compressor(RobotMap.Compressor.COMP);
 		comp.start();
 	}
