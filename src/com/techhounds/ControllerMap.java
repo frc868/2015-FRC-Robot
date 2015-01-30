@@ -35,6 +35,8 @@ public class ControllerMap {
     /** PS4 Controller */
     private static final int[] ps4 =		{};
     
+    private static final double DEADZONE = 0.05;
+    
     private boolean eightDirectional;
     int[] controller;
     private Joystick joystick;
@@ -80,19 +82,23 @@ public class ControllerMap {
     }
     
     public double getLeftStickX(){
-        return joystick.getRawAxis(index(LEFT_HORIZONTAL));
+        return checkDeadZone(joystick.getRawAxis(index(LEFT_HORIZONTAL)));
     }
     
     public double getLeftStickY(){
-        return joystick.getRawAxis(index(LEFT_VERTICAL));
+        return checkDeadZone(joystick.getRawAxis(index(LEFT_VERTICAL)));
     }
     
     public double getRightStickX(){
-        return joystick.getRawAxis(index(RIGHT_HORIZONTAL));
+        return checkDeadZone(joystick.getRawAxis(index(RIGHT_HORIZONTAL)));
     }
     
     public double getRightStickY(){
-        return joystick.getRawAxis(index(RIGHT_VERTICAL));
+        return checkDeadZone(joystick.getRawAxis(index(RIGHT_VERTICAL)));
+    }
+    
+    public static double checkDeadZone(double val) {
+    	return Math.abs(val) < DEADZONE ? 0 : val;
     }
     
     public Button createButton(int buttonID){

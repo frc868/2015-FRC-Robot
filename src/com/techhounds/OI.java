@@ -200,41 +200,35 @@ public class OI {
 	    }
     
     public static double getDriverRightXAxis() {
-    	return checkDeadZone(driver.getRightStickX());
+    	return driver.getRightStickX();
     }
     
     public static double getDriverRightYAxis() {
-    	return checkDeadZone(driver.getRightStickY());
+    	return driver.getRightStickY();
     }
     
     public static double getDriverleftXAxis() {
-    	return checkDeadZone(driver.getLeftStickX());
+    	return driver.getLeftStickX();
     }
+    
     public static double getDriverLeftYAxis() {
-    	return checkDeadZone(driver.getLeftStickY());
+    	return driver.getLeftStickY();
     }
     
     public static double getOperatorRightXAxis() {
-    	return checkDeadZone(operator.getRightStickX());
+    	return operator.getRightStickX();
     }
     
     public static double getOperatorRightYAxis() {
-    	return checkDeadZone(operator.getRightStickY());
+    	return operator.getRightStickY();
     }
     
     public static double getOperatorLeftXAxis() {
-    	return checkDeadZone(operator.getLeftStickX());
+    	return operator.getLeftStickX();
     }
     
     public static double getOperatorLeftYAxis() {
-    	return checkDeadZone(operator.getLeftStickY());
+    	return operator.getLeftStickY();
     }
-    
-    public static double checkDeadZone(double val) {
-    	return Math.abs(val) < DEADZONE ? 0 : val;
-    }
-    
-    
-    
 }
 
