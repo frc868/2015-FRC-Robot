@@ -55,8 +55,8 @@ public class OI {
     
 	public OI() {
 		
-		driver = new ControllerMap(new Joystick(RobotMap.Drive.DRIVER_PORT), ControllerMap.LOGITECH);
-		operator = new ControllerMap(new Joystick(RobotMap.Drive.OPERATOR_PORT), ControllerMap.LOGITECH);
+		driver = new ControllerMap(new Joystick(RobotMap.Drive.DRIVER_PORT), ControllerMap.LOGITECH, false);
+		operator = new ControllerMap(new Joystick(RobotMap.Drive.OPERATOR_PORT), ControllerMap.LOGITECH, false);
 		
 		autonChoice = createChoices("Auton Choices", AutonChooser.AUTON_CHOICES);
 		
