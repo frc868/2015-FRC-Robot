@@ -42,7 +42,7 @@ public class OI {
     
     //Tweaker buttons
   	private final int opToggleForward = ControllerMap.START;
-    private final int operatorPushHalf = ControllerMap.LB;
+    private final int operatorPushHalf = ControllerMap.RT;
     private final int opLiftUp = ControllerMap.Y;
     private final int opLiftDown = ControllerMap.A;
     private final int opLiftIn = ControllerMap.X;
