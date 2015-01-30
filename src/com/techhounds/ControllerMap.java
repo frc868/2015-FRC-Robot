@@ -17,7 +17,7 @@ public class ControllerMap {
     public static final int RIGHT = 0, LEFT = 1, UP = 2, DOWN = 3, DIAG_UP_RIGHT = 4,
     		DIAG_UP_LEFT = 5, DIAG_DOWN_RIGHT = 6, DIAG_DOWN_LEFT = 7;
                 
-    public static final int LOGITECH = 0, TOMEE = 1, PS3 = 2;
+    public static final int LOGITECH = 0, TOMEE = 1, PS3 = 2, PS4 = 3;
     
     private static String[] buttonName = {"A", "B", "X", "Y", "RB", "RT", "LB",
             "LT", "START", "BACK"};
@@ -31,6 +31,9 @@ public class ControllerMap {
     
     /** PS3 Cannot get DPAD UP and DOWN) */
     private static final int[] ps3 =        { 1, 2, 3, 4, 6, 10, 5, 9, 8, 7, 1, 4, 2, 5};
+    
+    /** PS4 Controller */
+    private static final int[] ps4 =		{};
     
     private boolean fourDirectional;
     int[] controller;
@@ -48,10 +51,13 @@ public class ControllerMap {
     private ControllerMap(int type){
         if(type == PS3)
             controller = ps3;
+        else if(type == PS4)
+        	controller = ps4;
         else if(type == TOMEE)
             controller = tomee;
         else
             controller = logitech;
+        
         fourDirectional = true;
     }
     
