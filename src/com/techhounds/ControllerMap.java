@@ -10,13 +10,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ControllerMap {
 
+	//These are index values for the controller arrays
     public static final int A = 0, B = 1, X = 2, Y = 3, RB = 4, RT = 5, LB = 6,
             LT = 7, START = 8, BACK = 9, LEFT_HORIZONTAL = 10,
             RIGHT_HORIZONTAL = 11, LEFT_VERTICAL = 12, RIGHT_VERTICAL = 13;
     
+    //These are magic numbers
     public static final int RIGHT = 0, LEFT = 1, UP = 2, DOWN = 3, DIAG_UP_RIGHT = 4,
     		DIAG_UP_LEFT = 5, DIAG_DOWN_RIGHT = 6, DIAG_DOWN_LEFT = 7;
                 
+    //These are magic numbers
     public static final int LOGITECH = 0, TOMEE = 1, PS3 = 2, PS4 = 3;
     
     private static String[] buttonName = {"A", "B", "X", "Y", "RB", "RT", "LB",
@@ -37,8 +40,8 @@ public class ControllerMap {
     
     private static final double DEADZONE = 0.05;
     
-    private boolean eightDirectional;
-    int[] controller;
+    public boolean eightDirectional;
+    private int[] buttonSet;
     private Joystick joystick;
     
     public ControllerMap(Joystick joystick){
@@ -52,13 +55,13 @@ public class ControllerMap {
     
     private ControllerMap(int type){
         if(type == PS3)
-            controller = ps3;
+            buttonSet = ps3;
         else if(type == PS4)
-        	controller = ps4;
+        	buttonSet = ps4;
         else if(type == TOMEE)
-            controller = tomee;
+            buttonSet = tomee;
         else
-            controller = logitech;
+            buttonSet = logitech;
         
         eightDirectional = false;
     }
@@ -68,41 +71,39 @@ public class ControllerMap {
     	eightDirectional = isEightDirectional;
     }
     
-    public int index(int id) {
-        return controller[id];
-    }
-    
-    public void putValues(String label, Joystick js){
+    public void putValues(String label, Joystick stick){
         for(int i = 0; i < buttonName.length; i++){
-            SmartDashboard.putBoolean(label+" "+buttonName[i], js.getRawButton(index(i)));
+            SmartDashboard.putBoolean(label + " " + buttonName[i], stick.getRawButton(buttonSet[i]));
         }
         for(int i = 0 ; i < axeNames.length; i++){
-            SmartDashboard.putNumber(label+" "+axeNames[i], js.getRawAxis(index(i+LEFT_HORIZONTAL)));
+            SmartDashboard.putNumber(label + " " + axeNames[i], stick.getRawAxis(buttonSet[i + buttonName.length]));
         }
     }
     
     public double getLeftStickX(){
-        return checkDeadZone(joystick.getRawAxis(index(LEFT_HORIZONTAL)));
+        return checkDeadZone(joystick.getRawAxis(buttonSet[LEFT_HORIZONTAL]));
     }
     
     public double getLeftStickY(){
-        return checkDeadZone(joystick.getRawAxis(index(LEFT_VERTICAL)));
+        return checkDeadZone(joystick.getRawAxis(buttonSet[LEFT_VERTICAL]));
     }
     
     public double getRightStickX(){
-        return checkDeadZone(joystick.getRawAxis(index(RIGHT_HORIZONTAL)));
+        return checkDeadZone(joystick.getRawAxis(buttonSet[RIGHT_HORIZONTAL]));
     }
     
     public double getRightStickY(){
-        return checkDeadZone(joystick.getRawAxis(index(RIGHT_VERTICAL)));
+        return checkDeadZone(joystick.getRawAxis(buttonSet[RIGHT_VERTICAL]));
     }
     
     public static double checkDeadZone(double val) {
-    	return Math.abs(val) < DEADZONE ? 0 : val;
+    	if (Math.abs(val) < DEADZONE)
+    		return 0;
+    	return val;
     }
     
     public Button createButton(int buttonID){
-        return new JoystickButton(joystick, index(buttonID));
+        return new JoystickButton(joystick, buttonSet[buttonID]);
     }
     
     public DPadButton createDPadButton(int buttonID) {
