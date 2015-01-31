@@ -26,21 +26,24 @@ public class DriveSubsystem extends BasicSubsystem {
 	private boolean twoPersonDrive = true;
 	private boolean isForward = true;
 	private boolean isHalfSpeed = false;
+	
 	private static final double Kp = 0;
 	private static final double Ki = 0;
 	private static final double Kd = 0;
+	private double driveTolerance;
+	
 	private PIDController drivePID;
 	
-
 	private MultiMotor leftMotors;
 	private MultiMotor rightMotors;
 	
 	private Counter leftEnc;
 	private Counter rightEnc;
 	
-	private final double COUNTS_TO_FEET = 0;
+	private boolean leftEncEnabled = false;
+	private boolean rightEncEnabled = false;
 	
-	private double tolerance;
+	private final double COUNTS_TO_FEET = 0;
 
 	private DriveSubsystem() {
 		super("DriveSubsystem");
@@ -62,11 +65,13 @@ public class DriveSubsystem extends BasicSubsystem {
 		if(RobotMap.Drive.LEFT_ENC != RobotMap.DOES_NOT_EXIST){
 			leftEnc = new Counter(RobotMap.Drive.LEFT_ENC);
 			leftEnc.setDistancePerPulse(COUNTS_TO_FEET);
+			leftEncEnabled = true;
 		}
 		
 		if(RobotMap.Drive.RIGHT_ENC != RobotMap.DOES_NOT_EXIST){
 			rightEnc = new Counter(RobotMap.Drive.RIGHT_ENC);
 			rightEnc.setDistancePerPulse(COUNTS_TO_FEET);
+			rightEncEnabled = true;
 		}
 		
 		drivePID = new PIDController(
@@ -145,11 +150,11 @@ public class DriveSubsystem extends BasicSubsystem {
 	}
 	
 	public double getLeftDistance(){
-    	return leftEnc.getDistance();
+    	return leftEncEnabled ? leftEnc.getDistance() : 0;
     }
     
     public double getRightDistance(){
-    	return rightEnc.getDistance();
+    	return rightEncEnabled ? rightEnc.getDistance() : 0;
     }
 
 	public double getAvgDistance(){
@@ -157,11 +162,11 @@ public class DriveSubsystem extends BasicSubsystem {
 	}
     
 	public double getLeftCount(){
-		return leftEnc.get();
+		return leftEncEnabled ? leftEnc.get() : 0;
 	}
 	
 	public double getRightCount(){
-		return rightEnc.get();
+		return rightEncEnabled ? rightEnc.get() : 0;
 	}
 	
 	public double getAvgCount(){
@@ -170,11 +175,11 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	//feet per second
 	public double getLeftSpeed(){
-		return leftEnc.getRate();
+		return leftEncEnabled ? leftEnc.getRate() : 0;
 	}
 	
 	public double getRightSpeed(){
-		return rightEnc.getRate();
+		return rightEncEnabled ? rightEnc.getRate() : 0;
 	}
 
 	public double getAvgSpeed(){
@@ -264,28 +269,28 @@ public class DriveSubsystem extends BasicSubsystem {
         return (getLeftPower() + getRightPower()) / 2;
     }
     
-    public void driveWithEncoder(double dist) {
+    public void setDrivePID(double dist) {
     	leftEnc.reset();
     	rightEnc.reset();
     	drivePID.setSetpoint(dist);
     	drivePID.enable();
     }
     
-    public void stopDriveWithEncoder() {
+    public void stopDrivePID() {
     	drivePID.disable();
     }
     
-    public double getSetPoint() {
+    public double getDriveSetPoint() {
     	return drivePID.getSetpoint();
     }
     
-    public void setTolerance(double tol) {
-    	drivePID.setAbsoluteTolerance(tol);
-    	tolerance = tol;
+    public void setDriveTolerance(double feet) {
+    	drivePID.setAbsoluteTolerance(feet);
+    	driveTolerance = feet;
     }
     
-    public double getTolerance() {
-    	return tolerance;
+    public double getDriveTolerance() {
+    	return driveTolerance;
     }
     
     public boolean drivePIDOnTarget() {

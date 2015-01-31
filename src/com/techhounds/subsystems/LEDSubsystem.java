@@ -30,10 +30,16 @@ public class LEDSubsystem extends BasicSubsystem {
     public static final byte BACKWARD_HALF = 7;
     public static final byte BRIGHT_CMD = 10;
 	
+    private boolean[] enabled = new boolean [LED_LIST.length];
+    
 	private LEDSubsystem() {
 		super("LEDSubsystem");
 		
-		leds = new I2C(Port.kMXP, RobotMap.LED.LEDS);
+		if (RobotMap.LED.LED_1 != RobotMap.DOES_NOT_EXIST){
+			leds = new I2C(Port.kMXP, RobotMap.LED.LEDS);
+			enabled[0] = true;
+		}
+		
 		setBrightness(DEFAULT_BRIGHTNESS);
 		off();
 	}
@@ -101,7 +107,8 @@ public class LEDSubsystem extends BasicSubsystem {
 	}
 	
 	private void send(int strip, byte data){
-		leds.write(LED_LIST[strip], data);
+		if (enabled[strip])
+			leds.write(LED_LIST[strip], data);
 	}
 	
 	public void sendToAll(byte data){
@@ -111,8 +118,7 @@ public class LEDSubsystem extends BasicSubsystem {
 	}
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+
     }
     
     public void updateSmartDashboard(){

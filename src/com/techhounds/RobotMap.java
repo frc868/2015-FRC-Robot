@@ -1,5 +1,10 @@
 package com.techhounds;
 
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SolenoidBase;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Victor;
+
 public class RobotMap {
 	
 	public static final int DOES_NOT_EXIST = -1;

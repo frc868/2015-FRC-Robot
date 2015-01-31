@@ -90,10 +90,10 @@ public class OI {
         setLiftDown.whenReleased(new SetLift(LiftSubsystem.DOWN, 0));
 
         Button setLiftIn = driver.createButton(liftIn);
-        setLiftIn.whenPressed(new SetLift(LiftSubsystem.IN));
+        setLiftIn.whenPressed(new SetLift(LiftSubsystem.CLOSED));
         
         Button setLiftOut = driver.createButton(liftOut);
-        setLiftOut.whenPressed(new SetLift(LiftSubsystem.OUT));
+        setLiftOut.whenPressed(new SetLift(LiftSubsystem.OPEN));
 
 		Button binsButtonUp = driver.createButton(binsUp);
 		binsButtonUp.whenPressed(new SetBin(BinSubsystem.UP));
@@ -137,10 +137,10 @@ public class OI {
         setLiftDown.whenReleased(new SetLift(LiftSubsystem.DOWN, 0));
 
         Button setLiftIn = operator.createButton(opLiftIn);
-        setLiftIn.whenPressed(new SetLift(LiftSubsystem.IN));
+        setLiftIn.whenPressed(new SetLift(LiftSubsystem.CLOSED));
         
         Button setLiftOut = operator.createButton(opLiftOut);
-        setLiftOut.whenPressed(new SetLift(LiftSubsystem.OUT));
+        setLiftOut.whenPressed(new SetLift(LiftSubsystem.OPEN));
 		
 		Button opBinsButtonUp = operator.createButton(opBinsUp);
 		opBinsButtonUp.whenPressed(new SetBin(BinSubsystem.UP));

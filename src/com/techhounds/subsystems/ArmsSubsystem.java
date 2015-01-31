@@ -4,6 +4,7 @@ import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -18,8 +19,12 @@ public class ArmsSubsystem extends Subsystem {
 	public static final boolean OPEN = false;
 	public static final boolean CLOSED = true;
 	
-	private Victor left;
-	private Victor right;
+	private boolean leftEnabled = false;
+	private boolean rightEnabled = false;
+	private boolean solEnabled = false;
+	
+	private SpeedController left;
+	private SpeedController right;
 	
 	private Solenoid sol;
 	
@@ -29,28 +34,32 @@ public class ArmsSubsystem extends Subsystem {
 	private ArmsSubsystem() {
 		super("ArmsSubsystem");
 		
-		if(RobotMap.Arms.LEFT_ARM != RobotMap.DOES_NOT_EXIST)
+		if(RobotMap.Arms.LEFT_ARM != RobotMap.DOES_NOT_EXIST){
 			left = new Victor(RobotMap.Arms.LEFT_ARM);
-		if(RobotMap.Arms.RIGHT_ARM != RobotMap.DOES_NOT_EXIST)
+			leftEnabled = true;
+		}
+		if(RobotMap.Arms.RIGHT_ARM != RobotMap.DOES_NOT_EXIST){
 			right = new Victor(RobotMap.Arms.RIGHT_ARM);
-		if(RobotMap.Arms.ARM_SOL != RobotMap.DOES_NOT_EXIST)
+			rightEnabled = true;
+		}
+		if(RobotMap.Arms.ARM_SOL != RobotMap.DOES_NOT_EXIST){
 			sol = new Solenoid(RobotMap.Arms.ARM_SOL);
+			solEnabled = true;
+		}
 	}
 	
 	public static ArmsSubsystem getInstance() {
-		if (instance == null) {
+		if (instance == null)
 			instance = new ArmsSubsystem();
-		}
-		
 		return instance;
 	}
 		
 	public double getLeftPower() {
-		return left.get();
+		return leftEnabled ? left.get() : 0;
 	}
 	
 	public double getRightPower() {
-		return right.get();
+		return rightEnabled ? right.get() : 0;
 	}
 	
 	public double getAvgPower() {
@@ -58,8 +67,10 @@ public class ArmsSubsystem extends Subsystem {
 	}
 	
 	public void setPower(double left, double right) {
-		this.left.set(Robot.checkRange(left, -1, 1) * leftMotorMult);
-		this.right.set(Robot.checkRange(right, -1, 1) * rightMotorMult);
+		if (leftEnabled)
+			this.left.set(Robot.checkRange(left, -1, 1) * leftMotorMult);
+		if (rightEnabled)
+			this.right.set(Robot.checkRange(right, -1, 1) * rightMotorMult);
 	}
 	
 	public void setPower(double power) {
@@ -67,16 +78,16 @@ public class ArmsSubsystem extends Subsystem {
 	}
 	
 	public boolean getPosition() {
-		return sol.get();
+		return solEnabled ? sol.get() : OPEN;
 	}
 	
 	public void setPosition(boolean direction) {
-		sol.set(direction);
+		if (solEnabled)
+			sol.set(direction);
 	}
 	
 	public void stopArms() {
-		left.set(0);
-		right.set(0);
+		setPower(0, 0);
 	}
 	
 	public void updateSmartDashboard() {

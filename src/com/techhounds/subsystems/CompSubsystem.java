@@ -22,8 +22,11 @@ public class CompSubsystem extends Subsystem {
 	
 	private CompSubsystem() {
 		super("CompSubsystem");
-		comp = new Compressor(RobotMap.Compressor.COMP);
-		comp.start();
+		
+		if (RobotMap.Compressor.COMP != RobotMap.DOES_NOT_EXIST){
+			comp = new Compressor(RobotMap.Compressor.COMP);
+			comp.start();
+		}
 	}
 	
 	public void updateSmartDashboard() {

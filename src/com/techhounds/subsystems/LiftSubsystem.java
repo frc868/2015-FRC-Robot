@@ -22,36 +22,46 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final int DOWN = 2;
 	public static final int STOPPED = 3;
 	
-	public static final boolean IN = false;
-	public static final boolean OUT = true;
+	public static final boolean CLOSED = false;
+	public static final boolean OPEN = true;
 	
 	private int direction = STOPPED;
 	public double power = 0;
 	
 	private MultiMotor motors;
-	
 	private Solenoid sol;
+	private DigitalInput checkTop, checkBottom;
 	
-	private DigitalInput checkTop;
-	private DigitalInput checkBottom;
+	private boolean motorsEnabled = false;
+	private boolean solEnabled = false;
+	private boolean topEnabled = false;
+	private boolean bottomEnabled = false;
 	
 	private LiftSubsystem() {
 		super("LiftSubsystem");
 		
 		if (RobotMap.Lift.LIFT_MOTOR_1 != RobotMap.DOES_NOT_EXIST &&
-				RobotMap.Lift.LIFT_MOTOR_2 != RobotMap.DOES_NOT_EXIST)
+				RobotMap.Lift.LIFT_MOTOR_2 != RobotMap.DOES_NOT_EXIST){
 			motors = new MultiMotor(
 						new Victor[]{
 								new Victor(RobotMap.Lift.LIFT_MOTOR_1),
 								new Victor(RobotMap.Lift.LIFT_MOTOR_2)},
 						new boolean[]{false, false}
 					);
-		if (RobotMap.Lift.DIGITAL_INPUT_TOP != RobotMap.DOES_NOT_EXIST)
+			motorsEnabled = true;
+		}
+		if (RobotMap.Lift.DIGITAL_INPUT_TOP != RobotMap.DOES_NOT_EXIST){
 			checkTop = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_TOP);
-		if (RobotMap.Lift.DIGITAL_INPUT_BOTTOM != RobotMap.DOES_NOT_EXIST)
+			topEnabled = true;
+		}
+		if (RobotMap.Lift.DIGITAL_INPUT_BOTTOM != RobotMap.DOES_NOT_EXIST){
 			checkBottom = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_BOTTOM);
-		if (RobotMap.Lift.LIFT_SOL != RobotMap.DOES_NOT_EXIST)
+			bottomEnabled = true;
+		}
+		if (RobotMap.Lift.LIFT_SOL != RobotMap.DOES_NOT_EXIST){
 			sol = new Solenoid(RobotMap.Lift.LIFT_SOL);
+			solEnabled = true;
+		}
 	}
 	
 	public static LiftSubsystem getInstance() {
@@ -62,15 +72,15 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public boolean isAtTop() {
-		return !checkTop.get();
+		return topEnabled ? !checkTop.get() : true;
 	}
 	
 	public boolean isAtBottom() {
-		return !checkBottom.get();
+		return bottomEnabled ? !checkBottom.get() : true;
 	}
 	
 	public double getPower() {
-		return Math.abs(motors.get());
+		return motorsEnabled ? Math.abs(motors.get()) : 0;
 	}
 	
 	public int getDirection(){
@@ -78,7 +88,8 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public void setPower() {
-		motors.set(power);
+		if (motorsEnabled)
+			motors.set(power);
 	}
 	
 	public void setLift(int dir, double power) {
@@ -100,24 +111,19 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public boolean getPosition() {
-		return sol.get();
+		return solEnabled ? sol.get() : OPEN;
 	}
 	
 	public void setPosition(boolean position) {
-		sol.set(position);
+		if (solEnabled)
+			sol.set(position);
 	}
 
-	@Override
 	public void updateSmartDashboard() {
-		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new RunLift());
-		
+		setDefaultCommand(new RunLift());		
 	}
-	
-
 }

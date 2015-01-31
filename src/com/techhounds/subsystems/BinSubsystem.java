@@ -16,11 +16,15 @@ public class BinSubsystem extends BasicSubsystem {
     
 	public static BinSubsystem instance;
 	
-	private DigitalInput checkTop, checkBottom;
+	private boolean motorEnabled = false;
+	private boolean grabEnabled = false;
+	private boolean tiltEnabled = false;
+	private boolean topEnabled = false;
+	private boolean bottomEnabled = false;
 	
-	Victor motor;
-	Solenoid grabSol;
-	Solenoid tiltSol;
+	private Victor motor;
+	private Solenoid grabSol, tiltSol;
+	private DigitalInput checkTop, checkBottom;
 	
 	public static final int STOPPED = 0;
 	public static final int DOWN = 1;
@@ -40,20 +44,30 @@ public class BinSubsystem extends BasicSubsystem {
 	public BinSubsystem() {
 		super("BinSubsystem");
 		
-		if(RobotMap.Bin.BIN_MOTOR != RobotMap.DOES_NOT_EXIST)
+		if(RobotMap.Bin.BIN_MOTOR != RobotMap.DOES_NOT_EXIST){
 			motor = new Victor(RobotMap.Bin.BIN_MOTOR);
+			motorEnabled = true;
+		}
 		
-		if(RobotMap.Bin.BIN_GRABSOL != RobotMap.DOES_NOT_EXIST)
+		if(RobotMap.Bin.BIN_GRABSOL != RobotMap.DOES_NOT_EXIST){
 			grabSol = new Solenoid(RobotMap.Bin.BIN_GRABSOL);
+			grabEnabled = true;
+		}
 		
-		if(RobotMap.Bin.BIN_TILTSOL != RobotMap.DOES_NOT_EXIST)
+		if(RobotMap.Bin.BIN_TILTSOL != RobotMap.DOES_NOT_EXIST){
 			tiltSol = new Solenoid(RobotMap.Bin.BIN_TILTSOL);
+			tiltEnabled = true;
+		}
 		
-		if(RobotMap.Bin.BIN_DOWN_CHECK != RobotMap.DOES_NOT_EXIST)
+		if(RobotMap.Bin.BIN_DOWN_CHECK != RobotMap.DOES_NOT_EXIST){
 			checkBottom = new DigitalInput(RobotMap.Bin.BIN_DOWN_CHECK);
+			bottomEnabled = true;
+		}
 		
-		if(RobotMap.Bin.BIN_TOP_CHECK != RobotMap.DOES_NOT_EXIST)
+		if(RobotMap.Bin.BIN_TOP_CHECK != RobotMap.DOES_NOT_EXIST){
 			checkTop = new DigitalInput(RobotMap.Bin.BIN_TOP_CHECK);
+			topEnabled = true;
+		}
 	}
 	
 	public static BinSubsystem getInstance() {
@@ -63,27 +77,28 @@ public class BinSubsystem extends BasicSubsystem {
 	}
 	
 	public double getPower() {
-		return Math.abs(motor.get());
+		return motorEnabled ? Math.abs(motor.get()) : 0;
 	}
 	
 	public void setPower() {
-		motor.set(power);
+		if (motorEnabled)
+			motor.set(power);
 	}
 	
 	public boolean getGrabSol() {
-		return grabSol.get();
+		return grabEnabled ? grabSol.get() : OPEN;
 	}
 	
 	public boolean getTiltSol() {
-		return tiltSol.get();
+		return tiltEnabled ? tiltSol.get() : TILT_DOWN;
 	}
 	
 	public boolean isAtTop(){
-		return checkTop.get();
+		return topEnabled ? checkTop.get() : true;
 	}
 	
 	public boolean isAtBottom(){
-		return checkBottom.get();
+		return bottomEnabled ? checkBottom.get() : true;
 	}
 	
 	public int getDirection() {
@@ -103,11 +118,13 @@ public class BinSubsystem extends BasicSubsystem {
 	}
 	
 	public void setGrabSol(boolean position) {
-		grabSol.set(position);
+		if (grabEnabled)
+			grabSol.set(position);
 	}
 	
 	public void setTiltSol(boolean position) {
-		tiltSol.set(position);
+		if (tiltEnabled)
+			tiltSol.set(position);
 	}
 	
 	public void stopLift(){
@@ -115,13 +132,10 @@ public class BinSubsystem extends BasicSubsystem {
 	}
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+
     }
 
-	@Override
 	public void updateSmartDashboard() {
-		// TODO Auto-generated method stub
 		
 	}
 	

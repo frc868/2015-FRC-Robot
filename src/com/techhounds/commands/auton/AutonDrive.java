@@ -16,7 +16,7 @@ public class AutonDrive extends Command {
     public AutonDrive(double distance, double tol) {
     	drive = DriveSubsystem.getInstance();
     	requires(drive);
-    	drive.setTolerance(tol);
+    	drive.setDriveTolerance(tol);
     	this.distance = distance;
     }
     
@@ -26,7 +26,7 @@ public class AutonDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	drive.driveWithEncoder(distance);
+    	drive.setDrivePID(distance);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -40,7 +40,7 @@ public class AutonDrive extends Command {
 
     // Called once after isFinished returns true
     protected void end(){
-    	drive.stopDriveWithEncoder();
+    	drive.stopDrivePID();
     }
 
     // Called when another command which requires one or more of the same
