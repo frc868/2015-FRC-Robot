@@ -1,6 +1,9 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.OI;
+import com.techhounds.commands.auton.tote.OneToteBin;
+import com.techhounds.commands.auton.tote.ThreeToteBin;
+import com.techhounds.commands.auton.tote.TwoToteBin;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -24,17 +27,17 @@ public class AutonChooser {
 	public static Command getSelected() {
 		
 		Command [] options = new Command[] {
-				new DoNothing(),
-				new DoNothing(),
-				new DoNothing(),
-				new DoNothing(),
-				new DoNothing(),
-				new DoNothing(),
-				new DoNothing(),
-				new DoNothing(),
-				new DoNothing(),
+				new ThreeToteBin(true),
+				new ThreeToteBin(false),
+				new TwoToteBin(true),
+				new TwoToteBin(false),
+				new OneToteBin(true),
+				new OneToteBin(false),
+				new CollectBin(),
+				new Push(),
+				new MoveToAutoZone(),
 				new DoNothing()
-		}; // TODO: Replace with actual commands
+		};
 		
 		return options[OI.getInstance().getAutonChoice()];
 	}
