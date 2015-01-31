@@ -10,45 +10,49 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SetDriveMode extends Command {
 	
 	private DriveSubsystem drive;
-	boolean forward;
-	boolean half;
+	private boolean forward;
+	private boolean half;
+	private boolean two;
 
-    public SetDriveMode(boolean isForward, boolean isHalfSpeed) {
+    public SetDriveMode(boolean isForward, boolean isHalfSpeed, boolean isTwoPerson) {
         drive = DriveSubsystem.getInstance();
         
         forward = isForward;
         half = isHalfSpeed;
+        two = isTwoPerson;
     }
     
     public SetDriveMode(boolean isForward){
-    	this(isForward, DriveSubsystem.getInstance().getHalfSpeed());
+    	this(isForward, DriveSubsystem.getInstance().getHalfSpeed(), DriveSubsystem.getInstance().getTwoPersonDrive());
     }
     
     public SetDriveMode(boolean isHalfSpeed, int doesntMatter){
-    	this(DriveSubsystem.getInstance().getDriveForward(), isHalfSpeed);
+    	this(DriveSubsystem.getInstance().getDriveForward(), isHalfSpeed, DriveSubsystem.getInstance().getTwoPersonDrive());
+    }
+    
+    public SetDriveMode(boolean isTwoPerson, boolean doesntMatter){
+    	this(DriveSubsystem.getInstance().getDriveForward(), DriveSubsystem.getInstance().getHalfSpeed(), isTwoPerson);
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
     	drive.setDriveMode(forward);
     	drive.setHalfSpeed(half);
+    	drive.setTwoPersonDrive(two);
     }
 
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return true;
     }
 
-    // Called once after isFinished returns true
     protected void end() {
+    	
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

@@ -31,6 +31,7 @@ public class Robot extends IterativeRobot {
     	DriveSubsystem.getInstance();
     	LEDSubsystem.getInstance().standby();
     	LiftSubsystem.getInstance();
+    	PassiveStopSubsystem.getInstance();
     }	
     
     public void autonomousInit() {

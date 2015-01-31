@@ -49,16 +49,14 @@ public class DriveSubsystem extends BasicSubsystem {
 				new SpeedController[]{
 						new Victor(RobotMap.Drive.LEFT_DRIVE_MOTOR_1),
 						new Victor(RobotMap.Drive.LEFT_DRIVE_MOTOR_2),
-						new Victor(RobotMap.Drive.LEFT_DRIVE_MOTOR_3),
-					},
+						new Victor(RobotMap.Drive.LEFT_DRIVE_MOTOR_3),},
 				new boolean[]{false, false, false});
 		
 		rightMotors = new MultiMotor(
 				new SpeedController[]{
 						new Victor(RobotMap.Drive.RIGHT_DRIVE_MOTOR_1),
 						new Victor(RobotMap.Drive.RIGHT_DRIVE_MOTOR_2),
-						new Victor(RobotMap.Drive.RIGHT_DRIVE_MOTOR_3),
-					},
+						new Victor(RobotMap.Drive.RIGHT_DRIVE_MOTOR_3),},
 				new boolean[]{false, false, false});
 		
 		if(RobotMap.Drive.LEFT_ENC != RobotMap.DOES_NOT_EXIST){

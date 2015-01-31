@@ -1,12 +1,11 @@
 package com.techhounds;
 
-import com.techhounds.commands.Debug;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.bin.SetBin;
 import com.techhounds.commands.driving.OperatorHalfDrive;
 import com.techhounds.commands.driving.ToggleDriveMode;
-import com.techhounds.commands.lift.RunLift;
 import com.techhounds.commands.lift.SetLift;
+import com.techhounds.commands.lift.SetPassiveStop;
 import com.techhounds.subsystems.*;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -39,6 +38,7 @@ public class OI {
     private final int binsClose = ControllerMap.RIGHT;
     private final int binsTiltUp = ControllerMap.LB;
     private final int binsTiltDown = ControllerMap.LT;
+    private final int togglePassive = ControllerMap.RB;
     
     //Tweaker buttons
   	private final int opToggleForward = ControllerMap.START;
@@ -53,6 +53,7 @@ public class OI {
     private final int opBinsClose = ControllerMap.RIGHT;
     private final int opBinsTiltUp = ControllerMap.LB;
     private final int opBinsTiltDown = ControllerMap.LT;
+    private final int opTogglePassive = ControllerMap.RB;
     
 	public OI() {
 		
@@ -75,10 +76,10 @@ public class OI {
     public void initDriver() {
 
         Button toggleDriveForward = driver.createButton(toggleForward);
-        toggleDriveForward.whenPressed(new ToggleDriveMode(true, false));
+        toggleDriveForward.whenPressed(new ToggleDriveMode(true, false, false));
         
         Button toggleHalfSpeed = driver.createButton(toggleHalf);
-        toggleHalfSpeed.whenPressed(new ToggleDriveMode(false, true));
+        toggleHalfSpeed.whenPressed(new ToggleDriveMode(false, true, false));
 
         Button setLiftUp = driver.createButton(liftUp);
         setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
@@ -108,17 +109,20 @@ public class OI {
 		Button binsButtonClosed = driver.createButton(binsClose);
 		binsButtonClosed.whenPressed(new SetBin(BinSubsystem.CLOSED));
 		
-		Button binTiltUp= driver.createButton(binsTiltUp);
-		binTiltUp.whenInactive(new SetBin(BinSubsystem.TILT_UP, 0));
+		Button binTiltUp = driver.createButton(binsTiltUp);
+		binTiltUp.whenPressed(new SetBin(BinSubsystem.TILT_UP, 0));
 		
-		Button binTiltDown= driver.createButton(binsTiltDown);
-		binTiltDown.whenInactive(new SetBin(BinSubsystem.TILT_DOWN, 0));
+		Button binTiltDown = driver.createButton(binsTiltDown);
+		binTiltDown.whenPressed(new SetBin(BinSubsystem.TILT_DOWN, 0));
+		
+		Button togglePassiveStop = driver.createButton(togglePassive);
+		togglePassiveStop.whenPressed(new SetPassiveStop());
     }
     
     public void initOperator() {
     	
     	Button toggleDriveForward = operator.createButton(opToggleForward);
-        toggleDriveForward.whenPressed(new ToggleDriveMode(true, false));
+        toggleDriveForward.whenPressed(new ToggleDriveMode(true, false, false));
         
         Button pushHalfSpeed = operator.createButton(opPushHalf);
         pushHalfSpeed.whenPressed(new OperatorHalfDrive(true));
@@ -152,16 +156,19 @@ public class OI {
 		Button opBinsButtonClosed = operator.createButton(opBinsClose);
 		opBinsButtonClosed.whenPressed(new SetBin(BinSubsystem.CLOSED));
 		
-		Button opBinTiltUp= operator.createButton(opBinsTiltUp);
-		opBinTiltUp.whenInactive(new SetBin(BinSubsystem.TILT_UP, 0));
+		Button opBinTiltUp = operator.createButton(opBinsTiltUp);
+		opBinTiltUp.whenPressed(new SetBin(BinSubsystem.TILT_UP, 0));
 		
-		Button opBinTiltDown= operator.createButton(opBinsTiltDown);
-		opBinTiltDown.whenInactive(new SetBin(BinSubsystem.TILT_DOWN, 0));
+		Button opBinTiltDown = operator.createButton(opBinsTiltDown);
+		opBinTiltDown.whenPressed(new SetBin(BinSubsystem.TILT_DOWN, 0));
+		
+		Button opTogglePassiveStop = operator.createButton(opTogglePassive);
+		opTogglePassiveStop.whenPressed(new SetPassiveStop());
 		
     }
     
     public void initSD() {
-    	// TODO: Put SmartDashboard Values;
+    	
     }
     
     public int getAutonChoice() {

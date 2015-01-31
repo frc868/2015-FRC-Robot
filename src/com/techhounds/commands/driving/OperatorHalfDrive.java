@@ -22,7 +22,7 @@ public class OperatorHalfDrive extends Command {
     	if(halfSpeed){
     		drive.setOverrideOperator(drive.getHalfSpeed());
     		drive.setHalfSpeed(true);
-    	} else{
+    	}else{
     		if(!drive.getOverrideOperator())
     			drive.setHalfSpeed(false);
     	}
