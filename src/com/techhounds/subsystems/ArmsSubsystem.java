@@ -34,18 +34,14 @@ public class ArmsSubsystem extends Subsystem {
 	private ArmsSubsystem() {
 		super("ArmsSubsystem");
 		
-		if(RobotMap.Arms.LEFT_ARM != RobotMap.DOES_NOT_EXIST){
+		if(leftEnabled = RobotMap.Arms.LEFT_ARM != RobotMap.DOES_NOT_EXIST)
 			left = new Victor(RobotMap.Arms.LEFT_ARM);
-			leftEnabled = true;
-		}
-		if(RobotMap.Arms.RIGHT_ARM != RobotMap.DOES_NOT_EXIST){
+		
+		if(rightEnabled = RobotMap.Arms.RIGHT_ARM != RobotMap.DOES_NOT_EXIST)
 			right = new Victor(RobotMap.Arms.RIGHT_ARM);
-			rightEnabled = true;
-		}
-		if(RobotMap.Arms.ARM_SOL != RobotMap.DOES_NOT_EXIST){
+		
+		if(solEnabled = RobotMap.Arms.ARM_SOL != RobotMap.DOES_NOT_EXIST)
 			sol = new Solenoid(RobotMap.Arms.ARM_SOL);
-			solEnabled = true;
-		}
 	}
 	
 	public static ArmsSubsystem getInstance() {
@@ -66,11 +62,11 @@ public class ArmsSubsystem extends Subsystem {
 		return (getLeftPower() + getRightPower()) / 2;
 	}
 	
-	public void setPower(double left, double right) {
+	public void setPower(double leftPower, double rightPower) {
 		if (leftEnabled)
-			this.left.set(Robot.checkRange(left, -1, 1) * leftMotorMult);
+			left.set(Robot.checkRange(leftPower, -1, 1) * leftMotorMult);
 		if (rightEnabled)
-			this.right.set(Robot.checkRange(right, -1, 1) * rightMotorMult);
+			right.set(Robot.checkRange(rightPower, -1, 1) * rightMotorMult);
 	}
 	
 	public void setPower(double power) {

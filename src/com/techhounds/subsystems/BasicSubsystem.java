@@ -12,8 +12,7 @@ public abstract class BasicSubsystem extends Subsystem {
 	public static ArrayList<BasicSubsystem> subsystems = new ArrayList<>();
 	
 	public BasicSubsystem() { 
-		super();
-		subsystems.add(this);
+		this("Basic Subsystem");
 	}
 	
 	public BasicSubsystem(String name) {
