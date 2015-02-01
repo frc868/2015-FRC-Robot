@@ -16,27 +16,16 @@ public class BinSubsystem extends BasicSubsystem {
     
 	public static BinSubsystem instance;
 	
-	private boolean motorEnabled = false;
-	private boolean grabEnabled = false;
-	private boolean tiltEnabled = false;
-	private boolean topEnabled = false;
-	private boolean bottomEnabled = false;
+	private boolean motorEnabled = false, grabEnabled = false, tiltEnabled = false, 
+			topEnabled = false, bottomEnabled = false;
 	
 	private Victor motor;
 	private Solenoid grabSol, tiltSol;
 	private DigitalInput checkTop, checkBottom;
 	
-	public static final int STOPPED = 0;
-	public static final int DOWN = 1;
-	public static final int UP = 2;
-	
-	public static final boolean OPEN = true;
-	public static final boolean CLOSED = false;
-	
-	public static final boolean TILT_UP = true;
-	public static final boolean TILT_DOWN = false;
-	
+	public static final int STOPPED = 0, DOWN = 1, UP = 2;
 	public static final double LIFT_POWER = 1;
+	public static final boolean OPEN = true, CLOSED = false, TILT_UP = true, TILT_DOWN = false;
 	
 	private int direction;
 	private double power;
@@ -44,30 +33,20 @@ public class BinSubsystem extends BasicSubsystem {
 	public BinSubsystem() {
 		super("BinSubsystem");
 		
-		if(RobotMap.Bin.BIN_MOTOR != RobotMap.DOES_NOT_EXIST){
+		if(motorEnabled = RobotMap.Bin.BIN_MOTOR != RobotMap.DOES_NOT_EXIST)
 			motor = new Victor(RobotMap.Bin.BIN_MOTOR);
-			motorEnabled = true;
-		}
 		
-		if(RobotMap.Bin.BIN_GRABSOL != RobotMap.DOES_NOT_EXIST){
+		if(grabEnabled = RobotMap.Bin.BIN_GRABSOL != RobotMap.DOES_NOT_EXIST)
 			grabSol = new Solenoid(RobotMap.Bin.BIN_GRABSOL);
-			grabEnabled = true;
-		}
 		
-		if(RobotMap.Bin.BIN_TILTSOL != RobotMap.DOES_NOT_EXIST){
+		if(tiltEnabled = RobotMap.Bin.BIN_TILTSOL != RobotMap.DOES_NOT_EXIST)
 			tiltSol = new Solenoid(RobotMap.Bin.BIN_TILTSOL);
-			tiltEnabled = true;
-		}
 		
-		if(RobotMap.Bin.BIN_DOWN_CHECK != RobotMap.DOES_NOT_EXIST){
+		if(bottomEnabled = RobotMap.Bin.BIN_DOWN_CHECK != RobotMap.DOES_NOT_EXIST)
 			checkBottom = new DigitalInput(RobotMap.Bin.BIN_DOWN_CHECK);
-			bottomEnabled = true;
-		}
 		
-		if(RobotMap.Bin.BIN_TOP_CHECK != RobotMap.DOES_NOT_EXIST){
+		if(topEnabled = RobotMap.Bin.BIN_TOP_CHECK != RobotMap.DOES_NOT_EXIST)
 			checkTop = new DigitalInput(RobotMap.Bin.BIN_TOP_CHECK);
-			topEnabled = true;
-		}
 	}
 	
 	public static BinSubsystem getInstance() {
@@ -138,6 +117,5 @@ public class BinSubsystem extends BasicSubsystem {
 	public void updateSmartDashboard() {
 		
 	}
-	
 }
 

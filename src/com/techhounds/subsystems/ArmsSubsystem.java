@@ -13,23 +13,14 @@ public class ArmsSubsystem extends Subsystem {
     
 	private static ArmsSubsystem instance;
 	
-	public static final double FEED_IN = -0.5;
-	public static final double FEED_OUT = 0.5;
-	public static final double STOPPED = 0;
-	public static final boolean OPEN = false;
-	public static final boolean CLOSED = true;
+	public static final double FEED_IN = -0.5, FEED_OUT = 0.5, STOPPED = 0;
+	public static final boolean OPEN = false, CLOSED = true;
 	
-	private boolean leftEnabled = false;
-	private boolean rightEnabled = false;
-	private boolean solEnabled = false;
+	private double leftMotorMult = 1, rightMotorMult = .8;
+	private boolean leftEnabled = false, rightEnabled = false, solEnabled = false;
 	
-	private SpeedController left;
-	private SpeedController right;
-	
+	private SpeedController left, right;
 	private Solenoid sol;
-	
-	private double leftMotorMult = 1;
-	private double rightMotorMult = .8;
 	
 	private ArmsSubsystem() {
 		super("ArmsSubsystem");

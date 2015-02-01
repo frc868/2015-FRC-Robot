@@ -12,14 +12,6 @@ public class CompSubsystem extends Subsystem {
 	
 	private Compressor comp;
 	
-	public static CompSubsystem getInstance() {
-		if (instance == null) {
-			instance = new CompSubsystem();
-		}
-		
-		return instance;
-	}
-	
 	private CompSubsystem() {
 		super("CompSubsystem");
 		
@@ -27,6 +19,12 @@ public class CompSubsystem extends Subsystem {
 			comp = new Compressor(RobotMap.Compressor.COMP);
 			comp.start();
 		}
+	}
+	
+	public static CompSubsystem getInstance() {
+		if (instance == null) 
+			instance = new CompSubsystem();
+		return instance;
 	}
 	
 	public void updateSmartDashboard() {

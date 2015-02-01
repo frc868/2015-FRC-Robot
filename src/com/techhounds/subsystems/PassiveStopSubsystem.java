@@ -26,9 +26,8 @@ public class PassiveStopSubsystem extends BasicSubsystem {
 	}
 	
 	private PassiveStopSubsystem(){
-		if (RobotMap.Lift.PASSIVE_STOP_SOL != RobotMap.DOES_NOT_EXIST){
+		if (solEnabled = RobotMap.Lift.PASSIVE_STOP_SOL != RobotMap.DOES_NOT_EXIST){
 			sol = new Solenoid(RobotMap.Lift.PASSIVE_STOP_SOL);
-			solEnabled = true;
 		}
 	}
 	

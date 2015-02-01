@@ -17,51 +17,37 @@ public class LiftSubsystem extends BasicSubsystem {
 	private static LiftSubsystem instance;
 	
 	public static final double LIFT_POWER = 0.5;
-	
-	public static final int UP = 1;
-	public static final int DOWN = 2;
-	public static final int STOPPED = 3;
-	
-	public static final boolean CLOSED = false;
-	public static final boolean OPEN = true;
-	
-	private int direction = STOPPED;
-	public double power = 0;
+	public static final int UP = 1, DOWN = 2, STOPPED = 3;
+	public static final boolean CLOSED = false, OPEN = true;
 	
 	private MultiMotor motors;
 	private Solenoid sol;
 	private DigitalInput checkTop, checkBottom;
 	
-	private boolean motorsEnabled = false;
-	private boolean solEnabled = false;
-	private boolean topEnabled = false;
-	private boolean bottomEnabled = false;
+	public double power = 0;
+	private int direction = STOPPED;
+	private boolean motorsEnabled = false, solEnabled = false, topEnabled = false, bottomEnabled = false;
 	
 	private LiftSubsystem() {
 		super("LiftSubsystem");
 		
-		if (RobotMap.Lift.LIFT_MOTOR_1 != RobotMap.DOES_NOT_EXIST &&
-				RobotMap.Lift.LIFT_MOTOR_2 != RobotMap.DOES_NOT_EXIST){
+		if (motorsEnabled = RobotMap.Lift.LIFT_MOTOR_1 != RobotMap.DOES_NOT_EXIST &&
+				RobotMap.Lift.LIFT_MOTOR_2 != RobotMap.DOES_NOT_EXIST)
 			motors = new MultiMotor(
 						new Victor[]{
 								new Victor(RobotMap.Lift.LIFT_MOTOR_1),
 								new Victor(RobotMap.Lift.LIFT_MOTOR_2)},
 						new boolean[]{false, false}
 					);
-			motorsEnabled = true;
-		}
-		if (RobotMap.Lift.DIGITAL_INPUT_TOP != RobotMap.DOES_NOT_EXIST){
+			
+		if (topEnabled = RobotMap.Lift.DIGITAL_INPUT_TOP != RobotMap.DOES_NOT_EXIST)
 			checkTop = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_TOP);
-			topEnabled = true;
-		}
-		if (RobotMap.Lift.DIGITAL_INPUT_BOTTOM != RobotMap.DOES_NOT_EXIST){
+			
+		if (bottomEnabled = RobotMap.Lift.DIGITAL_INPUT_BOTTOM != RobotMap.DOES_NOT_EXIST)
 			checkBottom = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_BOTTOM);
-			bottomEnabled = true;
-		}
-		if (RobotMap.Lift.LIFT_SOL != RobotMap.DOES_NOT_EXIST){
+		
+		if (solEnabled = RobotMap.Lift.LIFT_SOL != RobotMap.DOES_NOT_EXIST)
 			sol = new Solenoid(RobotMap.Lift.LIFT_SOL);
-			solEnabled = true;
-		}
 	}
 	
 	public static LiftSubsystem getInstance() {

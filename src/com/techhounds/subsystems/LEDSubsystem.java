@@ -20,25 +20,16 @@ public class LEDSubsystem extends BasicSubsystem {
     
     public int curCmd = 0;
     
-    public static final byte OFF_CMD = 0;
-    public static final byte STANDBY_CMD = 1;
-    public static final byte YELLOW_DOT_CMD = 2;
-    public static final byte DRIVE_CMD = 3;
-    public static final byte FORWARD_FULL = 4;
-    public static final byte FORWARD_HALF = 5;
-    public static final byte BACKWARD_FULL = 6;
-    public static final byte BACKWARD_HALF = 7;
-    public static final byte BRIGHT_CMD = 10;
+    public static final byte OFF_CMD = 0, STANDBY_CMD = 1, YELLOW_DOT_CMD = 2, DRIVE_CMD = 3, 
+    		FORWARD_FULL = 4, FORWARD_HALF = 5, BACKWARD_FULL = 6, BACKWARD_HALF = 7, BRIGHT_CMD = 10;
 	
     private boolean[] enabled = new boolean [LED_LIST.length];
     
 	private LEDSubsystem() {
 		super("LEDSubsystem");
 		
-		if (RobotMap.LED.LED_1 != RobotMap.DOES_NOT_EXIST){
+		if (enabled[0] = RobotMap.LED.LED_1 != RobotMap.DOES_NOT_EXIST)
 			leds = new I2C(Port.kMXP, RobotMap.LED.LEDS);
-			enabled[0] = true;
-		}
 		
 		setBrightness(DEFAULT_BRIGHTNESS);
 		off();

@@ -22,28 +22,19 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	private static DriveSubsystem instance;
 	
-	private boolean overrideOperatorButton = false;
-	private boolean twoPersonDrive = true;
-	private boolean isForward = true;
-	private boolean isHalfSpeed = false;
+	private static final double Kp = 0, Ki = 0, Kd = 0;
 	
-	private static final double Kp = 0;
-	private static final double Ki = 0;
-	private static final double Kd = 0;
-	private double driveTolerance;
+	private boolean overrideOperatorButton = false, twoPersonDrive = true, isForward = true, isHalfSpeed = false;
+	private boolean leftEncEnabled = false, rightEncEnabled = false;
 	
 	private PIDController drivePID;
 	
-	private MultiMotor leftMotors;
-	private MultiMotor rightMotors;
-	
-	private Counter leftEnc;
-	private Counter rightEnc;
-	
-	private boolean leftEncEnabled = false;
-	private boolean rightEncEnabled = false;
+	private MultiMotor leftMotors, rightMotors;
+	private Counter leftEnc, rightEnc;
 	
 	private final double COUNTS_TO_FEET = 0;
+	
+	private double driveTolerance;
 
 	private DriveSubsystem() {
 		super("DriveSubsystem");
@@ -62,16 +53,14 @@ public class DriveSubsystem extends BasicSubsystem {
 						new Victor(RobotMap.Drive.RIGHT_DRIVE_MOTOR_3),},
 				new boolean[]{false, false, false});
 		
-		if(RobotMap.Drive.LEFT_ENC != RobotMap.DOES_NOT_EXIST){
+		if(leftEncEnabled = RobotMap.Drive.LEFT_ENC != RobotMap.DOES_NOT_EXIST){
 			leftEnc = new Counter(RobotMap.Drive.LEFT_ENC);
 			leftEnc.setDistancePerPulse(COUNTS_TO_FEET);
-			leftEncEnabled = true;
 		}
 		
-		if(RobotMap.Drive.RIGHT_ENC != RobotMap.DOES_NOT_EXIST){
+		if(rightEncEnabled = RobotMap.Drive.RIGHT_ENC != RobotMap.DOES_NOT_EXIST){
 			rightEnc = new Counter(RobotMap.Drive.RIGHT_ENC);
 			rightEnc.setDistancePerPulse(COUNTS_TO_FEET);
-			rightEncEnabled = true;
 		}
 		
 		drivePID = new PIDController(
@@ -98,15 +87,11 @@ public class DriveSubsystem extends BasicSubsystem {
 	}
 	
 	public void driveWithGamepad() {
-		double powerMag;
-    	double steerMag;
-    	boolean posPower;
-    	boolean posSteer;
+		double powerMag, steerMag;
+    	boolean posPower, posSteer;
     	
-    	double onePower = OI.getDriverLeftYAxis();
-    	double oneSteer = OI.getDriverRightXAxis();
-    	double twoPower = OI.getOperatorLeftYAxis();
-    	double twoSteer = OI.getOperatorRightXAxis();
+    	double onePower = OI.getDriverLeftYAxis(), oneSteer = OI.getDriverRightXAxis(), 
+    			twoPower = OI.getOperatorLeftYAxis(), twoSteer = OI.getOperatorRightXAxis();
     	
     	if (!getTwoPersonDrive()){
 	        powerMag = onePower;
