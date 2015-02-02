@@ -16,8 +16,7 @@ public class BinSubsystem extends BasicSubsystem {
     
 	public static BinSubsystem instance;
 	
-	private boolean motorEnabled = false, grabEnabled = false, tiltEnabled = false, 
-			topEnabled = false, bottomEnabled = false;
+	private boolean motorEnabled, grabEnabled, tiltEnabled, topEnabled, bottomEnabled;
 	
 	private Victor motor;
 	private Solenoid grabSol, tiltSol;

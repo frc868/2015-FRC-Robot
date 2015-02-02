@@ -17,7 +17,7 @@ public class ArmsSubsystem extends Subsystem {
 	public static final boolean OPEN = false, CLOSED = true;
 	
 	private double leftMotorMult = 1, rightMotorMult = .8;
-	private boolean leftEnabled = false, rightEnabled = false, solEnabled = false;
+	private boolean leftEnabled, rightEnabled, solEnabled;
 	
 	private SpeedController left, right;
 	private Solenoid sol;

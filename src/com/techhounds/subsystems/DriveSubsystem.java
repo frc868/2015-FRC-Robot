@@ -24,8 +24,8 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	private static final double Kp = 0, Ki = 0, Kd = 0;
 	
-	private boolean overrideOperatorButton = false, twoPersonDrive = true, isForward = true, isHalfSpeed = false;
-	private boolean leftEncEnabled = false, rightEncEnabled = false;
+	private boolean overrideOperatorButton, twoPersonDrive, isForward, isHalfSpeed;
+	private boolean leftEncEnabled, rightEncEnabled;
 	
 	private PIDController drivePID;
 	
