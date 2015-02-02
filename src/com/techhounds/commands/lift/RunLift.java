@@ -14,31 +14,32 @@ public class RunLift extends Command{
 	}
 
 	protected void initialize() {
-		// TODO Auto-generated method stub
+		
 	}
 
 	protected void execute() {
 		if ((lift.getDirection() == LiftSubsystem.UP && !lift.isAtTop()) ||
 				(lift.getDirection() == LiftSubsystem.DOWN && !lift.isAtBottom())){
 		} else {
-			lift.stopLift();			
+			lift.stopLift();
 		}
 		lift.setPower();
+		
+		if (lift.getPower() == 0)
+			lift.setBrakePosition(LiftSubsystem.BRAKE);
+		else
+			lift.setBrakePosition(LiftSubsystem.UNBRAKE);
 	}
 
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	protected void end() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	protected void interrupted() {
-		// TODO Auto-generated method stub
 		
 	}
-
 }

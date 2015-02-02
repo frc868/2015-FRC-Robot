@@ -12,12 +12,11 @@ public class SetLift extends Command {
 	public LiftSubsystem lift;
 	public Integer direction;
 	public Double power;
-	public Boolean position;
+	public Boolean grabPosition;
+	public Boolean brakePosition;
 	
     public SetLift(int direction) {
     	this(direction, LiftSubsystem.LIFT_POWER);
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     }
     
     public SetLift(int direction, double pwr){
@@ -27,34 +26,37 @@ public class SetLift extends Command {
     	this.power = pwr;
     }
     
-    public SetLift(boolean position) {
+    public SetLift(boolean grabPosition) {
     	lift = LiftSubsystem.getInstance();
-    	this.position = position;
+    	this.grabPosition = grabPosition;
+    }
+    
+    public SetLift(boolean brakePosition, int dontCare){
+    	lift = LiftSubsystem.getInstance();
+    	this.brakePosition = brakePosition;
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
     	if (direction != null)
     		lift.setLift(direction, power);
-    	if (position != null)
-    		lift.setPosition(position);
+    	if (grabPosition != null)
+    		lift.setGrabPosition(grabPosition);
+    	if (brakePosition != null)
+    		lift.setBrakePosition(brakePosition);
     }
 
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return true;
     }
 
-    // Called once after isFinished returns true
     protected void end() {
+    	
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
     protected void interrupted() {
     	end();
     }

@@ -30,7 +30,8 @@ public class RobotMap {
 		public static final int LIFT_MOTOR_2 = 7;
 		public static final int DIGITAL_INPUT_TOP = 0;
 		public static final int DIGITAL_INPUT_BOTTOM = 1;
-		public static final int LIFT_SOL = 0;
+		public static final int LIFT_GRAB_SOL = 0;
+		public static final int LIFT_BRAKE_SOL = DOES_NOT_EXIST;
 		public static final int PASSIVE_STOP_SOL = DOES_NOT_EXIST;
 	}
 

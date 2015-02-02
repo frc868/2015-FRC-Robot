@@ -19,14 +19,15 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final double LIFT_POWER = 0.5;
 	public static final int UP = 1, DOWN = 2, STOPPED = 3;
 	public static final boolean CLOSED = false, OPEN = true;
+	public static final boolean BRAKE = false, UNBRAKE = true;
 	
 	private MultiMotor motors;
-	private Solenoid sol;
+	private Solenoid grabSol, brakeSol;
 	private DigitalInput checkTop, checkBottom;
 	
 	private double power = 0;
 	private int direction = STOPPED;
-	private boolean motorsEnabled, solEnabled, topEnabled, bottomEnabled;
+	private boolean motorsEnabled, grabSolEnabled, brakeSolEnabled, topEnabled, bottomEnabled;
 	
 	private LiftSubsystem() {
 		super("LiftSubsystem");
@@ -46,8 +47,11 @@ public class LiftSubsystem extends BasicSubsystem {
 		if (bottomEnabled = RobotMap.Lift.DIGITAL_INPUT_BOTTOM != RobotMap.DOES_NOT_EXIST)
 			checkBottom = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_BOTTOM);
 		
-		if (solEnabled = RobotMap.Lift.LIFT_SOL != RobotMap.DOES_NOT_EXIST)
-			sol = new Solenoid(RobotMap.Lift.LIFT_SOL);
+		if (grabSolEnabled = RobotMap.Lift.LIFT_GRAB_SOL != RobotMap.DOES_NOT_EXIST)
+			grabSol = new Solenoid(RobotMap.Lift.LIFT_GRAB_SOL);
+
+		if (brakeSolEnabled = RobotMap.Lift.LIFT_BRAKE_SOL != RobotMap.DOES_NOT_EXIST)
+			brakeSol = new Solenoid(RobotMap.Lift.LIFT_BRAKE_SOL);
 	}
 	
 	public static LiftSubsystem getInstance() {
@@ -96,15 +100,24 @@ public class LiftSubsystem extends BasicSubsystem {
 		setLift(STOPPED, 0);
 	}
 	
-	public boolean getPosition() {
-		return solEnabled ? sol.get() : OPEN;
+	public boolean getGrabPosition() {
+		return grabSolEnabled ? grabSol.get() : OPEN;
 	}
 	
-	public void setPosition(boolean position) {
-		if (solEnabled)
-			sol.set(position);
+	public void setGrabPosition(boolean position) {
+		if (grabSolEnabled)
+			grabSol.set(position);
 	}
 
+	public boolean getBrakePosition(){
+		return brakeSolEnabled ? brakeSol.get() : UNBRAKE;
+	}
+	
+	public void setBrakePosition(boolean pos){
+		if (brakeSolEnabled)
+			brakeSol.set(pos);
+	}
+	
 	public void updateSmartDashboard() {
 		
 	}

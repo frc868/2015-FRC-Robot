@@ -57,7 +57,7 @@ public class OI {
     
 	public OI() {
 		
-		driver = new ControllerMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.LOGITECH, true);
+		driver = new ControllerMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.PS4, true);
 		operator = new ControllerMap(new Joystick(RobotMap.OPERATOR_PORT), ControllerMap.LOGITECH, true);
 		
 		autonChoice = createChoices("Auton Choices", AutonChooser.AUTON_CHOICES);
