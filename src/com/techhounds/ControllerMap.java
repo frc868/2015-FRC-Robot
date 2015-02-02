@@ -15,6 +15,10 @@ public class ControllerMap {
             LT = 7, START = 8, BACK = 9, LEFT_HORIZONTAL = 10,
             RIGHT_HORIZONTAL = 11, LEFT_VERTICAL = 12, RIGHT_VERTICAL = 13;
     
+    //This is for PS4
+    public static final int CROSS = 0, CIRCLE = 1, SQUARE = 2, TRIANGLE = 3, R1 = 4, R2 = 5, L1 = 6,
+    		L2 = 7, OPTIONS = 8, SHARAE = 9;
+    
     //These are magic numbers
     public static final int RIGHT = 0, LEFT = 1, UP = 2, DOWN = 3, DIAG_UP_RIGHT = 4,
     		DIAG_UP_LEFT = 5, DIAG_DOWN_RIGHT = 6, DIAG_DOWN_LEFT = 7;
@@ -36,7 +40,7 @@ public class ControllerMap {
     private static final int[] ps3 =        { 1, 2, 3, 4, 6, 10, 5, 9, 8, 7, 1, 4, 2, 5};
     
     /** PS4 Controller */
-    private static final int[] ps4 =		{};
+    private static final int[] ps4 =		{ 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 0, 2, 1, 5};
     
     private static final double DEADZONE = 0.05;
     
