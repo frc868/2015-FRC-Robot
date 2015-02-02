@@ -15,7 +15,7 @@ public class PassiveStopSubsystem extends BasicSubsystem {
 	public static boolean STOP = true;
 	public static boolean OPEN = false;
 	
-	private boolean solEnabled = false;
+	private boolean solEnabled;
 	
 	private Solenoid sol;
 	

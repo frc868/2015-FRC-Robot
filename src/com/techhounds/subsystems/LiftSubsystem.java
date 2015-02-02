@@ -24,15 +24,15 @@ public class LiftSubsystem extends BasicSubsystem {
 	private Solenoid sol;
 	private DigitalInput checkTop, checkBottom;
 	
-	public double power = 0;
+	private double power = 0;
 	private int direction = STOPPED;
-	private boolean motorsEnabled = false, solEnabled = false, topEnabled = false, bottomEnabled = false;
+	private boolean motorsEnabled, solEnabled, topEnabled, bottomEnabled;
 	
 	private LiftSubsystem() {
 		super("LiftSubsystem");
 		
-		if (motorsEnabled = RobotMap.Lift.LIFT_MOTOR_1 != RobotMap.DOES_NOT_EXIST &&
-				RobotMap.Lift.LIFT_MOTOR_2 != RobotMap.DOES_NOT_EXIST)
+		if (motorsEnabled = (RobotMap.Lift.LIFT_MOTOR_1 != RobotMap.DOES_NOT_EXIST &&
+				RobotMap.Lift.LIFT_MOTOR_2 != RobotMap.DOES_NOT_EXIST))
 			motors = new MultiMotor(
 						new Victor[]{
 								new Victor(RobotMap.Lift.LIFT_MOTOR_1),
