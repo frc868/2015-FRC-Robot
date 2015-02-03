@@ -16,11 +16,14 @@ public class BinSubsystem extends BasicSubsystem {
     
 	public static BinSubsystem instance;
 	
-	private boolean motorEnabled, grabEnabled, tiltEnabled, topEnabled, bottomEnabled;
+	public static final double COUNT_TO_FEET = 1;
+	
+	private boolean motorEnabled, grabEnabled, tiltEnabled, topEnabled, bottomEnabled, encEnabled;
 	
 	private Victor motor;
 	private Solenoid grabSol, tiltSol;
 	private DigitalInput checkTop, checkBottom;
+	private Counter enc;
 	
 	public static final int STOPPED = 0, DOWN = 1, UP = 2;
 	public static final double LIFT_POWER = 1;
@@ -47,6 +50,11 @@ public class BinSubsystem extends BasicSubsystem {
 		
 		if(topEnabled = RobotMap.Bin.TOP_CHECK != RobotMap.DOES_NOT_EXIST)
 			checkTop = new DigitalInput(RobotMap.Bin.TOP_CHECK);
+		
+		if (encEnabled = RobotMap.Bin.ENCODER != RobotMap.DOES_NOT_EXIST){
+			enc = new Counter(RobotMap.Bin.ENCODER);
+			enc.setDistancePerPulse(COUNT_TO_FEET);
+		}
 	}
 	
 	public static BinSubsystem getInstance() {
@@ -110,6 +118,19 @@ public class BinSubsystem extends BasicSubsystem {
 		setBin(STOPPED, 0);
 	}
 
+	public double getEncCount(){
+		return encEnabled ? enc.get() : 0;
+	}
+	
+	public double getEncHeight(){
+		return encEnabled ? enc.getDistance() : 0;
+	}
+	
+	public void resetEncHeight(){
+		if(encEnabled)
+			enc.reset();
+	}
+	
     public void initDefaultCommand() {
 
     }

@@ -29,6 +29,9 @@ public class RunLift extends Command{
 			lift.setBrakePosition(LiftSubsystem.BRAKE);
 		else
 			lift.setBrakePosition(LiftSubsystem.UNBRAKE);
+		
+		if (lift.isAtBottom())
+			lift.resetEncHeight();
 	}
 
 	protected boolean isFinished() {

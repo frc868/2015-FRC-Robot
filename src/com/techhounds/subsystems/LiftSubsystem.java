@@ -5,6 +5,7 @@ import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 import com.techhounds.commands.lift.RunLift;
 
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
@@ -17,6 +18,8 @@ public class LiftSubsystem extends BasicSubsystem {
 	private static LiftSubsystem instance;
 	
 	public static final double LIFT_POWER = 0.5;
+	public static final double COUNT_TO_FEET = 1;
+	
 	public static final int UP = 1, DOWN = 2, STOPPED = 3;
 	public static final boolean CLOSED = false, OPEN = true;
 	public static final boolean BRAKE = false, UNBRAKE = true;
@@ -24,10 +27,11 @@ public class LiftSubsystem extends BasicSubsystem {
 	private MultiMotor motors;
 	private Solenoid grabSol, brakeSol;
 	private DigitalInput checkTop, checkBottom;
+	private Counter enc;
 	
 	private double power = 0;
 	private int direction = STOPPED;
-	private boolean motorsEnabled, grabSolEnabled, brakeSolEnabled, topEnabled, bottomEnabled;
+	private boolean motorsEnabled, grabSolEnabled, brakeSolEnabled, topEnabled, bottomEnabled, encEnabled;
 	
 	private LiftSubsystem() {
 		super("LiftSubsystem");
@@ -52,6 +56,11 @@ public class LiftSubsystem extends BasicSubsystem {
 
 		if (brakeSolEnabled = RobotMap.Lift.BRAKE_SOL != RobotMap.DOES_NOT_EXIST)
 			brakeSol = new Solenoid(RobotMap.Lift.BRAKE_SOL);
+		
+		if (encEnabled = RobotMap.Lift.ENCODER != RobotMap.DOES_NOT_EXIST){
+			enc = new Counter(RobotMap.Lift.ENCODER);
+			enc.setDistancePerPulse(COUNT_TO_FEET);
+		}
 	}
 	
 	public static LiftSubsystem getInstance() {
@@ -115,6 +124,19 @@ public class LiftSubsystem extends BasicSubsystem {
 	public void setBrakePosition(boolean pos){
 		if (brakeSolEnabled)
 			brakeSol.set(pos);
+	}
+	
+	public double getEncCount(){
+		return encEnabled ? enc.get() : 0;
+	}
+	
+	public double getEncHeight(){
+		return encEnabled ? enc.getDistance() : 0;
+	}
+	
+	public void resetEncHeight(){
+		if (encEnabled)
+			enc.reset();
 	}
 	
 	public void updateSmartDashboard() {
