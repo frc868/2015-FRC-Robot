@@ -32,12 +32,12 @@ public class LiftSubsystem extends BasicSubsystem {
 	private LiftSubsystem() {
 		super("LiftSubsystem");
 		
-		if (motorsEnabled = (RobotMap.Lift.LIFT_MOTOR_1 != RobotMap.DOES_NOT_EXIST &&
-				RobotMap.Lift.LIFT_MOTOR_2 != RobotMap.DOES_NOT_EXIST))
+		if (motorsEnabled = (RobotMap.Lift.MOTOR_1 != RobotMap.DOES_NOT_EXIST &&
+				RobotMap.Lift.MOTOR_2 != RobotMap.DOES_NOT_EXIST))
 			motors = new MultiMotor(
 						new Victor[]{
-								new Victor(RobotMap.Lift.LIFT_MOTOR_1),
-								new Victor(RobotMap.Lift.LIFT_MOTOR_2)},
+								new Victor(RobotMap.Lift.MOTOR_1),
+								new Victor(RobotMap.Lift.MOTOR_2)},
 						new boolean[]{false, false}
 					);
 			
@@ -47,11 +47,11 @@ public class LiftSubsystem extends BasicSubsystem {
 		if (bottomEnabled = RobotMap.Lift.DIGITAL_INPUT_BOTTOM != RobotMap.DOES_NOT_EXIST)
 			checkBottom = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_BOTTOM);
 		
-		if (grabSolEnabled = RobotMap.Lift.LIFT_GRAB_SOL != RobotMap.DOES_NOT_EXIST)
-			grabSol = new Solenoid(RobotMap.Lift.LIFT_GRAB_SOL);
+		if (grabSolEnabled = RobotMap.Lift.GRAB_SOL != RobotMap.DOES_NOT_EXIST)
+			grabSol = new Solenoid(RobotMap.Lift.GRAB_SOL);
 
-		if (brakeSolEnabled = RobotMap.Lift.LIFT_BRAKE_SOL != RobotMap.DOES_NOT_EXIST)
-			brakeSol = new Solenoid(RobotMap.Lift.LIFT_BRAKE_SOL);
+		if (brakeSolEnabled = RobotMap.Lift.BRAKE_SOL != RobotMap.DOES_NOT_EXIST)
+			brakeSol = new Solenoid(RobotMap.Lift.BRAKE_SOL);
 	}
 	
 	public static LiftSubsystem getInstance() {
