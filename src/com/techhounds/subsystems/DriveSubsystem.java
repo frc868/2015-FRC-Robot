@@ -86,6 +86,7 @@ public class DriveSubsystem extends BasicSubsystem {
 		return instance;
 	}
 	
+	//If you have questions about this, ask Evan <3 <3 <3 XOXO
 	public void driveWithGamepad() {
 		double powerMag, steerMag;
     	boolean posPower, posSteer;

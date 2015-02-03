@@ -103,9 +103,8 @@ public class LEDSubsystem extends BasicSubsystem {
 	}
 	
 	public void sendToAll(byte data){
-		for(int i = 0; i < LED_LIST.length; i++){
+		for(int i = 0; i < LED_LIST.length; i++)
 			send(i, data);
-		}
 	}
 
     public void initDefaultCommand() {

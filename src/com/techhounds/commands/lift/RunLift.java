@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class RunLift extends Command{
 	
-	LiftSubsystem lift;
+	private LiftSubsystem lift;
 	
 	public RunLift() {
 		lift = LiftSubsystem.getInstance();

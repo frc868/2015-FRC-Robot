@@ -55,9 +55,8 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public static LiftSubsystem getInstance() {
-		if (instance == null) {
+		if (instance == null)
 			instance = new LiftSubsystem();
-		}
 		return instance;
 	}
 	

@@ -4,9 +4,9 @@ import com.techhounds.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.Timer;
 
-/*
- * Author Shaurya Doger*/
-
+/**
+ * @author Shaurya Doger
+ */
 public class DriveTime extends Command {
 	
 	private DriveSubsystem drive;

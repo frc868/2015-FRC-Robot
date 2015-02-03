@@ -5,7 +5,7 @@ import com.techhounds.subsystems.LiftSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * @author Anonymous
  */
 public class SetLift extends Command {
 	

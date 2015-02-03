@@ -5,7 +5,7 @@ import com.techhounds.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * @author Anonymous :6
  */
 public class SetDriveMode extends Command {
 	

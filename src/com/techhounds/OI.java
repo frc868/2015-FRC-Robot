@@ -26,38 +26,38 @@ public class OI {
 	private SendableChooser autonChoice;
 		
 	//Driver buttons
-	private final int toggleForward = ControllerMap.START;
-    private final int toggleHalf = ControllerMap.BACK;
-    private final int liftUp = ControllerMap.Y;
-    private final int liftDown = ControllerMap.A;
-    private final int liftIn = ControllerMap.X;
-    private final int liftOut = ControllerMap.B;
-    private final int binsUp = ControllerMap.UP;
-    private final int binsDown = ControllerMap.DOWN;
-    private final int binsOpen = ControllerMap.LEFT;
-    private final int binsClose = ControllerMap.RIGHT;
-    private final int binsTiltUp = ControllerMap.LB;
-    private final int binsTiltDown = ControllerMap.LT;
-    private final int togglePassive = ControllerMap.RB;
+	private final int toggleForward = 	PS4Map.OPTIONS;
+    private final int toggleHalf = 		PS4Map.SHARE;
+    private final int liftUp = 			PS4Map.TRIANGLE;
+    private final int liftDown = 		PS4Map.CROSS;
+    private final int liftIn = 			PS4Map.SQUARE;
+    private final int liftOut = 		PS4Map.CIRCLE;
+    private final int binsUp = 			PS4Map.UP;
+    private final int binsDown = 		PS4Map.DOWN;
+    private final int binsOpen = 		PS4Map.LEFT;
+    private final int binsClose = 		PS4Map.RIGHT;
+    private final int binsTiltUp = 		PS4Map.L1;
+    private final int binsTiltDown = 	PS4Map.L2;
+    private final int togglePassive = 	PS4Map.R1;
     
     //Tweaker buttons
-  	private final int opToggleForward = ControllerMap.START;
-    private final int opPushHalf = ControllerMap.RT;
-    private final int opLiftUp = ControllerMap.Y;
-    private final int opLiftDown = ControllerMap.A;
-    private final int opLiftIn = ControllerMap.X;
-    private final int opLiftOut = ControllerMap.B;
-    private final int opBinsUp = ControllerMap.UP;
-    private final int opBinsDown = ControllerMap.DOWN;
-    private final int opBinsOpen = ControllerMap.LEFT;
-    private final int opBinsClose = ControllerMap.RIGHT;
-    private final int opBinsTiltUp = ControllerMap.LB;
-    private final int opBinsTiltDown = ControllerMap.LT;
-    private final int opTogglePassive = ControllerMap.RB;
+  	private final int opToggleForward = 	ControllerMap.START;
+    private final int opPushHalf = 			ControllerMap.RT;
+    private final int opLiftUp = 			ControllerMap.Y;
+    private final int opLiftDown = 			ControllerMap.A;
+    private final int opLiftIn = 			ControllerMap.X;
+    private final int opLiftOut = 			ControllerMap.B;
+    private final int opBinsUp = 			ControllerMap.UP;
+    private final int opBinsDown = 			ControllerMap.DOWN;
+    private final int opBinsOpen = 			ControllerMap.LEFT;
+    private final int opBinsClose = 		ControllerMap.RIGHT;
+    private final int opBinsTiltUp = 		ControllerMap.LB;
+    private final int opBinsTiltDown = 		ControllerMap.LT;
+    private final int opTogglePassive = 	ControllerMap.RB;
     
 	public OI() {
 		
-		driver = new ControllerMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.PS4, true);
+		driver = new PS4Map(new Joystick(RobotMap.DRIVER_PORT));
 		operator = new ControllerMap(new Joystick(RobotMap.OPERATOR_PORT), ControllerMap.LOGITECH, true);
 		
 		autonChoice = createChoices("Auton Choices", AutonChooser.AUTON_CHOICES);

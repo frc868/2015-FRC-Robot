@@ -13,7 +13,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutonChooser {
 	
 	public static final String [] AUTON_CHOICES = {
-		"3 Tote with Bin",
+	//	"Totes mah goats",
+	//	"1 Tote 2 Tote Red Tote Blue Tote",
+	//	"Goats ma totes",
+	//	"Suicide run into other team",
+	//	"LED rave",
+		"Totes mah Goats",
 		"3 Tote",
 		"2 Tote with Bin",
 		"2 Tote",

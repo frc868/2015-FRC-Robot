@@ -15,21 +15,12 @@ public class ControllerMap {
             LT = 7, START = 8, BACK = 9, LEFT_HORIZONTAL = 10,
             RIGHT_HORIZONTAL = 11, LEFT_VERTICAL = 12, RIGHT_VERTICAL = 13;
     
-    //This is for PS4
-    public static final int CROSS = 0, CIRCLE = 1, SQUARE = 2, TRIANGLE = 3, R1 = 4, R2 = 5, L1 = 6,
-    		L2 = 7, OPTIONS = 8, SHARAE = 9;
-    
     //These are magic numbers
     public static final int RIGHT = 0, LEFT = 1, UP = 2, DOWN = 3, DIAG_UP_RIGHT = 4,
     		DIAG_UP_LEFT = 5, DIAG_DOWN_RIGHT = 6, DIAG_DOWN_LEFT = 7;
                 
-    //These are magic numbers
-    public static final int LOGITECH = 0, TOMEE = 1, PS3 = 2, PS4 = 3;
-    
-    private static String[] buttonName = {"A", "B", "X", "Y", "RB", "RT", "LB",
-            "LT", "START", "BACK"};
-    
-    private static String[] axeNames = {"LH", "RH", "LV", "RV"};
+    //These are also magic numbers
+    public static final int LOGITECH = 0, TOMEE = 1, PS3 = 2;
     
     /** TOMEE Cannot get the whole DPad */
     private static final int[] tomee =      { 3, 2, 4, 1, 8, 6, 7, 5, 10, 9, 1, 3, 2, 5};
@@ -39,14 +30,11 @@ public class ControllerMap {
     /** PS3 Cannot get DPAD UP and DOWN) */
     private static final int[] ps3 =        { 1, 2, 3, 4, 6, 10, 5, 9, 8, 7, 1, 4, 2, 5};
     
-    /** PS4 Controller */
-    private static final int[] ps4 =		{ 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 0, 2, 1, 5};
-    
-    private static final double DEADZONE = 0.05;
+    protected static final double DEADZONE = 0.05;
     
     public boolean eightDirectional;
-    private int[] buttonSet;
-    private Joystick joystick;
+    protected int[] buttonSet;
+    protected Joystick joystick;
     
     public ControllerMap(Joystick joystick){
         this(joystick, LOGITECH);
@@ -57,11 +45,9 @@ public class ControllerMap {
         this.joystick = joystick;
     }
     
-    private ControllerMap(int type){
+    protected ControllerMap(int type){
         if(type == PS3)
             buttonSet = ps3;
-        else if(type == PS4)
-        	buttonSet = ps4;
         else if(type == TOMEE)
             buttonSet = tomee;
         else
@@ -73,15 +59,6 @@ public class ControllerMap {
     public ControllerMap(Joystick joystick, int type, boolean isEightDirectional){
     	this(joystick, type);
     	eightDirectional = isEightDirectional;
-    }
-    
-    public void putValues(String label, Joystick stick){
-        for(int i = 0; i < buttonName.length; i++){
-            SmartDashboard.putBoolean(label + " " + buttonName[i], stick.getRawButton(buttonSet[i]));
-        }
-        for(int i = 0 ; i < axeNames.length; i++){
-            SmartDashboard.putNumber(label + " " + axeNames[i], stick.getRawAxis(buttonSet[i + buttonName.length]));
-        }
     }
     
     public double getLeftStickX(){

@@ -5,7 +5,7 @@ import com.techhounds.subsystems.PassiveStopSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * @author Anonymous :-{)
  */
 public class SetPassiveStop extends Command {
 

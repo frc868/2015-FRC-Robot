@@ -1,7 +1,3 @@
-/*
- * Ayon Mitra, Matt Simons, Clayton Detke, the interns
-*/
-
 package com.techhounds.commands.auton;
 
 import com.techhounds.commands.SetArms;
@@ -14,6 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.command.WaitForChildren;
 
+/**
+ * @author Ayon Mitra, Matt Simons, Clayton Detke, the interns
+ */
 public class PracticeSequential extends CommandGroup {
     
     public  PracticeSequential() {
@@ -27,7 +26,5 @@ public class PracticeSequential extends CommandGroup {
     	addSequential(new SetLift(LiftSubsystem.UP));
     	addSequential(new WaitCommand(1));
     	addSequential(new AutonDrive(10));
-
-    	
     }
 }
