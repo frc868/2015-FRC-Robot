@@ -16,10 +16,9 @@ public class Robot extends IterativeRobot {
 	private Command auton;
 	
     public void robotInit() {
-    	SmartDashboard.putString("State", "Robot Init");
     	initSubsystems();
 		OI.getInstance();
-		(new UpdateDashboard()).start();
+//		(new UpdateDashboard()).start();
 		
 		System.out.println("*******\n"+
 							"TEAM 868 CAN ROBOT NOW!\n" +
@@ -41,6 +40,7 @@ public class Robot extends IterativeRobot {
 
     	auton = AutonChooser.getSelected();
     	auton.start();
+		(new UpdateDashboard()).start();
     	
 		System.out.println("*******\n"+
 							"TEAM 868 CAN AUTON NOW!\n" +
@@ -55,7 +55,8 @@ public class Robot extends IterativeRobot {
 		System.out.println("*******\n"+
 							"TEAM 868 CAN TELEOP NOW!\n" +
 							"*******");
-		
+
+		(new UpdateDashboard()).start();
 		DriveSubsystem.getInstance().updateLEDCommand();
     }
     

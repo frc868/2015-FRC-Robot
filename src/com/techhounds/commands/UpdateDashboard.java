@@ -18,35 +18,29 @@ public class UpdateDashboard extends Command {
 		timer = new Timer();
 	}
 
-	@Override
 	protected void initialize() {
 		timer.reset();
 		timer.start();
-		SmartDashboard.putString("Update DB", "Init");
 	}
 
-	@Override
 	protected void execute() {
 		
 		if(timer.get() >= 0.3) {
 			for(BasicSubsystem sub : BasicSubsystem.subsystems)
 				sub.updateSmartDashboard();
-			SmartDashboard.putString("Update DB", "Count: " + BasicSubsystem.subsystems.size());
 			timer.reset();
 		}
 	}
 
-	@Override
 	protected boolean isFinished() {
 		return false;
 	}
 
-	@Override
 	protected void end() {
-		SmartDashboard.putString("Update DB", "End");
+		
 	}
 
-	@Override
-	protected void interrupted() {	}
-
+	protected void interrupted() {	
+		end();
+	}
 }

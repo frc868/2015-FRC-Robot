@@ -110,18 +110,18 @@ public class OI {
         Button setLiftOut = driver.createButton(liftOut);
         setLiftOut.whenPressed(new SetLift(LiftSubsystem.OPEN));
 
-		Button binsButtonUp = driver.createButton(binsUp);
+		Button binsButtonUp = driver.createDPadButton(binsUp);
 		binsButtonUp.whenPressed(new SetBin(BinSubsystem.UP));
 		binsButtonUp.whenReleased(new SetBin(BinSubsystem.STOPPED));
 		
-		Button binsButtonDown = driver.createButton(binsDown);
+		Button binsButtonDown = driver.createDPadButton(binsDown);
 		binsButtonDown.whenPressed(new SetBin(BinSubsystem.DOWN));
 		binsButtonDown.whenReleased(new SetBin(BinSubsystem.STOPPED));
 		
-		Button binsButtonOpen = driver.createButton(binsOpen);
+		Button binsButtonOpen = driver.createDPadButton(binsOpen);
 		binsButtonOpen.whenPressed(new SetBin(BinSubsystem.OPEN));
 		
-		Button binsButtonClosed = driver.createButton(binsClose);
+		Button binsButtonClosed = driver.createDPadButton(binsClose);
 		binsButtonClosed.whenPressed(new SetBin(BinSubsystem.CLOSED));
 		
 		Button binTiltUp = driver.createButton(binsTiltUp);
@@ -156,22 +156,18 @@ public class OI {
         
         Button setLiftOut = operator.createButton(opLiftOut);
         setLiftOut.whenPressed(new SetLift(LiftSubsystem.OPEN));
-		
-//		Button opBinsButtonUp = operator.createButton(opBinsUp);
+        
         Button opBinsButtonUp = operator.createDPadButton(binsUp);
 		opBinsButtonUp.whenPressed(new SetBin(BinSubsystem.UP));
 		opBinsButtonUp.whenReleased(new SetBin(BinSubsystem.STOPPED));
 		
-//		Button opBinsButtonDown = operator.createButton(opBinsDown);
 		Button opBinsButtonDown = operator.createDPadButton(opBinsDown);
 		opBinsButtonDown.whenPressed(new SetBin(BinSubsystem.DOWN));
 		opBinsButtonDown.whenReleased(new SetBin(BinSubsystem.STOPPED));
 		
-//		Button opBinsButtonOpen = operator.createButton(opBinsOpen);
 		Button opBinsButtonOpen = operator.createDPadButton(opBinsOpen);
 		opBinsButtonOpen.whenPressed(new SetBin(BinSubsystem.OPEN));
 		
-//		Button opBinsButtonClosed = operator.createButton(opBinsClose);
 		Button opBinsButtonClosed = operator.createDPadButton(opBinsClose);
 		opBinsButtonClosed.whenPressed(new SetBin(BinSubsystem.CLOSED));
 		
