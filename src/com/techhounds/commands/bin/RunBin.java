@@ -16,19 +16,20 @@ public class RunBin extends Command {
     }
 
     protected void initialize() {
-    	if(bin.getDirection() == BinSubsystem.UP && !bin.isAtTop() ||
-    		bin.getDirection() == BinSubsystem.DOWN && !bin.isAtBottom()){
+    	
+    }
+
+    protected void execute() {
+    	if((bin.getDirection() == BinSubsystem.UP && !bin.isAtTop()) ||
+        		(bin.getDirection() == BinSubsystem.DOWN && !bin.isAtBottom())){
     	}else{
     		bin.stopLift();
     	}
+    	
     	bin.setPower();
     	
     	if (bin.isAtBottom())
     		bin.resetEncHeight();
-    }
-
-    protected void execute() {
-    
     }
 
     protected boolean isFinished() {

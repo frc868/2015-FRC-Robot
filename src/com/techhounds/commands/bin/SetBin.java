@@ -19,7 +19,7 @@ public class SetBin extends Command {
     	this.power = power;
     }
     
-    public SetBin(Integer direction) {
+    public SetBin(int direction) {
     	bin = BinSubsystem.getInstance();
     	this.direction = direction;
     	this.power = BinSubsystem.LIFT_POWER;

@@ -27,14 +27,17 @@ public class RunLift extends Command{
 		
 		if (lift.getBraked()){
 			double diff = lift.getBrakeHeight() - lift.getEncHeight();
-			double pow = diff > 0 ? diff * LiftSubsystem.LIFT_POWER : 0;
+			double pow = diff > 0 ? (diff * 4) * LiftSubsystem.LIFT_POWER : 0;
 			int dir = diff > 0 ? LiftSubsystem.UP : LiftSubsystem.DOWN;
 			lift.setLift(dir, pow);
 		}
 		
-		if (lift.isAtBottom())
+		if (lift.isAtBottom()){
 			lift.resetEncHeight();
-		
+			lift.setBrake(!lift.getBraked());//resets brake height to 0
+			lift.setBrake(!lift.getBraked());
+		}
+			
 		lift.setPower();
 	}
 

@@ -21,10 +21,10 @@ public class LiftSubsystem extends BasicSubsystem {
 	private static LiftSubsystem instance;
 	
 	public static final double LIFT_POWER = 0.5;
-	public static final double COUNT_TO_FEET = 1 / 500.0;
+	public static final double COUNT_TO_FEET = (24.0 / 12) / 497.0;
 	
 	public static final int UP = 1, DOWN = 2, STOPPED = 3;
-	public static final boolean CLOSED = false, OPEN = true;
+	public static final boolean CLOSED = true, OPEN = false;
 	public static final boolean BRAKE = false, UNBRAKE = true;
 	
 	private MultiMotor motors;
@@ -96,7 +96,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public void setPower() {
-		if ((isAtTop() && power > 0) || (isAtBottom() && power < 0))//should be redundant
+		if ((isAtTop() && getDirection() == UP) || (isAtBottom() && getDirection() == DOWN))//should be redundant
 			power = 0;
 		
 		if (motorsEnabled)
@@ -171,6 +171,9 @@ public class LiftSubsystem extends BasicSubsystem {
 		SmartDashboard.putNumber("Lift Enc Height", getEncHeight());
 		SmartDashboard.putBoolean("Lift Top Switch", isAtTop());
 		SmartDashboard.putBoolean("Lift Bottom Switch", isAtBottom());
+		SmartDashboard.putBoolean("Lift isBraked", getBraked());
+		SmartDashboard.putNumber("Lift Brake Height", getBrakeHeight());
+		SmartDashboard.putNumber("Lift Power", getPower());
 	}
 
 	protected void initDefaultCommand() {

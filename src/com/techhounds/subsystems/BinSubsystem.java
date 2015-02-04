@@ -1,8 +1,8 @@
 package com.techhounds.subsystems;
 
 import com.techhounds.RobotMap;
+import com.techhounds.commands.bin.RunBin;
 
-import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -26,7 +26,7 @@ public class BinSubsystem extends BasicSubsystem {
 	private Encoder enc;
 	
 	public static final int STOPPED = 0, DOWN = 1, UP = 2;
-	public static final double LIFT_POWER = 1;
+	public static final double LIFT_POWER = .5;
 	public static final boolean OPEN = true, CLOSED = false, 
 			TILT_UP = true, TILT_DOWN = false;
 	
@@ -55,6 +55,7 @@ public class BinSubsystem extends BasicSubsystem {
 			enc = new Encoder(RobotMap.Bin.ENCODER_A, RobotMap.Bin.ENCODER_B);
 			enc.setDistancePerPulse(COUNT_TO_FEET);
 		}
+		SmartDashboard.putData(this);
 	}
 	
 	public static BinSubsystem getInstance() {
@@ -68,6 +69,9 @@ public class BinSubsystem extends BasicSubsystem {
 	}
 	
 	public void setPower() {
+		if ((isAtTop() && getDirection() == UP) || (isAtBottom() && getDirection() == DOWN))//should be redundant
+			power = 0;
+		
 		if (motorEnabled)
 			motor.set(power);
 	}
@@ -94,7 +98,7 @@ public class BinSubsystem extends BasicSubsystem {
 	
 	public void setBin(int dir, double power) {
 		power = Math.max(Math.min(power, 1), 0);
-		if(dir == UP) {
+		if(dir == DOWN) {
 			power *= -1;
 		} else if (dir == STOPPED) {
 			power = 0;
@@ -132,7 +136,7 @@ public class BinSubsystem extends BasicSubsystem {
 	}
 	
     public void initDefaultCommand() {
-
+    	setDefaultCommand(new RunBin());
     }
 
 	public void updateSmartDashboard() {
@@ -140,6 +144,8 @@ public class BinSubsystem extends BasicSubsystem {
 		SmartDashboard.putNumber("Bin Enc Height", getEncHeight());
 		SmartDashboard.putBoolean("Bin Top Switch", isAtTop());
 		SmartDashboard.putBoolean("Bin Bottom Switch", isAtBottom());
+		SmartDashboard.putNumber("Bin Direction", getDirection());
+		SmartDashboard.putNumber("Bin Power", getPower());
 	}
 }
 

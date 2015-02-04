@@ -43,14 +43,16 @@ public class DriveSubsystem extends BasicSubsystem {
 				new SpeedController[]{
 						new Victor(RobotMap.Drive.LEFT_MOTOR_1),
 						new Victor(RobotMap.Drive.LEFT_MOTOR_2),
-						new Victor(RobotMap.Drive.LEFT_MOTOR_3),},
+						//new Victor(RobotMap.Drive.LEFT_MOTOR_3),
+						},
 				new boolean[]{false, false, false});
 		
 		rightMotors = new MultiMotor(
 				new SpeedController[]{
 						new Victor(RobotMap.Drive.RIGHT_MOTOR_1),
 						new Victor(RobotMap.Drive.RIGHT_MOTOR_2),
-						new Victor(RobotMap.Drive.RIGHT_MOTOR_3),},
+						//new Victor(RobotMap.Drive.RIGHT_MOTOR_3),
+						},
 				new boolean[]{false, false, false});
 		
 		if(leftEncEnabled = RobotMap.Drive.LEFT_ENC != RobotMap.DOES_NOT_EXIST){
@@ -121,7 +123,7 @@ public class DriveSubsystem extends BasicSubsystem {
         
         if (isHalfSpeed){
         	powerMag *= .5;
-        	steerMag *= .3;
+        	steerMag *= .6;
         }
         
         if (!posPower)
@@ -284,7 +286,7 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public void updateSmartDashboard(){
-        SmartDashboard.putData("drivePID", drivePID);
+//        SmartDashboard.putData("drivePID", drivePID);
     }
     
     public void initDefaultCommand() {
