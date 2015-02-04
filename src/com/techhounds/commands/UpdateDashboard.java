@@ -4,6 +4,7 @@ import com.techhounds.subsystems.BasicSubsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Atif Niyaz
@@ -21,6 +22,7 @@ public class UpdateDashboard extends Command {
 	protected void initialize() {
 		timer.reset();
 		timer.start();
+		SmartDashboard.putString("Update DB", "Init");
 	}
 
 	@Override
@@ -29,7 +31,7 @@ public class UpdateDashboard extends Command {
 		if(timer.get() >= 0.3) {
 			for(BasicSubsystem sub : BasicSubsystem.subsystems)
 				sub.updateSmartDashboard();
-			
+			SmartDashboard.putString("Update DB", "Count: " + BasicSubsystem.subsystems.size());
 			timer.reset();
 		}
 	}
@@ -40,7 +42,9 @@ public class UpdateDashboard extends Command {
 	}
 
 	@Override
-	protected void end() {	}
+	protected void end() {
+		SmartDashboard.putString("Update DB", "End");
+	}
 
 	@Override
 	protected void interrupted() {	}

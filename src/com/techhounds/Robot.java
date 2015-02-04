@@ -4,16 +4,19 @@ package com.techhounds;
 import com.techhounds.commands.UpdateDashboard;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.subsystems.*;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	
 	private Command auton;
 	
     public void robotInit() {
+    	SmartDashboard.putString("State", "Robot Init");
     	initSubsystems();
 		OI.getInstance();
 		(new UpdateDashboard()).start();

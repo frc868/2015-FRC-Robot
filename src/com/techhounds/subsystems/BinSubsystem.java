@@ -4,10 +4,9 @@ import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //add second solonoid
 /**
@@ -24,7 +23,7 @@ public class BinSubsystem extends BasicSubsystem {
 	private Victor motor;
 	private Solenoid grabSol, tiltSol;
 	private DigitalInput checkTop, checkBottom;
-	private Counter enc;
+	private Encoder enc;
 	
 	public static final int STOPPED = 0, DOWN = 1, UP = 2;
 	public static final double LIFT_POWER = 1;
@@ -52,8 +51,8 @@ public class BinSubsystem extends BasicSubsystem {
 		if(topEnabled = RobotMap.Bin.TOP_CHECK != RobotMap.DOES_NOT_EXIST)
 			checkTop = new DigitalInput(RobotMap.Bin.TOP_CHECK);
 		
-		if (encEnabled = RobotMap.Bin.ENCODER != RobotMap.DOES_NOT_EXIST){
-			enc = new Counter(RobotMap.Bin.ENCODER);
+		if (encEnabled = RobotMap.Bin.ENCODER_A != RobotMap.DOES_NOT_EXIST){
+			enc = new Encoder(RobotMap.Bin.ENCODER_A, RobotMap.Bin.ENCODER_B);
 			enc.setDistancePerPulse(COUNT_TO_FEET);
 		}
 	}

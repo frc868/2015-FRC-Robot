@@ -7,8 +7,10 @@ import com.techhounds.commands.lift.RunLift;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -28,7 +30,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	private MultiMotor motors;
 	private Solenoid grabSol, brakeSol;
 	private DigitalInput checkTop, checkBottom;
-	private Counter enc;
+	private Encoder enc;
 	
 	private double brakeHeight = 0;
 	private boolean braked = false;
@@ -36,15 +38,17 @@ public class LiftSubsystem extends BasicSubsystem {
 	private int direction = STOPPED;
 	private boolean motorsEnabled, grabSolEnabled, brakeSolEnabled, topEnabled, bottomEnabled, encEnabled;
 	
+	private Victor[] array = new Victor[]{
+			new Victor(RobotMap.Lift.MOTOR_1),
+			new Victor(RobotMap.Lift.MOTOR_2)};
+	
 	private LiftSubsystem() {
 		super("LiftSubsystem");
 		
 		if (motorsEnabled = (RobotMap.Lift.MOTOR_1 != RobotMap.DOES_NOT_EXIST &&
 				RobotMap.Lift.MOTOR_2 != RobotMap.DOES_NOT_EXIST))
-			motors = new MultiMotor(
-						new Victor[]{
-								new Victor(RobotMap.Lift.MOTOR_1),
-								new Victor(RobotMap.Lift.MOTOR_2)},
+			motors = new MultiMotor(array
+						,
 						new boolean[]{false, false}
 					);
 			
@@ -60,10 +64,13 @@ public class LiftSubsystem extends BasicSubsystem {
 		if (brakeSolEnabled = RobotMap.Lift.BRAKE_SOL != RobotMap.DOES_NOT_EXIST)
 			brakeSol = new Solenoid(RobotMap.Lift.BRAKE_SOL);
 		
-		if (encEnabled = RobotMap.Lift.ENCODER != RobotMap.DOES_NOT_EXIST){
-			enc = new Counter(RobotMap.Lift.ENCODER);
+		if (encEnabled = RobotMap.Lift.ENCODER_A != RobotMap.DOES_NOT_EXIST){
+			enc = new Encoder(RobotMap.Lift.ENCODER_A, RobotMap.Lift.ENCODER_B);
 			enc.setDistancePerPulse(COUNT_TO_FEET);
 		}
+		LiveWindow.addSensor("Lift", "Encoder", enc);
+		LiveWindow.addActuator("Lift", "Motor1", array[0]);
+		LiveWindow.addActuator("Lift", "Motor2", array[1]);
 	}
 	
 	public static LiftSubsystem getInstance() {

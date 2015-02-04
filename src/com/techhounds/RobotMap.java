@@ -27,17 +27,19 @@ public class RobotMap {
 		public static final int DIGITAL_INPUT_BOTTOM = 1;
 		public static final int GRAB_SOL = 0;
 		public static final int BRAKE_SOL = DOES_NOT_EXIST;
-		public static final int PASSIVE_STOP_SOL = DOES_NOT_EXIST;
-		public static final int ENCODER = DOES_NOT_EXIST;
+		public static final int PASSIVE_STOP_SOL = 3;
+		public static final int ENCODER_A = 4;
+		public static final int ENCODER_B = 5;
 	}
 
 	public static class Bin{
 		public static final int GRABSOL = 1;
 		public static final int TILTSOL = 2;
 		public static final int MOTOR = 8;
-		public static final int TOP_CHECK = 2;
+		public static final int TOP_CHECK = 9;
 		public static final int DOWN_CHECK = 3;
-		public static final int ENCODER = DOES_NOT_EXIST;
+		public static final int ENCODER_A = 6;
+		public static final int ENCODER_B = 7;
 	}
 	
 	public static class Arms{

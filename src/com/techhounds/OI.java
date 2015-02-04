@@ -115,8 +115,8 @@ public class OI {
 		Button binTiltDown = driver.createButton(binsTiltDown);
 		binTiltDown.whenPressed(new SetBin(BinSubsystem.TILT_DOWN, 0));
 		
-		Button togglePassiveStop = driver.createButton(togglePassive);
-		togglePassiveStop.whenPressed(new SetPassiveStop());
+//		Button togglePassiveStop = driver.createButton(togglePassive);
+//		togglePassiveStop.whenPressed(new SetPassiveStop());
     }
     
     public void initOperator() {
@@ -162,8 +162,8 @@ public class OI {
 		Button opBinTiltDown = operator.createButton(opBinsTiltDown);
 		opBinTiltDown.whenPressed(new SetBin(BinSubsystem.TILT_DOWN, 0));
 		
-		Button opTogglePassiveStop = operator.createButton(opTogglePassive);
-		opTogglePassiveStop.whenPressed(new SetPassiveStop());
+//		Button opTogglePassiveStop = operator.createButton(opTogglePassive);
+//		opTogglePassiveStop.whenPressed(new SetPassiveStop());
 		
     }
     

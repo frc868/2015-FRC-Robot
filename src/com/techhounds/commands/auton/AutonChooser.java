@@ -18,7 +18,7 @@ public class AutonChooser {
 	//	"Goats ma totes",
 	//	"Suicide run into other team",
 	//	"LED rave",
-		"Totes mah Goats",
+		"3 Tote with Bin",
 		"3 Tote",
 		"2 Tote with Bin",
 		"2 Tote",
