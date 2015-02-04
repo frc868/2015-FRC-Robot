@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //add second solonoid
 /**
  * @author Alex Fleig, Matt Simones, Ayon Mitra, Clayton Detke, Adam Foster
@@ -16,7 +17,7 @@ public class BinSubsystem extends BasicSubsystem {
     
 	public static BinSubsystem instance;
 	
-	public static final double COUNT_TO_FEET = 1;
+	public static final double COUNT_TO_FEET = 1 / 500.0;
 	
 	private boolean motorEnabled, grabEnabled, tiltEnabled, topEnabled, bottomEnabled, encEnabled;
 	
@@ -136,7 +137,10 @@ public class BinSubsystem extends BasicSubsystem {
     }
 
 	public void updateSmartDashboard() {
-		
+		SmartDashboard.putNumber("Bin Enc Count", getEncCount());
+		SmartDashboard.putNumber("Bin Enc Height", getEncHeight());
+		SmartDashboard.putBoolean("Bin Top Switch", isAtTop());
+		SmartDashboard.putBoolean("Bin Bottom Switch", isAtBottom());
 	}
 }
 

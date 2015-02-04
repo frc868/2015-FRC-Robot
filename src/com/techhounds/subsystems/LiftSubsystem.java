@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Alex Fleig, Matt Simons, Ayon Mitra, Clayton Detke
@@ -18,7 +19,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	private static LiftSubsystem instance;
 	
 	public static final double LIFT_POWER = 0.5;
-	public static final double COUNT_TO_FEET = 1;
+	public static final double COUNT_TO_FEET = 1 / 500.0;
 	
 	public static final int UP = 1, DOWN = 2, STOPPED = 3;
 	public static final boolean CLOSED = false, OPEN = true;
@@ -159,7 +160,10 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public void updateSmartDashboard() {
-		
+		SmartDashboard.putNumber("Lift Enc Count", getEncCount());
+		SmartDashboard.putNumber("Lift Enc Height", getEncHeight());
+		SmartDashboard.putBoolean("Lift Top Switch", isAtTop());
+		SmartDashboard.putBoolean("Lift Bottom Switch", isAtBottom());
 	}
 
 	protected void initDefaultCommand() {
