@@ -29,6 +29,8 @@ public class LiftSubsystem extends BasicSubsystem {
 	private DigitalInput checkTop, checkBottom;
 	private Counter enc;
 	
+	private double brakeHeight = 0;
+	private boolean braked = false;
 	private double power = 0;
 	private int direction = STOPPED;
 	private boolean motorsEnabled, grabSolEnabled, brakeSolEnabled, topEnabled, bottomEnabled, encEnabled;
@@ -86,6 +88,9 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public void setPower() {
+		if ((isAtTop() && power > 0) || (isAtBottom() && power < 0))//should be redundant
+			power = 0;
+		
 		if (motorsEnabled)
 			motors.set(power);
 	}
@@ -137,6 +142,20 @@ public class LiftSubsystem extends BasicSubsystem {
 	public void resetEncHeight(){
 		if (encEnabled)
 			enc.reset();
+	}
+	
+	public boolean getBraked(){
+		return braked;
+	}
+	
+	public void setBrake(boolean isBraked){
+		braked = isBraked;
+		if (braked)
+			brakeHeight = getEncHeight();
+	}
+	
+	public double getBrakeHeight(){
+		return brakeHeight;
 	}
 	
 	public void updateSmartDashboard() {

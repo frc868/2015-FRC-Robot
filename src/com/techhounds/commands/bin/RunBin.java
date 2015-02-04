@@ -22,6 +22,9 @@ public class RunBin extends Command {
     		bin.stopLift();
     	}
     	bin.setPower();
+    	
+    	if (bin.isAtBottom())
+    		bin.resetEncHeight();
     }
 
     protected void execute() {

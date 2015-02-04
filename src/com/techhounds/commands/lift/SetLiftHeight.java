@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class MoveLiftHeight extends Command {
+public class SetLiftHeight extends Command {
 
 	private static final double TOLERANCE = .25;
 	
@@ -17,7 +17,7 @@ public class MoveLiftHeight extends Command {
 	private double initHeight;
 	private double finalHeight;
 	
-    public MoveLiftHeight(double dist, int direction) {
+    public SetLiftHeight(double dist, int direction) {
     	lift = LiftSubsystem.getInstance();
     	this.dist = dist;
     	this.direction = direction;
@@ -25,7 +25,9 @@ public class MoveLiftHeight extends Command {
 
     protected void initialize() {
     	initHeight = lift.getEncHeight();
+    	lift.setBrake(false);
     	lift.setLift(direction, LiftSubsystem.LIFT_POWER);
+    	
     	if (direction == LiftSubsystem.UP)
     		finalHeight = initHeight + dist;
     	else if (direction == LiftSubsystem.DOWN)
@@ -44,6 +46,7 @@ public class MoveLiftHeight extends Command {
 
     protected void end() {
     	lift.setLift(LiftSubsystem.STOPPED, 0);
+    	lift.setBrake(true);
     }
 
     protected void interrupted() {

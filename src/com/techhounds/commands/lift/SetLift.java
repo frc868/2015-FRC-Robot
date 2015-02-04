@@ -37,8 +37,10 @@ public class SetLift extends Command {
     }
 
     protected void initialize() {
-    	if (direction != null)
+    	if (direction != null){
     		lift.setLift(direction, power);
+    		lift.setBrake(power == 0 || direction == LiftSubsystem.STOPPED);
+    	}
     	if (grabPosition != null)
     		lift.setGrabPosition(grabPosition);
     	if (brakePosition != null)

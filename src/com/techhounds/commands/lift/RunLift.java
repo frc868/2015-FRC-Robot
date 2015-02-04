@@ -10,7 +10,8 @@ public class RunLift extends Command{
 	
 	public RunLift() {
 		lift = LiftSubsystem.getInstance();
-		requires(lift);		
+		requires(lift);
+		setInterruptible(false);
 	}
 
 	protected void initialize() {
@@ -23,15 +24,18 @@ public class RunLift extends Command{
 		} else {
 			lift.stopLift();
 		}
-		lift.setPower();
 		
-		if (lift.getPower() == 0)
-			lift.setBrakePosition(LiftSubsystem.BRAKE);
-		else
-			lift.setBrakePosition(LiftSubsystem.UNBRAKE);
+		if (lift.getBraked()){
+			double diff = lift.getBrakeHeight() - lift.getEncHeight();
+			double pow = diff > 0 ? diff * LiftSubsystem.LIFT_POWER : 0;
+			int dir = diff > 0 ? LiftSubsystem.UP : LiftSubsystem.DOWN;
+			lift.setLift(dir, pow);
+		}
 		
 		if (lift.isAtBottom())
 			lift.resetEncHeight();
+		
+		lift.setPower();
 	}
 
 	protected boolean isFinished() {

@@ -83,11 +83,11 @@ public class OI {
 
         Button setLiftUp = driver.createButton(liftUp);
         setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
-        setLiftUp.whenReleased(new SetLift(LiftSubsystem.UP, 0));
+        setLiftUp.whenReleased(new SetLift(LiftSubsystem.STOPPED));
         
         Button setLiftDown = driver.createButton(liftDown);
         setLiftDown.whenPressed(new SetLift(LiftSubsystem.DOWN));
-        setLiftDown.whenReleased(new SetLift(LiftSubsystem.DOWN, 0));
+        setLiftDown.whenReleased(new SetLift(LiftSubsystem.STOPPED));
 
         Button setLiftIn = driver.createButton(liftIn);
         setLiftIn.whenPressed(new SetLift(LiftSubsystem.CLOSED));
@@ -130,11 +130,11 @@ public class OI {
 
         Button setLiftUp = operator.createButton(opLiftUp);
         setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
-        setLiftUp.whenReleased(new SetLift(LiftSubsystem.UP, 0));
+        setLiftUp.whenReleased(new SetLift(LiftSubsystem.STOPPED));
         
         Button setLiftDown = operator.createButton(opLiftDown);
         setLiftDown.whenPressed(new SetLift(LiftSubsystem.DOWN));
-        setLiftDown.whenReleased(new SetLift(LiftSubsystem.DOWN, 0));
+        setLiftDown.whenReleased(new SetLift(LiftSubsystem.STOPPED));
 
         Button setLiftIn = operator.createButton(opLiftIn);
         setLiftIn.whenPressed(new SetLift(LiftSubsystem.CLOSED));
