@@ -12,10 +12,12 @@ public class CompSubsystem extends Subsystem {
 	
 	private Compressor comp;
 	
+	private boolean compEnabled;
+	
 	private CompSubsystem() {
 		super("CompSubsystem");
 		
-		if (RobotMap.Compressor.COMP != RobotMap.DOES_NOT_EXIST){
+		if (compEnabled = RobotMap.Compressor.COMP != RobotMap.DOES_NOT_EXIST){
 			comp = new Compressor(RobotMap.Compressor.COMP);
 			comp.start();
 		}

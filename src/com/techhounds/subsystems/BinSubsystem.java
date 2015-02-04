@@ -81,11 +81,11 @@ public class BinSubsystem extends BasicSubsystem {
 	}
 	
 	public boolean isAtTop(){
-		return topEnabled ? checkTop.get() : true;
+		return topEnabled ? !checkTop.get() : true;
 	}
 	
 	public boolean isAtBottom(){
-		return bottomEnabled ? checkBottom.get() : true;
+		return bottomEnabled ? !checkBottom.get() : true;
 	}
 	
 	public int getDirection() {
