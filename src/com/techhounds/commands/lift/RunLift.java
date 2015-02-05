@@ -34,8 +34,7 @@ public class RunLift extends Command{
 		
 		if (lift.isAtBottom()){
 			lift.resetEncHeight();
-			lift.setBrake(!lift.getBraked());//resets brake height to 0
-			lift.setBrake(!lift.getBraked());
+			lift.setBrakeHeight(0);
 		}
 			
 		lift.setPower();

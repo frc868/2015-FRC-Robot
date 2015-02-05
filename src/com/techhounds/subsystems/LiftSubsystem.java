@@ -158,12 +158,19 @@ public class LiftSubsystem extends BasicSubsystem {
 	
 	public void setBrake(boolean isBraked){
 		braked = isBraked;
-		if (braked)
+		if (braked){
 			brakeHeight = getEncHeight();
+			if (getDirection() == DOWN)
+				brakeHeight -= .1; 
+		}
 	}
 	
 	public double getBrakeHeight(){
 		return brakeHeight;
+	}
+	
+	public void setBrakeHeight(double height){
+		brakeHeight = height;
 	}
 	
 	public void updateSmartDashboard() {
