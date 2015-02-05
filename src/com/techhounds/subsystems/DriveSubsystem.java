@@ -80,6 +80,8 @@ public class DriveSubsystem extends BasicSubsystem {
 				});
 		drivePID.setOutputRange(-1, 1);
 		drivePID.setAbsoluteTolerance(1);
+		
+		twoPersonDrive= true;
 	}
 	
 	public static DriveSubsystem getInstance() {
