@@ -1,4 +1,4 @@
-package com.techhounds.commands.auton.tote;
+package com.techhounds.commands.auton;
 
 import com.techhounds.subsystems.CameraSubsystem;
 import com.techhounds.subsystems.DriveSubsystem;

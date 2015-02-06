@@ -1,4 +1,4 @@
-package com.techhounds.commands.auton.tote;
+package com.techhounds.commands.auton;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -12,10 +12,4 @@ public class ThreeToteBin extends CommandGroup {
 	public ThreeToteBin(boolean collectBin) {
 		
 	}
-	
-	@Override
-	protected boolean isFinished() {
-		return super.isFinished() || !DriverStation.getInstance().isAutonomous();
-	}
-
 }

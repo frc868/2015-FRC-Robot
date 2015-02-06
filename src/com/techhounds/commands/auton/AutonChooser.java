@@ -1,9 +1,6 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.OI;
-import com.techhounds.commands.auton.tote.OneToteBin;
-import com.techhounds.commands.auton.tote.ThreeToteBin;
-import com.techhounds.commands.auton.tote.TwoToteBin;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -25,7 +22,6 @@ public class AutonChooser {
 		"1 Tote with Bin",
 		"1 Tote",
 		"Bin",
-		"Push",
 		"Move To Auto Zone",
 		"Do Nothing"}; // TODO: Come up with more possibilities. These are the basic.
 
@@ -39,7 +35,6 @@ public class AutonChooser {
 				new OneToteBin(true),
 				new OneToteBin(false),
 				new CollectBin(),
-				new Push(),
 				new MoveToAutoZone(),
 				new DoNothing()
 		};
