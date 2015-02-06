@@ -24,7 +24,9 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final double LIFT_POWER = 0.5;
 	public static final double COUNT_TO_FEET = (24.0 / 12) / 497.0;
 	public static final double IRFactor = 1;
-	
+	public static final double UP_BRAKE_MULT = 10;
+	public static final double DOWN_BRAKE_MULT = 4; 
+			
 	public static final int UP = 1, DOWN = 2, STOPPED = 3;
 	public static final boolean CLOSED = true, OPEN = false;
 	public static final boolean BRAKE = false, UNBRAKE = true;
@@ -35,6 +37,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	private AnalogInput IRSensor;
 	private Encoder enc;
 	
+	private double brakeMult = 4;
 	private double brakeHeight = 0;
 	private boolean braked = false;
 	private double power = 0;
@@ -161,8 +164,11 @@ public class LiftSubsystem extends BasicSubsystem {
 		braked = isBraked;
 		if (braked){
 			brakeHeight = getEncHeight();
-			if (getDirection() == DOWN)
+			if (getDirection() == DOWN){
 				brakeHeight -= .1; 
+				setBrakeMult(DOWN_BRAKE_MULT);
+			}else if (getDirection() == UP)
+				setBrakeMult(UP_BRAKE_MULT);
 		}
 	}
 	
@@ -172,6 +178,14 @@ public class LiftSubsystem extends BasicSubsystem {
 	
 	public void setBrakeHeight(double height){
 		brakeHeight = height;
+	}
+
+	public double getBrakeMult(){
+		return brakeMult;
+	}
+	
+	public void setBrakeMult(double mult){
+		brakeMult = mult;
 	}
 	
 	public double getIRDist(){

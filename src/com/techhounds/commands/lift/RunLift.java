@@ -31,7 +31,7 @@ public class RunLift extends Command{
 		
 		if (lift.getBraked()){
 			double diff = lift.getBrakeHeight() - lift.getEncHeight();
-			double pow = diff > 0 ? (diff * 4) * LiftSubsystem.LIFT_POWER : 0;
+			double pow = diff > 0 ? diff * lift.getBrakeMult() * LiftSubsystem.LIFT_POWER : 0;
 			int dir = diff > 0 ? LiftSubsystem.UP : LiftSubsystem.DOWN;
 			lift.setLift(dir, pow);
 			stop.setPosition(PassiveStopSubsystem.STOP);
