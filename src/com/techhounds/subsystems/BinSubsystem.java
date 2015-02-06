@@ -17,6 +17,7 @@ public class BinSubsystem extends BasicSubsystem {
 	public static BinSubsystem instance;
 	
 	public static final double COUNT_TO_FEET = 1 / 500.0;
+	public static final double MIN_TILT_DOWN_HEIGHT = 0;
 	
 	private boolean motorEnabled, grabEnabled, tiltEnabled, topEnabled, bottomEnabled, encEnabled;
 	

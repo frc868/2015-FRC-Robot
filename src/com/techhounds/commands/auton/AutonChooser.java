@@ -30,7 +30,7 @@ public class AutonChooser {
 				new OneToteBin(true),
 				new OneToteBin(false),
 				new CollectBin(),
-				new MoveToAutoZone(),
+				new MoveToAutoZone(5),
 				new DoNothing()
 		};
 		

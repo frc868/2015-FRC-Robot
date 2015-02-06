@@ -30,6 +30,9 @@ public class RunBin extends Command {
     	
     	if (bin.isAtBottom())
     		bin.resetEncHeight();
+    	
+//    	if (bin.getEncHeight() <= BinSubsystem.MIN_TILT_DOWN_HEIGHT)
+//    		bin.setTiltSol(BinSubsystem.TILT_UP);
     }
 
     protected boolean isFinished() {

@@ -1,6 +1,7 @@
 package com.techhounds;
 
 import com.techhounds.commands.auton.AutonChooser;
+import com.techhounds.commands.auton.DriveToClosestTote;
 import com.techhounds.commands.bin.SetBin;
 import com.techhounds.commands.driving.OperatorHalfDrive;
 import com.techhounds.commands.driving.ToggleDriveMode;
@@ -188,7 +189,7 @@ public class OI {
     }
     
     public void initSD() {
-    	
+    	SmartDashboard.putData("Goto Closest Tote", new DriveToClosestTote());
     }
     
     public int getAutonChoice() {
