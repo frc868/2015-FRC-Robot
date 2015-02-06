@@ -186,6 +186,7 @@ public class LiftSubsystem extends BasicSubsystem {
 		SmartDashboard.putBoolean("Lift isBraked", getBraked());
 		SmartDashboard.putNumber("Lift Brake Height", getBrakeHeight());
 		SmartDashboard.putNumber("Lift Power", getPower());
+		SmartDashboard.putNumber("Lift IR Sensor", getIRDist());
 	}
 
 	protected void initDefaultCommand() {

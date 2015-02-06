@@ -29,7 +29,7 @@ public class RobotMap {
 		public static final int DIGITAL_INPUT_BOTTOM = 1;
 		public static final int GRAB_SOL = 0;
 		public static final int BRAKE_SOL = DOES_NOT_EXIST;
-		public static final int PASSIVE_STOP_SOL = 3;
+		public static final int PASSIVE_STOP_SOL = DOES_NOT_EXIST;//3;
 		public static final int ENCODER_A = 4;
 		public static final int ENCODER_B = 5;
 		public static final int IRSensor = 3;
