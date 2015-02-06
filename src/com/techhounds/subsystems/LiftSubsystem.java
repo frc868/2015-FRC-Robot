@@ -5,6 +5,7 @@ import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 import com.techhounds.commands.lift.RunLift;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -22,6 +23,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	
 	public static final double LIFT_POWER = 0.5;
 	public static final double COUNT_TO_FEET = (24.0 / 12) / 497.0;
+	public static final double IRFactor = 1;
 	
 	public static final int UP = 1, DOWN = 2, STOPPED = 3;
 	public static final boolean CLOSED = true, OPEN = false;
@@ -30,25 +32,24 @@ public class LiftSubsystem extends BasicSubsystem {
 	private MultiMotor motors;
 	private Solenoid grabSol, brakeSol;
 	private DigitalInput checkTop, checkBottom;
+	private AnalogInput IRSensor;
 	private Encoder enc;
 	
 	private double brakeHeight = 0;
 	private boolean braked = false;
 	private double power = 0;
 	private int direction = STOPPED;
-	private boolean motorsEnabled, grabSolEnabled, brakeSolEnabled, topEnabled, bottomEnabled, encEnabled;
-	
-	private Victor[] array = new Victor[]{
-			new Victor(RobotMap.Lift.MOTOR_1),
-			new Victor(RobotMap.Lift.MOTOR_2)};
+	private boolean motorsEnabled, grabSolEnabled, brakeSolEnabled, topEnabled, bottomEnabled, encEnabled, IREnabled;
 	
 	private LiftSubsystem() {
 		super("LiftSubsystem");
 		
 		if (motorsEnabled = (RobotMap.Lift.MOTOR_1 != RobotMap.DOES_NOT_EXIST &&
 				RobotMap.Lift.MOTOR_2 != RobotMap.DOES_NOT_EXIST))
-			motors = new MultiMotor(array
-						,
+			motors = new MultiMotor(
+						new Victor[]{
+							new Victor(RobotMap.Lift.MOTOR_1),
+							new Victor(RobotMap.Lift.MOTOR_2)},
 						new boolean[]{false, false}
 					);
 			
@@ -68,9 +69,9 @@ public class LiftSubsystem extends BasicSubsystem {
 			enc = new Encoder(RobotMap.Lift.ENCODER_A, RobotMap.Lift.ENCODER_B);
 			enc.setDistancePerPulse(COUNT_TO_FEET);
 		}
-		LiveWindow.addSensor("Lift", "Encoder", enc);
-		LiveWindow.addActuator("Lift", "Motor1", array[0]);
-		LiveWindow.addActuator("Lift", "Motor2", array[1]);
+		
+		if (IREnabled = RobotMap.Lift.IRSensor != RobotMap.DOES_NOT_EXIST)
+			IRSensor = new AnalogInput(RobotMap.Lift.IRSensor);
 	}
 	
 	public static LiftSubsystem getInstance() {
@@ -171,6 +172,10 @@ public class LiftSubsystem extends BasicSubsystem {
 	
 	public void setBrakeHeight(double height){
 		brakeHeight = height;
+	}
+	
+	public double getIRDist(){
+		return IREnabled ? IRSensor.getVoltage() * IRFactor : 0;
 	}
 	
 	public void updateSmartDashboard() {

@@ -7,6 +7,8 @@ public class RobotMap {
 	public static final int DRIVER_PORT = 0;
 	public static final int OPERATOR_PORT = 1;
 	
+	public static final int CAMERA_ENABLED = 1;
+	
 	public static class Drive{
 		
 		public static final int RIGHT_MOTOR_1 = 0;
@@ -30,6 +32,7 @@ public class RobotMap {
 		public static final int PASSIVE_STOP_SOL = 3;
 		public static final int ENCODER_A = 4;
 		public static final int ENCODER_B = 5;
+		public static final int IRSensor = 3;
 	}
 
 	public static class Bin{
