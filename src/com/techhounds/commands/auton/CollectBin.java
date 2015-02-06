@@ -8,9 +8,4 @@ public class CollectBin extends CommandGroup {
 	public CollectBin() {
 		
 	}
-	
-	@Override
-	protected boolean isFinished() {
-		return super.isFinished() || !DriverStation.getInstance().isAutonomous();
-	}
 }

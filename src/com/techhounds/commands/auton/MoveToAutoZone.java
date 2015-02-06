@@ -8,9 +8,4 @@ public class MoveToAutoZone extends CommandGroup {
 	public MoveToAutoZone() {
 		
 	}
-	
-	@Override
-	protected boolean isFinished() {
-		return super.isFinished() || !DriverStation.getInstance().isAutonomous();
-	}
 }
