@@ -23,7 +23,6 @@ public class LiftSubsystem extends BasicSubsystem {
 	
 	public static final double LIFT_POWER = 0.5;
 	public static final double COUNT_TO_FEET = (24.0 / 12) / 497.0;
-	public static final double IRFactor = 1;
 	public static final double UP_BRAKE_MULT = 10;
 	public static final double DOWN_BRAKE_MULT = 4; 
 			
@@ -37,7 +36,9 @@ public class LiftSubsystem extends BasicSubsystem {
 	private AnalogInput IRSensor;
 	private Encoder enc;
 	
-	private double brakeMult = 4;
+	private double IRBadCount = 0;
+	private double lastIRVal = 0;
+	private double brakeMult = 10;
 	private double brakeHeight = 0;
 	private boolean braked = false;
 	private double power = 0;
@@ -189,7 +190,35 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public double getIRDist(){
-		return IREnabled ? IRSensor.getVoltage() * IRFactor : 0;
+		if (IREnabled)
+			return voltsToDist(IRSensor.getVoltage());
+		return 0;
+	}
+	
+	public double getIRAvgDist(){
+		if (IREnabled){
+			double val = voltsToDist(IRSensor.getVoltage());
+			if (val / lastIRVal > 1.25 || val / lastIRVal < .75){
+				val = lastIRVal;
+				IRBadCount++;
+			}else
+				IRBadCount = 0;
+			
+			if (IRBadCount > 3){
+				IRBadCount = 0;
+				return lastIRVal = voltsToDist(IRSensor.getVoltage());
+			}else
+				return val;
+		}
+		return 0;
+	}
+	
+	private double voltsToDist(double volts){
+		return 1.3958 * volts * volts * volts * volts +
+				-13.74 * volts * volts * volts +
+				49.609 * volts * volts +
+				-80.118 * volts +
+				53.37;
 	}
 	
 	public void updateSmartDashboard() {
@@ -200,7 +229,10 @@ public class LiftSubsystem extends BasicSubsystem {
 		SmartDashboard.putBoolean("Lift isBraked", getBraked());
 		SmartDashboard.putNumber("Lift Brake Height", getBrakeHeight());
 		SmartDashboard.putNumber("Lift Power", getPower());
-		SmartDashboard.putNumber("Lift IR Sensor", getIRDist());
+		SmartDashboard.putNumber("Lift IR Dist", getIRDist());
+		SmartDashboard.putNumber("Lift IR Voltage", IRSensor.getVoltage());
+		SmartDashboard.putNumber("Lift IR Avg Volt", IRSensor.getAverageVoltage());
+		SmartDashboard.putNumber("Lift IR Avd Dist", getIRAvgDist());
 	}
 
 	protected void initDefaultCommand() {

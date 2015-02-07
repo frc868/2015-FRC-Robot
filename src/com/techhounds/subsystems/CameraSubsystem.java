@@ -38,7 +38,8 @@ public class CameraSubsystem extends BasicSubsystem {
     }
 
 	public void updateSmartDashboard() {
-		
+		SmartDashboard.putNumber("Camera Power", getDistValue());
+		SmartDashboard.putNumber("Camera Turn", getOffsetValue());
 	}
 }
 
