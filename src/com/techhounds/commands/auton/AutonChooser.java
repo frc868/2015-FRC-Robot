@@ -16,7 +16,6 @@ public class AutonChooser {
 		"2 Tote",
 		"1 Tote with Bin",
 		"1 Tote",
-		"Bin",
 		"Move To Auto Zone",
 		"Do Nothing"}; // TODO: Come up with more possibilities. These are the basic.
 
@@ -29,7 +28,6 @@ public class AutonChooser {
 				new TwoToteBin(false),
 				new OneToteBin(true),
 				new OneToteBin(false),
-				new CollectBin(),
 				new MoveToAutoZone(5),
 				new DoNothing()
 		};

@@ -2,6 +2,7 @@ package com.techhounds;
 
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.DriveToClosestTote;
+import com.techhounds.commands.auton.OneToteBin;
 import com.techhounds.commands.bin.SetBin;
 import com.techhounds.commands.driving.DriveTime;
 import com.techhounds.commands.driving.OperatorHalfDrive;
@@ -191,7 +192,8 @@ public class OI {
     
     public void initSD() {
     	SmartDashboard.putData("Goto Closest Tote", new DriveToClosestTote());
-    	SmartDashboard.putData("Drive 3 sec", new DriveTime(3, .5));
+    	SmartDashboard.putData("Drive Back 1.5 sec", new DriveTime(1.5, -.5));
+    	SmartDashboard.putData("One Crate", new OneToteBin());
     }
     
     public int getAutonChoice() {

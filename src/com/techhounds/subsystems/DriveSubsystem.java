@@ -43,7 +43,7 @@ public class DriveSubsystem extends BasicSubsystem {
 				new SpeedController[]{
 						new Victor(RobotMap.Drive.LEFT_MOTOR_1),
 						new Victor(RobotMap.Drive.LEFT_MOTOR_2),
-						//new Victor(RobotMap.Drive.LEFT_MOTOR_3),
+						new Victor(RobotMap.Drive.LEFT_MOTOR_3),
 						},
 				new boolean[]{false, false, false});
 		
@@ -51,9 +51,9 @@ public class DriveSubsystem extends BasicSubsystem {
 				new SpeedController[]{
 						new Victor(RobotMap.Drive.RIGHT_MOTOR_1),
 						new Victor(RobotMap.Drive.RIGHT_MOTOR_2),
-						//new Victor(RobotMap.Drive.RIGHT_MOTOR_3),
+						new Victor(RobotMap.Drive.RIGHT_MOTOR_3),
 						},
-				new boolean[]{false, false, false});
+				new boolean[]{true, true, true});
 		
 		if(leftEncEnabled = RobotMap.Drive.LEFT_ENC != RobotMap.DOES_NOT_EXIST){
 			leftEnc = new Counter(RobotMap.Drive.LEFT_ENC);
@@ -136,7 +136,7 @@ public class DriveSubsystem extends BasicSubsystem {
         double left = powerMag + steerMag;
         double right = powerMag - steerMag;
         
-        setPower(left, -right);
+        setPower(left, right);
 	}
 	
 	public double getLeftDistance(){
@@ -248,7 +248,7 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public double getRightPower(){
-        return -rightMotors.get();
+        return rightMotors.get();
     }
     
     public double getLeftPower(){
@@ -289,6 +289,8 @@ public class DriveSubsystem extends BasicSubsystem {
     
     public void updateSmartDashboard(){
 //        SmartDashboard.putData("drivePID", drivePID);
+    	SmartDashboard.putNumber("Left Drive Power", getLeftPower());
+    	SmartDashboard.putNumber("Right Drive Power", getRightPower());
     }
     
     public void initDefaultCommand() {

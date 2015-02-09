@@ -29,7 +29,7 @@ public class MultiMotor implements SpeedController {
     }
     
     public double get(int index) {
-        return motors[index].get();
+        return inverted[index] ? -motors[index].get() : motors[index].get();
         //return motors[index].get() / multiplier[i];
     }
 
