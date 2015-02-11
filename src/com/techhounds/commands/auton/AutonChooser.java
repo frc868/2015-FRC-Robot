@@ -10,11 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutonChooser {
 	
 	public static final String [] AUTON_CHOICES = {
-		"3 Tote with Bin",
 		"3 Tote",
 		"2 Tote with Bin",
 		"2 Tote",
-		"1 Tote with Bin",
 		"1 Tote",
 		"Move To Auto Zone",
 		"Do Nothing"}; // TODO: Come up with more possibilities. These are the basic.
@@ -22,12 +20,10 @@ public class AutonChooser {
 	public static Command getSelected() {
 		
 		Command [] options = new Command[] {
-				new ThreeToteBin(true),
-				new ThreeToteBin(false),
+				new ThreeTote(),
 				new TwoToteBin(true),
 				new TwoToteBin(false),
-				new OneToteBin(true),
-				new OneToteBin(false),
+				new FirstTote(),
 				new MoveToAutoZone(5),
 				new DoNothing()
 		};

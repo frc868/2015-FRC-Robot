@@ -1,5 +1,6 @@
 package com.techhounds.commands.auton;
 
+import com.techhounds.commands.driving.WaitForIR;
 import com.techhounds.commands.lift.SetLift;
 import com.techhounds.commands.lift.SetLiftHeight;
 import com.techhounds.subsystems.LiftSubsystem;
@@ -8,16 +9,13 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class OneToteBin extends CommandGroup {
+public class FirstTote extends CommandGroup {
 	
-	public OneToteBin() {
-		this(false);
-	}
-	
-	public OneToteBin(boolean collectBin) {
-		addSequential(new DriveToClosestTote());
+	public FirstTote() {
+		addParallel(new DriveToClosestTote());
+		addSequential(new WaitForIR(6, 2));
 		addSequential(new SetLift(LiftSubsystem.CLOSED));
-		addSequential(new WaitCommand(1));
-		addSequential(new SetLiftHeight(1, LiftSubsystem.UP));
+		addSequential(new WaitCommand(.3));
+		addSequential(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
 	}
 }

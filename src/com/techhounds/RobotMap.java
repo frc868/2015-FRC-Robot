@@ -36,8 +36,8 @@ public class RobotMap {
 	}
 
 	public static class Bin{
-		public static final int GRABSOL = 2;
-		public static final int TILTSOL = 1;
+		public static final int GRABSOL = 1;
+		public static final int TILTSOL = 2;
 		public static final int MOTOR = 8;
 		public static final int TOP_CHECK = 9;
 		public static final int DOWN_CHECK = 3;
