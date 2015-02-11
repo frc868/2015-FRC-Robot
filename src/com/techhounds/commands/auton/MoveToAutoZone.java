@@ -9,6 +9,7 @@ public class MoveToAutoZone extends Command {
 	private DriveSubsystem drive;
 	private double time;
 	private final double power = .75;
+	private boolean noEnc = false;
 
 	public MoveToAutoZone(double time) {
 		drive = DriveSubsystem.getInstance();
@@ -16,9 +17,17 @@ public class MoveToAutoZone extends Command {
 		
 		this.time = time;
 	}
+	
+	public MoveToAutoZone(double time, boolean noEnc){
+		this(time);
+		this.noEnc = noEnc;
+	}
 
 	protected void initialize() {
-		drive.setPower(power);
+		if (noEnc)
+			drive.setPower(power, power * .6);
+		else
+			drive.setPower(power);
 	}
 
 	protected void execute() {

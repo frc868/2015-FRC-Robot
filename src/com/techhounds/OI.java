@@ -2,11 +2,14 @@ package com.techhounds;
 
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.DriveToClosestTote;
+import com.techhounds.commands.auton.MoveToAutoZone;
 import com.techhounds.commands.auton.NextTote;
 import com.techhounds.commands.auton.FirstTote;
 import com.techhounds.commands.auton.ThreeTote;
+import com.techhounds.commands.auton.TwoTote;
 import com.techhounds.commands.bin.SetBin;
 import com.techhounds.commands.driving.DriveTime;
+import com.techhounds.commands.driving.ManualTurn;
 import com.techhounds.commands.driving.OperatorHalfDrive;
 import com.techhounds.commands.driving.ToggleDriveMode;
 import com.techhounds.commands.lift.SetLift;
@@ -193,12 +196,14 @@ public class OI {
     }
     
     public void initSD() {
+    	SmartDashboard.putData("Move To Zone", new MoveToAutoZone(1.5));
     	SmartDashboard.putData("Goto Closest Tote", new DriveToClosestTote());
-    	SmartDashboard.putData("Drive Back 1.5 sec", new DriveTime(1.5, -.5));
     	SmartDashboard.putData("One Crate", new FirstTote());
     	SmartDashboard.putData("Next Crate", new NextTote(false));
     	SmartDashboard.putData("Final Crate", new NextTote(true));
-    	SmartDashboard.putData("Three Tote", new ThreeTote());
+    	SmartDashboard.putData("Two Tote", new TwoTote());
+    	SmartDashboard.putData("Three Tote", new ThreeTote(true));
+    	SmartDashboard.putData("Turn 90?", new ManualTurn(.75, 1, false));
     }
     
     public int getAutonChoice() {

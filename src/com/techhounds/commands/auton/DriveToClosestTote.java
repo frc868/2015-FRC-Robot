@@ -16,6 +16,7 @@ public class DriveToClosestTote extends Command {
 	
 	private double power = 0;
 	private double offset = 0;
+	private Double minTime;
 	
     public DriveToClosestTote() {
     	drive = DriveSubsystem.getInstance();
@@ -24,7 +25,13 @@ public class DriveToClosestTote extends Command {
     	requires(cam);
     }
 
+    public DriveToClosestTote(double minTime){
+    	this();
+    	this.minTime = minTime;
+    }
+    
     protected void initialize() {
+    	
     }
 
     protected void execute() {
@@ -35,7 +42,7 @@ public class DriveToClosestTote extends Command {
     }
 
     protected boolean isFinished() {
-        return power < .1;
+        return minTime == null ? power < .1 : timeSinceInitialized() >= minTime && power < .1;
     }
 
     protected void end() {
