@@ -5,6 +5,7 @@ import com.techhounds.commands.auton.DriveToClosestTote;
 import com.techhounds.commands.auton.MoveToAutoZone;
 import com.techhounds.commands.auton.NextTote;
 import com.techhounds.commands.auton.FirstTote;
+import com.techhounds.commands.auton.ReverseThreeTote;
 import com.techhounds.commands.auton.ThreeTote;
 import com.techhounds.commands.auton.TwoTote;
 import com.techhounds.commands.bin.SetBin;
@@ -12,7 +13,9 @@ import com.techhounds.commands.driving.DriveTime;
 import com.techhounds.commands.driving.ManualTurn;
 import com.techhounds.commands.driving.OperatorHalfDrive;
 import com.techhounds.commands.driving.ToggleDriveMode;
+import com.techhounds.commands.lift.NextLevel;
 import com.techhounds.commands.lift.SetLift;
+import com.techhounds.commands.lift.SetLiftHeight;
 import com.techhounds.commands.lift.SetPassiveStop;
 import com.techhounds.subsystems.*;
 
@@ -40,13 +43,17 @@ public class OI {
 	private final int liftDown = 		PS4Map.CROSS;
 	private final int liftIn = 			PS4Map.SQUARE;
 	private final int liftOut = 		PS4Map.CIRCLE;
-	private final int binsUp = 			PS4Map.UP;
-	private final int binsDown = 		PS4Map.DOWN;
-	private final int binsOpen = 		PS4Map.LEFT;
-	private final int binsClose = 		PS4Map.RIGHT;
-	private final int binsTiltUp = 		PS4Map.L1;
-	private final int binsTiltDown = 	PS4Map.L2;
-	private final int togglePassive = 	PS4Map.R1;
+	private final int oneToteHeight = 	PS4Map.R1;
+	private final int toteOffGround = 	PS4Map.R2;
+	private final int upOneLevel = 		PS4Map.UP;
+	private final int downOneLevel = 	PS4Map.DOWN;
+//	private final int binsUp = 			PS4Map.UP;
+//	private final int binsDown = 		PS4Map.DOWN;
+//	private final int binsOpen = 		PS4Map.LEFT;
+//	private final int binsClose = 		PS4Map.RIGHT;
+//	private final int binsTiltUp = 		PS4Map.L1;
+//	private final int binsTiltDown = 	PS4Map.L2;
+//	private final int togglePassive = 	PS4Map.R1;
 
 //	private final int toggleForward = 	ControllerMap.START;
 //    private final int toggleHalf = 		ControllerMap.RT;
@@ -54,13 +61,13 @@ public class OI {
 //    private final int liftDown = 		ControllerMap.A;
 //    private final int liftIn = 			ControllerMap.X;
 //    private final int liftOut = 		ControllerMap.B;
-//    private final int binsUp = 			ControllerMap.UP;
-//    private final int binsDown = 		ControllerMap.DOWN;
-//    private final int binsOpen = 		ControllerMap.LEFT;
-//    private final int binsClose = 		ControllerMap.RIGHT;
-//    private final int binsTiltUp = 		ControllerMap.LB;
-//    private final int binsTiltDown = 	ControllerMap.LT;
-//    private final int togglePassive = 	ControllerMap.RB;
+////    private final int binsUp = 			ControllerMap.UP;
+////    private final int binsDown = 		ControllerMap.DOWN;
+////    private final int binsOpen = 		ControllerMap.LEFT;
+////    private final int binsClose = 		ControllerMap.RIGHT;
+////    private final int binsTiltUp = 		ControllerMap.LB;
+////    private final int binsTiltDown = 	ControllerMap.LT;
+////    private final int togglePassive = 	ControllerMap.RB;
     
 	
     //Tweaker buttons
@@ -70,13 +77,17 @@ public class OI {
     private final int opLiftDown = 			ControllerMap.A;
     private final int opLiftIn = 			ControllerMap.X;
     private final int opLiftOut = 			ControllerMap.B;
-    private final int opBinsUp = 			ControllerMap.UP;
-    private final int opBinsDown = 			ControllerMap.DOWN;
-    private final int opBinsOpen = 			ControllerMap.LEFT;
-    private final int opBinsClose = 		ControllerMap.RIGHT;
-    private final int opBinsTiltUp = 		ControllerMap.LB;
-    private final int opBinsTiltDown = 		ControllerMap.LT;
-    private final int opTogglePassive = 	ControllerMap.RB;
+	private final int opOneToteHeight = 	ControllerMap.RB;
+	private final int opToteOffGround = 	ControllerMap.RT;
+	private final int opUpOneLevel = 		ControllerMap.UP;
+	private final int opDownOneLevel = 		ControllerMap.DOWN;
+//    private final int opBinsUp = 			ControllerMap.UP;
+//    private final int opBinsDown = 			ControllerMap.DOWN;
+//    private final int opBinsOpen = 			ControllerMap.LEFT;
+//    private final int opBinsClose = 		ControllerMap.RIGHT;
+//    private final int opBinsTiltUp = 		ControllerMap.LB;
+//    private final int opBinsTiltDown = 		ControllerMap.LT;
+//    private final int opTogglePassive = 	ControllerMap.RB;
     
 	public OI() {
 		
@@ -104,7 +115,6 @@ public class OI {
         
 //        Button toggleHalfSpeed = driver.createButton(toggleHalf);
 //        toggleHalfSpeed.whenPressed(new ToggleDriveMode(false, true, false));
-        
         Button toggleHalfSpeed = driver.createButton(toggleHalf);
         toggleHalfSpeed.whenPressed(new OperatorHalfDrive(true));
         toggleHalfSpeed.whenReleased(new OperatorHalfDrive(false));
@@ -123,25 +133,37 @@ public class OI {
         Button setLiftOut = driver.createButton(liftOut);
         setLiftOut.whenPressed(new SetLift(LiftSubsystem.OPEN));
 
-		Button binsButtonUp = driver.createDPadButton(binsUp);
-		binsButtonUp.whenPressed(new SetBin(BinSubsystem.UP));
-		binsButtonUp.whenReleased(new SetBin(BinSubsystem.STOPPED));
-		
-		Button binsButtonDown = driver.createDPadButton(binsDown);
-		binsButtonDown.whenPressed(new SetBin(BinSubsystem.DOWN));
-		binsButtonDown.whenReleased(new SetBin(BinSubsystem.STOPPED));
-		
-		Button binsButtonOpen = driver.createDPadButton(binsOpen);
-		binsButtonOpen.whenPressed(new SetBin(BinSubsystem.OPEN));
-		
-		Button binsButtonClosed = driver.createDPadButton(binsClose);
-		binsButtonClosed.whenPressed(new SetBin(BinSubsystem.CLOSED));
-		
-		Button binTiltUp = driver.createButton(binsTiltUp);
-		binTiltUp.whenPressed(new SetBin(BinSubsystem.TILT_UP, 0));
-		
-		Button binTiltDown = driver.createButton(binsTiltDown);
-		binTiltDown.whenPressed(new SetBin(BinSubsystem.TILT_DOWN, 0));
+        Button oneHeight = driver.createButton(oneToteHeight);
+        oneHeight.whenPressed(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
+        
+        Button offGround = driver.createButton(toteOffGround);
+        offGround.whenPressed(new SetLiftHeight(LiftSubsystem.OFF_GROUND_HEIGHT));
+        
+        Button upLevel = driver.createButton(upOneLevel);
+        upLevel.whenPressed(new NextLevel(LiftSubsystem.UP));
+
+        Button downLevel = driver.createButton(downOneLevel);
+        downLevel.whenPressed(new NextLevel(LiftSubsystem.DOWN));
+        
+//		Button binsButtonUp = driver.createDPadButton(binsUp);
+//		binsButtonUp.whenPressed(new SetBin(BinSubsystem.UP));
+//		binsButtonUp.whenReleased(new SetBin(BinSubsystem.STOPPED));
+//		
+//		Button binsButtonDown = driver.createDPadButton(binsDown);
+//		binsButtonDown.whenPressed(new SetBin(BinSubsystem.DOWN));
+//		binsButtonDown.whenReleased(new SetBin(BinSubsystem.STOPPED));
+//		
+//		Button binsButtonOpen = driver.createDPadButton(binsOpen);
+//		binsButtonOpen.whenPressed(new SetBin(BinSubsystem.OPEN));
+//		
+//		Button binsButtonClosed = driver.createDPadButton(binsClose);
+//		binsButtonClosed.whenPressed(new SetBin(BinSubsystem.CLOSED));
+//		
+//		Button binTiltUp = driver.createButton(binsTiltUp);
+//		binTiltUp.whenPressed(new SetBin(BinSubsystem.TILT_UP, 0));
+//		
+//		Button binTiltDown = driver.createButton(binsTiltDown);
+//		binTiltDown.whenPressed(new SetBin(BinSubsystem.TILT_DOWN, 0));
 		
 //		Button togglePassiveStop = driver.createButton(togglePassive);
 //		togglePassiveStop.whenPressed(new SetPassiveStop());
@@ -169,26 +191,38 @@ public class OI {
         
         Button setLiftOut = operator.createButton(opLiftOut);
         setLiftOut.whenPressed(new SetLift(LiftSubsystem.OPEN));
+
+        Button oneHeight = operator.createButton(opOneToteHeight);
+        oneHeight.whenPressed(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
         
-        Button opBinsButtonUp = operator.createDPadButton(binsUp);
-		opBinsButtonUp.whenPressed(new SetBin(BinSubsystem.UP));
-		opBinsButtonUp.whenReleased(new SetBin(BinSubsystem.STOPPED));
-		
-		Button opBinsButtonDown = operator.createDPadButton(opBinsDown);
-		opBinsButtonDown.whenPressed(new SetBin(BinSubsystem.DOWN));
-		opBinsButtonDown.whenReleased(new SetBin(BinSubsystem.STOPPED));
-		
-		Button opBinsButtonOpen = operator.createDPadButton(opBinsOpen);
-		opBinsButtonOpen.whenPressed(new SetBin(BinSubsystem.OPEN));
-		
-		Button opBinsButtonClosed = operator.createDPadButton(opBinsClose);
-		opBinsButtonClosed.whenPressed(new SetBin(BinSubsystem.CLOSED));
-		
-		Button opBinTiltUp = operator.createButton(opBinsTiltUp);
-		opBinTiltUp.whenPressed(new SetBin(BinSubsystem.TILT_UP, 0));
-		
-		Button opBinTiltDown = operator.createButton(opBinsTiltDown);
-		opBinTiltDown.whenPressed(new SetBin(BinSubsystem.TILT_DOWN, 0));
+        Button offGround = operator.createButton(opToteOffGround);
+        offGround.whenPressed(new SetLiftHeight(LiftSubsystem.OFF_GROUND_HEIGHT));
+        
+        Button upLevel = operator.createButton(opUpOneLevel);
+        upLevel.whenPressed(new NextLevel(LiftSubsystem.UP));
+
+        Button downLevel = operator.createButton(opDownOneLevel);
+        downLevel.whenPressed(new NextLevel(LiftSubsystem.DOWN));
+        
+//        Button opBinsButtonUp = operator.createDPadButton(binsUp);
+//		opBinsButtonUp.whenPressed(new SetBin(BinSubsystem.UP));
+//		opBinsButtonUp.whenReleased(new SetBin(BinSubsystem.STOPPED));
+//		
+//		Button opBinsButtonDown = operator.createDPadButton(opBinsDown);
+//		opBinsButtonDown.whenPressed(new SetBin(BinSubsystem.DOWN));
+//		opBinsButtonDown.whenReleased(new SetBin(BinSubsystem.STOPPED));
+//		
+//		Button opBinsButtonOpen = operator.createDPadButton(opBinsOpen);
+//		opBinsButtonOpen.whenPressed(new SetBin(BinSubsystem.OPEN));
+//		
+//		Button opBinsButtonClosed = operator.createDPadButton(opBinsClose);
+//		opBinsButtonClosed.whenPressed(new SetBin(BinSubsystem.CLOSED));
+//		
+//		Button opBinTiltUp = operator.createButton(opBinsTiltUp);
+//		opBinTiltUp.whenPressed(new SetBin(BinSubsystem.TILT_UP, 0));
+//		
+//		Button opBinTiltDown = operator.createButton(opBinsTiltDown);
+//		opBinTiltDown.whenPressed(new SetBin(BinSubsystem.TILT_DOWN, 0));
 		
 //		Button opTogglePassiveStop = operator.createButton(opTogglePassive);
 //		opTogglePassiveStop.whenPressed(new SetPassiveStop());
@@ -203,7 +237,9 @@ public class OI {
     	SmartDashboard.putData("Final Crate", new NextTote(true));
     	SmartDashboard.putData("Two Tote", new TwoTote());
     	SmartDashboard.putData("Three Tote", new ThreeTote(true));
-    	SmartDashboard.putData("Turn 90?", new ManualTurn(.75, 1, false));
+    	SmartDashboard.putData("Turn 90?", new ManualTurn(.75, 1.5, false));
+    	SmartDashboard.putData("Reverse Three Tote, Start L", new ReverseThreeTote(false, true));
+    	SmartDashboard.putData("Reverse Three Tote, Start R", new ReverseThreeTote(false, false));
     }
     
     public int getAutonChoice() {
