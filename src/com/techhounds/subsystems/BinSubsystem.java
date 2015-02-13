@@ -14,6 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class BinSubsystem extends BasicSubsystem {
     
+	/*
+	 *-----------------This Subsystem is Defunt---------------------------
+	 */
+	
 	public static BinSubsystem instance;
 	
 	public static final double COUNT_TO_FEET = 1 / 500.0;

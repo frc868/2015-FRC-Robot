@@ -14,8 +14,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	
 	private Command auton;
+	private static boolean finalRobot = false;
+	
+	public static boolean isFinal(){
+		return finalRobot;
+	}
 	
     public void robotInit() {
+    	
     	initSubsystems();
 		OI.getInstance();
 //		(new UpdateDashboard()).start();
@@ -27,13 +33,13 @@ public class Robot extends IterativeRobot {
     
     public void initSubsystems() {
     	
-    	ArmsSubsystem.getInstance();
+    	FeederSubsystem.getInstance();
     	BinSubsystem.getInstance();
     	CompSubsystem.getInstance();
     	DriveSubsystem.getInstance();
     	LEDSubsystem.getInstance().standby();
     	LiftSubsystem.getInstance();
-    	PassiveStopSubsystem.getInstance();
+    	PassiveSubsystem.getInstance();
     	CameraSubsystem.getInstance();
     }	
     

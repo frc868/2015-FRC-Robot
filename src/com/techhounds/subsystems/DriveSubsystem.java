@@ -6,6 +6,7 @@ import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 import com.techhounds.commands.driving.DriveWithGamepad;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -32,37 +33,64 @@ public class DriveSubsystem extends BasicSubsystem {
 	private MultiMotor leftMotors, rightMotors;
 	private Counter leftEnc, rightEnc;
 	
-	private final double COUNTS_TO_FEET = 0;
+	private final double COUNTS_TO_FEET = 1;
+	private final double COUNTS_TO_FEET_PRACT = 1;
 	
 	private double driveTolerance;
 
 	private DriveSubsystem() {
 		super("DriveSubsystem");
 		
-		leftMotors = new MultiMotor(
-				new SpeedController[]{
-						new Victor(RobotMap.Drive.LEFT_MOTOR_1),
-						new Victor(RobotMap.Drive.LEFT_MOTOR_2),
-						new Victor(RobotMap.Drive.LEFT_MOTOR_3),
-						},
-				new boolean[]{false, false, false});
-		
-		rightMotors = new MultiMotor(
-				new SpeedController[]{
-						new Victor(RobotMap.Drive.RIGHT_MOTOR_1),
-						new Victor(RobotMap.Drive.RIGHT_MOTOR_2),
-						new Victor(RobotMap.Drive.RIGHT_MOTOR_3),
-						},
-				new boolean[]{true, true, true});
-		
-		if(leftEncEnabled = RobotMap.Drive.LEFT_ENC != RobotMap.DOES_NOT_EXIST){
-			leftEnc = new Counter(RobotMap.Drive.LEFT_ENC);
-			leftEnc.setDistancePerPulse(COUNTS_TO_FEET);
-		}
-		
-		if(rightEncEnabled = RobotMap.Drive.RIGHT_ENC != RobotMap.DOES_NOT_EXIST){
-			rightEnc = new Counter(RobotMap.Drive.RIGHT_ENC);
-			rightEnc.setDistancePerPulse(COUNTS_TO_FEET);
+		if (Robot.isFinal()){
+			leftMotors = new MultiMotor(
+					new SpeedController[]{
+							new Victor(RobotMap.Drive.LEFT_MOTOR_1),
+							new Victor(RobotMap.Drive.LEFT_MOTOR_2)
+							},
+					new boolean[]{false, false});
+			
+			rightMotors = new MultiMotor(
+					new SpeedController[]{
+							new Victor(RobotMap.Drive.RIGHT_MOTOR_1),
+							new Victor(RobotMap.Drive.RIGHT_MOTOR_2)
+							},
+					new boolean[]{true, true});
+			
+			if(leftEncEnabled = RobotMap.Drive.LEFT_ENC != RobotMap.DOES_NOT_EXIST){
+				leftEnc = new Counter(RobotMap.Drive.LEFT_ENC);
+				leftEnc.setDistancePerPulse(COUNTS_TO_FEET);
+			}
+			
+			if(rightEncEnabled = RobotMap.Drive.RIGHT_ENC != RobotMap.DOES_NOT_EXIST){
+				rightEnc = new Counter(RobotMap.Drive.RIGHT_ENC);
+				rightEnc.setDistancePerPulse(COUNTS_TO_FEET);
+			}
+		}else{
+			leftMotors = new MultiMotor(
+					new SpeedController[]{
+							new Victor(RobotMap.Drive.LEFT_MOTOR_1_PRACT),
+							new Victor(RobotMap.Drive.LEFT_MOTOR_2_PRACT),
+							new Victor(RobotMap.Drive.LEFT_MOTOR_3_PRACT),
+							},
+					new boolean[]{false, false, false});
+			
+			rightMotors = new MultiMotor(
+					new SpeedController[]{
+							new Victor(RobotMap.Drive.RIGHT_MOTOR_1_PRACT),
+							new Victor(RobotMap.Drive.RIGHT_MOTOR_2_PRACT),
+							new Victor(RobotMap.Drive.RIGHT_MOTOR_3_PRACT),
+							},
+					new boolean[]{true, true, true});
+			
+			if(leftEncEnabled = RobotMap.Drive.LEFT_ENC_PRACT != RobotMap.DOES_NOT_EXIST){
+				leftEnc = new Counter(RobotMap.Drive.LEFT_ENC_PRACT);
+				leftEnc.setDistancePerPulse(COUNTS_TO_FEET_PRACT);
+			}
+			
+			if(rightEncEnabled = RobotMap.Drive.RIGHT_ENC_PRACT != RobotMap.DOES_NOT_EXIST){
+				rightEnc = new Counter(RobotMap.Drive.RIGHT_ENC_PRACT);
+				rightEnc.setDistancePerPulse(COUNTS_TO_FEET_PRACT);
+			}
 		}
 		
 		drivePID = new PIDController(

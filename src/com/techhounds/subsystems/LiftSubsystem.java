@@ -28,6 +28,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	
 	public static final double LIFT_POWER = 0.8;
 	public static final double COUNT_TO_FEET = (24.0 / 12) / 497.0;
+	public static final double COUNT_TO_FEET_PRACT = (24.0 / 12) / 497.0;
 	public static final double UP_BRAKE_MULT = 10;
 	public static final double DOWN_BRAKE_MULT = 4; 
 			
@@ -53,34 +54,65 @@ public class LiftSubsystem extends BasicSubsystem {
 	private LiftSubsystem() {
 		super("LiftSubsystem");
 		
-		if (motorsEnabled = (RobotMap.Lift.MOTOR_1 != RobotMap.DOES_NOT_EXIST &&
-				RobotMap.Lift.MOTOR_2 != RobotMap.DOES_NOT_EXIST))
-			motors = new MultiMotor(
-						new Victor[]{
-							new Victor(RobotMap.Lift.MOTOR_1),
-							new Victor(RobotMap.Lift.MOTOR_2)},
-						new boolean[]{false, false}
-					);
+		if (Robot.isFinal()){
+			if (motorsEnabled = (RobotMap.Lift.MOTOR_1 != RobotMap.DOES_NOT_EXIST &&
+					RobotMap.Lift.MOTOR_2 != RobotMap.DOES_NOT_EXIST))
+				motors = new MultiMotor(
+							new Victor[]{
+								new Victor(RobotMap.Lift.MOTOR_1),
+								new Victor(RobotMap.Lift.MOTOR_2)},
+							new boolean[]{false, false}
+						);
+				
+			if (topEnabled = RobotMap.Lift.DIGITAL_INPUT_TOP != RobotMap.DOES_NOT_EXIST)
+				checkTop = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_TOP);
+				
+			if (bottomEnabled = RobotMap.Lift.DIGITAL_INPUT_BOTTOM != RobotMap.DOES_NOT_EXIST)
+				checkBottom = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_BOTTOM);
 			
-		if (topEnabled = RobotMap.Lift.DIGITAL_INPUT_TOP != RobotMap.DOES_NOT_EXIST)
-			checkTop = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_TOP);
+			if (grabSolEnabled = RobotMap.Lift.GRAB_SOL != RobotMap.DOES_NOT_EXIST)
+				grabSol = new Solenoid(RobotMap.Lift.GRAB_SOL);
+	
+			if (brakeSolEnabled = RobotMap.Lift.BRAKE_SOL != RobotMap.DOES_NOT_EXIST)
+				brakeSol = new Solenoid(RobotMap.Lift.BRAKE_SOL);
 			
-		if (bottomEnabled = RobotMap.Lift.DIGITAL_INPUT_BOTTOM != RobotMap.DOES_NOT_EXIST)
-			checkBottom = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_BOTTOM);
-		
-		if (grabSolEnabled = RobotMap.Lift.GRAB_SOL != RobotMap.DOES_NOT_EXIST)
-			grabSol = new Solenoid(RobotMap.Lift.GRAB_SOL);
-
-		if (brakeSolEnabled = RobotMap.Lift.BRAKE_SOL != RobotMap.DOES_NOT_EXIST)
-			brakeSol = new Solenoid(RobotMap.Lift.BRAKE_SOL);
-		
-		if (encEnabled = RobotMap.Lift.ENCODER_A != RobotMap.DOES_NOT_EXIST){
-			enc = new Encoder(RobotMap.Lift.ENCODER_A, RobotMap.Lift.ENCODER_B);
-			enc.setDistancePerPulse(COUNT_TO_FEET);
+			if (encEnabled = RobotMap.Lift.ENCODER_A != RobotMap.DOES_NOT_EXIST){
+				enc = new Encoder(RobotMap.Lift.ENCODER_A, RobotMap.Lift.ENCODER_B);
+				enc.setDistancePerPulse(COUNT_TO_FEET);
+			}
+			
+			if (IREnabled = RobotMap.Lift.IR_SENSOR != RobotMap.DOES_NOT_EXIST)
+				IRSensor = new AnalogInput(RobotMap.Lift.IR_SENSOR);
+		}else{
+			if (motorsEnabled = (RobotMap.Lift.MOTOR_1_PRACT != RobotMap.DOES_NOT_EXIST &&
+					RobotMap.Lift.MOTOR_2_PRACT != RobotMap.DOES_NOT_EXIST))
+				motors = new MultiMotor(
+							new Victor[]{
+								new Victor(RobotMap.Lift.MOTOR_1_PRACT),
+								new Victor(RobotMap.Lift.MOTOR_2_PRACT)},
+							new boolean[]{false, false}
+						);
+				
+			if (topEnabled = RobotMap.Lift.DIGITAL_INPUT_TOP_PRACT != RobotMap.DOES_NOT_EXIST)
+				checkTop = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_TOP_PRACT);
+				
+			if (bottomEnabled = RobotMap.Lift.DIGITAL_INPUT_BOTTOM_PRACT != RobotMap.DOES_NOT_EXIST)
+				checkBottom = new DigitalInput(RobotMap.Lift.DIGITAL_INPUT_BOTTOM_PRACT);
+			
+			if (grabSolEnabled = RobotMap.Lift.GRAB_SOL_PRACT != RobotMap.DOES_NOT_EXIST)
+				grabSol = new Solenoid(RobotMap.Lift.GRAB_SOL_PRACT);
+	
+			if (brakeSolEnabled = RobotMap.Lift.BRAKE_SOL_PRACT != RobotMap.DOES_NOT_EXIST)
+				brakeSol = new Solenoid(RobotMap.Lift.BRAKE_SOL_PRACT);
+			
+			if (encEnabled = RobotMap.Lift.ENCODER_A_PRACT != RobotMap.DOES_NOT_EXIST){
+				enc = new Encoder(RobotMap.Lift.ENCODER_A_PRACT, RobotMap.Lift.ENCODER_B_PRACT);
+				enc.setDistancePerPulse(COUNT_TO_FEET_PRACT);
+			}
+			
+			if (IREnabled = RobotMap.Lift.IR_SENSOR_PRACT != RobotMap.DOES_NOT_EXIST)
+				IRSensor = new AnalogInput(RobotMap.Lift.IR_SENSOR_PRACT);
 		}
-		
-		if (IREnabled = RobotMap.Lift.IRSensor != RobotMap.DOES_NOT_EXIST)
-			IRSensor = new AnalogInput(RobotMap.Lift.IRSensor);
 	}
 	
 	public static LiftSubsystem getInstance() {

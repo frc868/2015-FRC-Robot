@@ -1,5 +1,6 @@
 package com.techhounds.subsystems;
 
+import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -17,9 +18,16 @@ public class CompSubsystem extends Subsystem {
 	private CompSubsystem() {
 		super("CompSubsystem");
 		
-		if (compEnabled = RobotMap.Compressor.COMP != RobotMap.DOES_NOT_EXIST){
-			comp = new Compressor(RobotMap.Compressor.COMP);
-			comp.start();
+		if(Robot.isFinal()){
+			if (compEnabled = RobotMap.Compressor.COMP != RobotMap.DOES_NOT_EXIST){
+				comp = new Compressor(RobotMap.Compressor.COMP);
+				comp.start();
+			}
+		}else{
+			if (compEnabled = RobotMap.Compressor.COMP_PRACT != RobotMap.DOES_NOT_EXIST){
+				comp = new Compressor(RobotMap.Compressor.COMP_PRACT);
+				comp.start();
+			}
 		}
 	}
 	

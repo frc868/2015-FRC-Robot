@@ -1,5 +1,6 @@
 package com.techhounds.subsystems;
 
+import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.I2C;
@@ -15,21 +16,34 @@ public class LEDSubsystem extends BasicSubsystem {
     private I2C leds;
     private static final byte DEFAULT_BRIGHTNESS = (byte)127;
     
-    final int LED_1 = RobotMap.LED.LED_1;
-    final int[] LED_LIST = {LED_1};
+    final int LED_1;
+    final int[] LED_LIST;
     
     public int curCmd = 0;
     
     public static final byte OFF_CMD = 0, STANDBY_CMD = 1, YELLOW_DOT_CMD = 2, DRIVE_CMD = 3, 
     		FORWARD_FULL = 4, FORWARD_HALF = 5, BACKWARD_FULL = 6, BACKWARD_HALF = 7, BRIGHT_CMD = 10;
 	
-    private boolean[] enabled = new boolean [LED_LIST.length];
+    private boolean[] enabled;
     
 	private LEDSubsystem() {
 		super("LEDSubsystem");
 		
-		if (enabled[0] = RobotMap.LED.LED_1 != RobotMap.DOES_NOT_EXIST)
-			leds = new I2C(Port.kMXP, RobotMap.LED.LEDS);
+		if (Robot.isFinal()){
+			LED_1 = RobotMap.LED.LED_1;
+			LED_LIST = new int[]{LED_1};
+			enabled = new boolean [LED_LIST.length];
+			
+			if (enabled[0] = RobotMap.LED.LED_1 != RobotMap.DOES_NOT_EXIST)
+				leds = new I2C(Port.kMXP, RobotMap.LED.LEDS);
+		}else{
+			LED_1 = RobotMap.LED.LED_1_PRACT;
+			LED_LIST = new int[]{LED_1};
+			enabled = new boolean [LED_LIST.length];
+			
+			if (enabled[0] = LED_LIST[0] != RobotMap.DOES_NOT_EXIST)
+				leds = new I2C(Port.kMXP, RobotMap.LED.LEDS_PRACT);
+		}
 		
 		setBrightness(DEFAULT_BRIGHTNESS);
 		off();

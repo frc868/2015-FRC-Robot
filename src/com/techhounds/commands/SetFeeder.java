@@ -1,40 +1,40 @@
 package com.techhounds.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import com.techhounds.subsystems.ArmsSubsystem;;
+import com.techhounds.subsystems.FeederSubsystem;;
 
 /**
  * @author Anonymous :1
  */
-public class SetArms extends Command {
+public class SetFeeder extends Command {
 	
-	public ArmsSubsystem arms;
+	public FeederSubsystem feed;
+	
 	public Double power;
-	
 	private Boolean position;
 
-    public SetArms(double power, boolean position) {
+    public SetFeeder(double power, boolean position) {
         this(power);
         this.position = position;
     }
     
-    public SetArms(double power){
-    	arms = ArmsSubsystem.getInstance();
-    	requires(arms);
+    public SetFeeder(double power){
+    	feed = FeederSubsystem.getInstance();
+    	requires(feed);
     	this.power = power;
     }
     
-    public SetArms(boolean position){
-    	arms = ArmsSubsystem.getInstance();
-    	requires(arms);
+    public SetFeeder(boolean position){
+    	feed = FeederSubsystem.getInstance();
+    	requires(feed);
     	this.position = position;
     }
 
     protected void initialize() {
     	if (power != null)
-    		arms.setPower(power);
+    		feed.setPower(power);
     	if (position != null)
-    		arms.setPosition(position);
+    		feed.setPosition(position);
     }
 
     protected void execute() {

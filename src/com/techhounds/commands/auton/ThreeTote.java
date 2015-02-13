@@ -28,11 +28,17 @@ public class ThreeTote extends CommandGroup {
 		addSequential(new SetLift(LiftSubsystem.CLOSED));
 		addSequential(new WaitCommand(.3));
 		
-		//lift first tote and drive to second tote
-		addParallel(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
-		addSequential(new WaitCommand(.3));
-		addParallel(new DriveToClosestTote(1));
-		addSequential(new WaitForIR(6, 2, true, 2));
+//		//lift first tote and drive to second tote
+//		addParallel(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
+////		addSequential(new WaitCommand(.3));
+//    	addSequential(new DriveTime(.75, .4, false));
+//		addParallel(new DriveToClosestTote(1));
+//		addSequential(new WaitForIR(6, 2, true, 2));
+		
+    	addParallel(new DriveToClosestTote(1));
+    	addParallel(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
+		addParallel(new WaitForIR(6, 2, true, 1));
+		addSequential(new WaitForChildren());
     	
 		//move lift down to second tote
     	addSequential(new SetLift(LiftSubsystem.OPEN));
@@ -45,7 +51,8 @@ public class ThreeTote extends CommandGroup {
     	
     	//lift second tote and drive to third tote
     	addParallel(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
-		addSequential(new WaitCommand(.3));
+//		addSequential(new WaitCommand(.3));
+    	addSequential(new DriveTime(.75, .4, false));
     	addParallel(new DriveToClosestTote(1));
 		addSequential(new WaitForIR(6, 2, true, 2));
     	
@@ -60,7 +67,7 @@ public class ThreeTote extends CommandGroup {
     	addSequential(new SetLiftHeight(.2));
     	
     	if (turnAndMove){
-    		addSequential(new ManualTurn(.6, 1, false));
+    		addSequential(new ManualTurn(.6, 1.2, false));
     		addSequential(new MoveToAutoZone(true));
     		addSequential(new SetLift(LiftSubsystem.DOWN));
     		addSequential(new SetLift(LiftSubsystem.OPEN));

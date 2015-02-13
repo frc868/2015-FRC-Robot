@@ -1,6 +1,6 @@
 package com.techhounds.commands.lift;
 
-import com.techhounds.subsystems.PassiveStopSubsystem;
+import com.techhounds.subsystems.PassiveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,21 +9,30 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SetPassiveStop extends Command {
 
-	private PassiveStopSubsystem stop;
+	private PassiveSubsystem pass;
 	
-	private boolean pos;
+	private Boolean stopPos;
+	private Boolean armPos;
 	
-	public SetPassiveStop(){
-		this(!PassiveStopSubsystem.getInstance().getPosition());
-	}
-	
-    public SetPassiveStop(boolean pos) {
-    	stop = PassiveStopSubsystem.getInstance();
-    	this.pos = pos;
+    public SetPassiveStop(Boolean stopPos, Boolean armPos) {
+    	pass = PassiveSubsystem.getInstance();
+    	this.stopPos = stopPos;
+    	this.armPos = armPos;
     }
 
+    public SetPassiveStop(boolean stopPos){
+    	this(stopPos, null);
+    }
+    
+    public SetPassiveStop(boolean armPos, int dontCare){
+    	this(null, armPos);
+    }
+    
     protected void initialize() {
-    	stop.setPosition(pos);
+    	if (stopPos != null)
+    		pass.setStopPosition(stopPos);
+    	if (armPos != null)
+    		pass.setStopPosition(armPos);
     }
 
     protected void execute() {

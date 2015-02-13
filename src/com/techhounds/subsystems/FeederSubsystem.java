@@ -3,41 +3,49 @@ package com.techhounds.subsystems;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
-public class ArmsSubsystem extends Subsystem {
+public class FeederSubsystem extends Subsystem {
     
-	private static ArmsSubsystem instance;
+	/*
+	 *-----------------This Subsystem is Final Robot ONLY!---------------------------
+	 */
+	
+	private static FeederSubsystem instance;
 	
 	public static final double FEED_IN = -0.5, FEED_OUT = 0.5, STOPPED = 0;
 	public static final boolean OPEN = false, CLOSED = true;
 	
-	private double leftMotorMult = 1, rightMotorMult = .8;
+	private double leftMotorMult = 1, rightMotorMult = 1;
 	private boolean leftEnabled, rightEnabled, solEnabled;
 	
-	private SpeedController left, right;
+	private CANTalon left, right;
 	private Solenoid sol;
 	
-	private ArmsSubsystem() {
+	private FeederSubsystem() {
 		super("ArmsSubsystem");
 		
-		if(leftEnabled = RobotMap.Arms.LEFT_ARM != RobotMap.DOES_NOT_EXIST)
-			left = new Victor(RobotMap.Arms.LEFT_ARM);
+		if (!Robot.isFinal())
+			return;
+					
+		if(leftEnabled = RobotMap.Feeder.LEFT_MOTOR != RobotMap.DOES_NOT_EXIST)
+			left = new CANTalon(RobotMap.Feeder.LEFT_MOTOR);
 		
-		if(rightEnabled = RobotMap.Arms.RIGHT_ARM != RobotMap.DOES_NOT_EXIST)
-			right = new Victor(RobotMap.Arms.RIGHT_ARM);
+		if(rightEnabled = RobotMap.Feeder.RIGHT_MOTOR != RobotMap.DOES_NOT_EXIST)
+			right = new CANTalon(RobotMap.Feeder.RIGHT_MOTOR);
 		
-		if(solEnabled = RobotMap.Arms.ARM_SOL != RobotMap.DOES_NOT_EXIST)
-			sol = new Solenoid(RobotMap.Arms.ARM_SOL);
+		if(solEnabled = RobotMap.Feeder.SOL != RobotMap.DOES_NOT_EXIST)
+			sol = new Solenoid(RobotMap.Feeder.SOL);
 	}
 	
-	public static ArmsSubsystem getInstance() {
+	public static FeederSubsystem getInstance() {
 		if (instance == null)
-			instance = new ArmsSubsystem();
+			instance = new FeederSubsystem();
 		return instance;
 	}
 		

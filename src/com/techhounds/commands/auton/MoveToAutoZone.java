@@ -12,6 +12,7 @@ public class MoveToAutoZone extends Command {
 	private double time;
 	private final double power = .75;
 	private boolean noEnc = false;
+	private double deccelTime = 0;
 
 	public MoveToAutoZone(double time) {
 		drive = DriveSubsystem.getInstance();
@@ -25,6 +26,11 @@ public class MoveToAutoZone extends Command {
 		this.noEnc = noEnc;
 	}
 	
+	public MoveToAutoZone(double time, double deccelTime){
+    	this(time, true);
+    	this.deccelTime = deccelTime;
+    }
+	
 	public MoveToAutoZone(boolean noEnc){
 		this(TIME, noEnc);
 	}
@@ -37,7 +43,10 @@ public class MoveToAutoZone extends Command {
 	}
 
 	protected void execute() {
-		
+		if (timeSinceInitialized() >= time - deccelTime){
+    		double pow = power * ((time - timeSinceInitialized()) / deccelTime);
+    		drive.setPower(pow, pow * .6);
+    	}
 	}
 
 	protected boolean isFinished() {
