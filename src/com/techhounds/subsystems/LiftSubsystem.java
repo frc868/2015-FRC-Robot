@@ -26,7 +26,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final double ONE_TOTE_HEIGHT = 1.4;
 	public static final double OFF_GROUND_HEIGHT = 0.2;
 	
-	public static final double LIFT_POWER = 0.5;
+	public static final double LIFT_POWER = 0.8;
 	public static final double COUNT_TO_FEET = (24.0 / 12) / 497.0;
 	public static final double UP_BRAKE_MULT = 10;
 	public static final double DOWN_BRAKE_MULT = 4; 

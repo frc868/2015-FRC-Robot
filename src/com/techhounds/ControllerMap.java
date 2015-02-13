@@ -16,8 +16,8 @@ public class ControllerMap {
             RIGHT_HORIZONTAL = 11, LEFT_VERTICAL = 12, RIGHT_VERTICAL = 13;
     
     //These are magic numbers
-    public static final int RIGHT = 0, LEFT = 1, UP = 2, DOWN = 3, DIAG_UP_RIGHT = 4,
-    		DIAG_UP_LEFT = 5, DIAG_DOWN_RIGHT = 6, DIAG_DOWN_LEFT = 7;
+    public static final int RIGHT = 14, LEFT = 15, UP = 16, DOWN = 17, DIAG_UP_RIGHT = 18,
+    		DIAG_UP_LEFT = 19, DIAG_DOWN_RIGHT = 20, DIAG_DOWN_LEFT = 21;
                 
     //These are also magic numbers
     public static final int LOGITECH = 0, TOMEE = 1, PS3 = 2;
@@ -84,11 +84,10 @@ public class ControllerMap {
     }
     
     public Button createButton(int buttonID){
+    	if (buttonID == UP || buttonID == DOWN || buttonID == LEFT || buttonID == RIGHT ||
+    		buttonID == DIAG_DOWN_LEFT || buttonID == DIAG_DOWN_RIGHT || buttonID == DIAG_UP_LEFT|| buttonID == DIAG_UP_RIGHT)
+    		return new DPadButton(buttonID);
         return new JoystickButton(joystick, buttonSet[buttonID]);
-    }
-    
-    public DPadButton createDPadButton(int buttonID) {
-        return new DPadButton(buttonID);
     }
     
     protected class DPadButton extends Button {

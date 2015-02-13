@@ -25,7 +25,7 @@ public class DriveTime extends Command {
 
     protected void initialize() {
     	initTime = Timer.getFPGATimestamp();
-    	drive.setPower(power);
+    	drive.setPower(power, power * .85);
     }
 
     protected void execute() {

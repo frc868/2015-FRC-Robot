@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveToAutoZone extends Command {
 
+	public static final double TIME = 1.5;
+	
 	private DriveSubsystem drive;
 	private double time;
 	private final double power = .75;
@@ -21,6 +23,10 @@ public class MoveToAutoZone extends Command {
 	public MoveToAutoZone(double time, boolean noEnc){
 		this(time);
 		this.noEnc = noEnc;
+	}
+	
+	public MoveToAutoZone(boolean noEnc){
+		this(TIME, noEnc);
 	}
 
 	protected void initialize() {

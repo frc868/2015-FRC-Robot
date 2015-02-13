@@ -19,7 +19,7 @@ public class AutonChooser {
 	public static Command getSelected() {
 		
 		Command [] options = new Command[] {
-				new ThreeTote(true),
+				new ThreeTote(true, 2),
 				new TwoTote(),
 				new FirstTote(),
 				new MoveToAutoZone(1.5),

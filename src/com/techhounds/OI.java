@@ -37,14 +37,14 @@ public class OI {
 	private SendableChooser autonChoice;
 		
 	//Driver buttons
-	private final int toggleForward = 	PS4Map.OPTIONS;
+	private final int toggleForward = 	PS4Map.OPTIONS; // i like it
 	private final int toggleHalf = 		PS4Map.R2;
 	private final int liftUp = 			PS4Map.TRIANGLE;
 	private final int liftDown = 		PS4Map.CROSS;
 	private final int liftIn = 			PS4Map.SQUARE;
 	private final int liftOut = 		PS4Map.CIRCLE;
 	private final int oneToteHeight = 	PS4Map.R1;
-	private final int toteOffGround = 	PS4Map.R2;
+	private final int toteOnGround = 	PS4Map.R2;
 	private final int upOneLevel = 		PS4Map.UP;
 	private final int downOneLevel = 	PS4Map.DOWN;
 //	private final int binsUp = 			PS4Map.UP;
@@ -78,7 +78,7 @@ public class OI {
     private final int opLiftIn = 			ControllerMap.X;
     private final int opLiftOut = 			ControllerMap.B;
 	private final int opOneToteHeight = 	ControllerMap.RB;
-	private final int opToteOffGround = 	ControllerMap.RT;
+	private final int opToteOnGround =	 	ControllerMap.RT;
 	private final int opUpOneLevel = 		ControllerMap.UP;
 	private final int opDownOneLevel = 		ControllerMap.DOWN;
 //    private final int opBinsUp = 			ControllerMap.UP;
@@ -136,8 +136,8 @@ public class OI {
         Button oneHeight = driver.createButton(oneToteHeight);
         oneHeight.whenPressed(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
         
-        Button offGround = driver.createButton(toteOffGround);
-        offGround.whenPressed(new SetLiftHeight(LiftSubsystem.OFF_GROUND_HEIGHT));
+        Button offGround = driver.createButton(toteOnGround);
+        offGround.whenPressed(new SetLiftHeight(0));
         
         Button upLevel = driver.createButton(upOneLevel);
         upLevel.whenPressed(new NextLevel(LiftSubsystem.UP));
@@ -195,8 +195,8 @@ public class OI {
         Button oneHeight = operator.createButton(opOneToteHeight);
         oneHeight.whenPressed(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
         
-        Button offGround = operator.createButton(opToteOffGround);
-        offGround.whenPressed(new SetLiftHeight(LiftSubsystem.OFF_GROUND_HEIGHT));
+        Button offGround = operator.createButton(opToteOnGround);
+        offGround.whenPressed(new SetLiftHeight(0));
         
         Button upLevel = operator.createButton(opUpOneLevel);
         upLevel.whenPressed(new NextLevel(LiftSubsystem.UP));
@@ -236,10 +236,10 @@ public class OI {
     	SmartDashboard.putData("Next Crate", new NextTote(false));
     	SmartDashboard.putData("Final Crate", new NextTote(true));
     	SmartDashboard.putData("Two Tote", new TwoTote());
-    	SmartDashboard.putData("Three Tote", new ThreeTote(true));
+    	SmartDashboard.putData("Three Tote", new ThreeTote(true, 2));
     	SmartDashboard.putData("Turn 90?", new ManualTurn(.75, 1.5, false));
-    	SmartDashboard.putData("Reverse Three Tote, Start L", new ReverseThreeTote(false, true));
-    	SmartDashboard.putData("Reverse Three Tote, Start R", new ReverseThreeTote(false, false));
+    	SmartDashboard.putData("Reverse Three Tote, Start L", new ReverseThreeTote(true, true, true));
+    	SmartDashboard.putData("Reverse Three Tote, Start R", new ReverseThreeTote(true, false, true));
     }
     
     public int getAutonChoice() {

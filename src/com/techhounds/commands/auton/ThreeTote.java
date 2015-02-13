@@ -15,10 +15,12 @@ import edu.wpi.first.wpilibj.command.WaitForChildren;
 
 public class ThreeTote extends CommandGroup {
 	
-	public ThreeTote(boolean turnAndMove) {
+	public ThreeTote(boolean turnAndMove, double waitTime) {
 //		addSequential(new FirstTote());
 //		addSequential(new NextTote(false));
 //		addSequential(new NextTote(true));
+		
+		addSequential(new WaitCommand(waitTime));
 		
 		//grab first tote
 		addParallel(new DriveToClosestTote(1));
@@ -58,12 +60,12 @@ public class ThreeTote extends CommandGroup {
     	addSequential(new SetLiftHeight(.2));
     	
     	if (turnAndMove){
-    		addSequential(new ManualTurn(.75, 1.5, false));
-    		addSequential(new MoveToAutoZone(1.5, true));
+    		addSequential(new ManualTurn(.6, 1, false));
+    		addSequential(new MoveToAutoZone(true));
     		addSequential(new SetLift(LiftSubsystem.DOWN));
     		addSequential(new SetLift(LiftSubsystem.OPEN));
-    		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
-    		addSequential(new DriveTime(1, -.5));
+//    		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
+//    		addSequential(new DriveTime(.5, -.5));
     	}
 	}
 }
