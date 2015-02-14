@@ -1,5 +1,6 @@
 package com.techhounds.subsystems;
 
+import com.techhounds.MultiCANTalon;
 import com.techhounds.MultiMotor;
 import com.techhounds.OI;
 import com.techhounds.Robot;
@@ -7,6 +8,7 @@ import com.techhounds.RobotMap;
 import com.techhounds.commands.driving.DriveWithGamepad;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -25,12 +27,13 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	private static final double Kp = 0, Ki = 0, Kd = 0;
 	
-	private boolean overrideOperatorButton, twoPersonDrive, isForward, isHalfSpeed;
+	private boolean overrideOperatorButton, twoPersonDrive = true, isForward, isHalfSpeed;
 	private boolean leftEncEnabled, rightEncEnabled;
 	
 	private PIDController drivePID;
 	
-	private MultiMotor leftMotors, rightMotors;
+	private MultiCANTalon leftMotors, rightMotors;
+	private MultiMotor leftMotorsPract, rightMotorsPract;
 	private Counter leftEnc, rightEnc;
 	
 	private final double COUNTS_TO_FEET = 1;
@@ -42,31 +45,30 @@ public class DriveSubsystem extends BasicSubsystem {
 		super("DriveSubsystem");
 		
 		if (Robot.isFinal()){
-			leftMotors = new MultiMotor(
-					new SpeedController[]{
-							new Victor(RobotMap.Drive.LEFT_MOTOR_1),
-							new Victor(RobotMap.Drive.LEFT_MOTOR_2)
-							},
-					new boolean[]{false, false});
+			leftMotors = new MultiCANTalon(
+					new CANTalon[]{
+							new CANTalon(RobotMap.Drive.RIGHT_MOTOR_1),
+							new CANTalon(RobotMap.Drive.RIGHT_MOTOR_2)},
+					new boolean[]{false, false},
+					FeedbackDevice.QuadEncoder,
+					false, false, false, false, false);
 			
-			rightMotors = new MultiMotor(
-					new SpeedController[]{
-							new Victor(RobotMap.Drive.RIGHT_MOTOR_1),
-							new Victor(RobotMap.Drive.RIGHT_MOTOR_2)
-							},
-					new boolean[]{true, true});
+			rightMotors = new MultiCANTalon(
+					new CANTalon[]{
+							new CANTalon(RobotMap.Drive.LEFT_MOTOR_1),
+							new CANTalon(RobotMap.Drive.LEFT_MOTOR_2)},
+					new boolean[]{true, true},
+					FeedbackDevice.QuadEncoder,
+					false, false, false, false, false);
+			leftMotors.setCountsPerFeet(1 / COUNTS_TO_FEET);
+			rightMotors.setCountsPerFeet(1 / COUNTS_TO_FEET);
+			leftMotors.resetEnc();
+			rightMotors.resetEnc();
 			
-			if(leftEncEnabled = RobotMap.Drive.LEFT_ENC != RobotMap.DOES_NOT_EXIST){
-				leftEnc = new Counter(RobotMap.Drive.LEFT_ENC);
-				leftEnc.setDistancePerPulse(COUNTS_TO_FEET);
-			}
-			
-			if(rightEncEnabled = RobotMap.Drive.RIGHT_ENC != RobotMap.DOES_NOT_EXIST){
-				rightEnc = new Counter(RobotMap.Drive.RIGHT_ENC);
-				rightEnc.setDistancePerPulse(COUNTS_TO_FEET);
-			}
+			leftEncEnabled = true;
+			rightEncEnabled = true;
 		}else{
-			leftMotors = new MultiMotor(
+			leftMotorsPract = new MultiMotor(
 					new SpeedController[]{
 							new Victor(RobotMap.Drive.LEFT_MOTOR_1_PRACT),
 							new Victor(RobotMap.Drive.LEFT_MOTOR_2_PRACT),
@@ -74,7 +76,7 @@ public class DriveSubsystem extends BasicSubsystem {
 							},
 					new boolean[]{false, false, false});
 			
-			rightMotors = new MultiMotor(
+			rightMotorsPract = new MultiMotor(
 					new SpeedController[]{
 							new Victor(RobotMap.Drive.RIGHT_MOTOR_1_PRACT),
 							new Victor(RobotMap.Drive.RIGHT_MOTOR_2_PRACT),
@@ -108,8 +110,6 @@ public class DriveSubsystem extends BasicSubsystem {
 				});
 		drivePID.setOutputRange(-1, 1);
 		drivePID.setAbsoluteTolerance(1);
-		
-		twoPersonDrive= true;
 	}
 	
 	public static DriveSubsystem getInstance() {
@@ -168,11 +168,11 @@ public class DriveSubsystem extends BasicSubsystem {
 	}
 	
 	public double getLeftDistance(){
-    	return leftEncEnabled ? leftEnc.getDistance() : 0;
+		return leftEncEnabled ? (Robot.isFinal() ? leftMotors.getDistance() : leftEnc.getDistance()) : 0;
     }
     
     public double getRightDistance(){
-    	return rightEncEnabled ? rightEnc.getDistance() : 0;
+    	return rightEncEnabled ? (Robot.isFinal() ? rightMotors.getDistance() : rightEnc.getDistance()) : 0;
     }
 
 	public double getAvgDistance(){
@@ -180,11 +180,11 @@ public class DriveSubsystem extends BasicSubsystem {
 	}
     
 	public double getLeftCount(){
-		return leftEncEnabled ? leftEnc.get() : 0;
+		return leftEncEnabled ? (Robot.isFinal() ? leftMotors.getCount() : leftEnc.get()) : 0;
 	}
 	
 	public double getRightCount(){
-		return rightEncEnabled ? rightEnc.get() : 0;
+		return rightEncEnabled ? (Robot.isFinal() ? rightMotors.getCount() : rightEnc.get()) : 0;
 	}
 	
 	public double getAvgCount(){
@@ -193,11 +193,11 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	//feet per second
 	public double getLeftSpeed(){
-		return leftEncEnabled ? leftEnc.getRate() : 0;
+		return leftEncEnabled ? (Robot.isFinal() ? leftMotors.getSpeed() : leftEnc.getRate()) : 0;
 	}
 	
 	public double getRightSpeed(){
-		return rightEncEnabled ? rightEnc.getRate() : 0;
+		return rightEncEnabled ? (Robot.isFinal() ? rightMotors.getSpeed() : rightEnc.getRate()) : 0;
 	}
 
 	public double getAvgSpeed(){
@@ -271,16 +271,21 @@ public class DriveSubsystem extends BasicSubsystem {
     	leftPower = Math.max(Math.min(leftPower, 1), -1);
     	rightPower = Math.max(Math.min(rightPower, 1), -1);
     	
-        leftMotors.set(leftPower);
-        rightMotors.set(rightPower);
+    	if(Robot.isFinal()){
+    		leftMotors.set(leftPower);
+    		rightMotors.set(rightPower);
+    	}else{
+	        leftMotorsPract.set(leftPower);
+	        rightMotorsPract.set(rightPower);
+    	}
     }
     
     public double getRightPower(){
-        return rightMotors.get();
+        return Robot.isFinal() ? rightMotors.get() : rightMotorsPract.get();
     }
     
     public double getLeftPower(){
-        return leftMotors.get();
+        return Robot.isFinal() ? leftMotors.get() : leftMotorsPract.get();
     }
     
     public double getAvgPower(){
@@ -288,8 +293,13 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public void setDrivePID(double dist) {
-    	leftEnc.reset();
-    	rightEnc.reset();
+    	if (Robot.isFinal()){
+    		leftMotors.resetEnc();
+    		rightMotors.resetEnc();
+    	}else{
+	    	leftEnc.reset();
+	    	rightEnc.reset();
+    	}
     	drivePID.setSetpoint(dist);
     	drivePID.enable();
     }

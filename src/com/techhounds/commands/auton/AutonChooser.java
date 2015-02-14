@@ -24,7 +24,7 @@ public class AutonChooser {
 				new ThreeTote(true, 2),
 				new ReverseThreeTote(true, true, true),
 				new TwoTote(),
-				new FirstTote(),
+				new OneTote(),
 				new BinAndTote(),
 				new MoveToAutoZone(1.5),
 				new DoNothing()

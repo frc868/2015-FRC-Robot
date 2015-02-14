@@ -4,6 +4,7 @@ import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
@@ -18,7 +19,7 @@ public class FeederSubsystem extends Subsystem {
 	
 	private static FeederSubsystem instance;
 	
-	public static final double FEED_IN = -0.5, FEED_OUT = 0.5, STOPPED = 0;
+	public static final double FEED_IN = -0.3, FEED_OUT = 0.3, STOPPED = 0;
 	public static final boolean OPEN = false, CLOSED = true;
 	
 	private double leftMotorMult = 1, rightMotorMult = 1;
@@ -33,11 +34,19 @@ public class FeederSubsystem extends Subsystem {
 		if (!Robot.isFinal())
 			return;
 					
-		if(leftEnabled = RobotMap.Feeder.LEFT_MOTOR != RobotMap.DOES_NOT_EXIST)
+		if(leftEnabled = RobotMap.Feeder.LEFT_MOTOR != RobotMap.DOES_NOT_EXIST){
 			left = new CANTalon(RobotMap.Feeder.LEFT_MOTOR);
+			left.enableBrakeMode(true);
+			left.changeControlMode(ControlMode.PercentVbus);
+			left.reverseOutput(false);
+		}
 		
-		if(rightEnabled = RobotMap.Feeder.RIGHT_MOTOR != RobotMap.DOES_NOT_EXIST)
+		if(rightEnabled = RobotMap.Feeder.RIGHT_MOTOR != RobotMap.DOES_NOT_EXIST){
 			right = new CANTalon(RobotMap.Feeder.RIGHT_MOTOR);
+			right.enableBrakeMode(true);
+			right.changeControlMode(ControlMode.PercentVbus);
+			right.reverseOutput(true);
+		}
 		
 		if(solEnabled = RobotMap.Feeder.SOL != RobotMap.DOES_NOT_EXIST)
 			sol = new Solenoid(RobotMap.Feeder.SOL);

@@ -38,7 +38,7 @@ public class DriveToClosestTote extends Command {
     	power = cam.getDistValue();
     	offset = cam.getOffsetValue();
     	
-    	drive.setPower(power + offset, (power - offset) * .85);
+    	drive.setPower(power + offset, (power - offset) * .8);
     }
 
     protected boolean isFinished() {
@@ -46,6 +46,7 @@ public class DriveToClosestTote extends Command {
     }
 
     protected void end() {
+    	
     }
 
     protected void interrupted() {

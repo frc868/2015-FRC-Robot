@@ -13,7 +13,6 @@ public class SetLift extends Command {
 	public Integer direction;
 	public Double power;
 	public Boolean grabPosition;
-	public Boolean brakePosition;
 	
     public SetLift(int direction) {
     	this(direction, LiftSubsystem.LIFT_POWER);
@@ -30,11 +29,6 @@ public class SetLift extends Command {
     	lift = LiftSubsystem.getInstance();
     	this.grabPosition = grabPosition;
     }
-    
-    public SetLift(boolean brakePosition, int dontCare){
-    	lift = LiftSubsystem.getInstance();
-    	this.brakePosition = brakePosition;
-    }
 
     protected void initialize() {
     	if (direction != null){
@@ -43,8 +37,6 @@ public class SetLift extends Command {
     	}
     	if (grabPosition != null)
     		lift.setGrabPosition(grabPosition);
-    	if (brakePosition != null)
-    		lift.setBrakePosition(brakePosition);
     }
 
     protected void execute() {
