@@ -12,6 +12,7 @@ import com.techhounds.commands.bin.SetBin;
 import com.techhounds.commands.driving.DriveTime;
 import com.techhounds.commands.driving.ManualTurn;
 import com.techhounds.commands.driving.OperatorHalfDrive;
+import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.driving.ToggleDriveMode;
 import com.techhounds.commands.lift.NextLevel;
 import com.techhounds.commands.lift.SetLift;
@@ -235,6 +236,12 @@ public class OI {
     	SmartDashboard.putData("Reverse Three Tote, Start L", new ReverseThreeTote(true, true, true));
     	SmartDashboard.putData("Reverse Three Tote, Start R", new ReverseThreeTote(true, false, true));
     	SmartDashboard.putData("Move Forward", new DriveTime(.75, .4, false));
+    	
+
+    	SmartDashboard.putData("Gyro Rotate 90", new RotateToAngle(90));
+    	SmartDashboard.putData("Gyro Rotate 270", new RotateToAngle(270));
+    	SmartDashboard.putData("Gyro Rotate 180", new RotateToAngle(180));
+    	SmartDashboard.putData("Gyro Rotate 0", new RotateToAngle(0));
     }
     
     public int getAutonChoice() {

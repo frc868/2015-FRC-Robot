@@ -41,6 +41,7 @@ public class Robot extends IterativeRobot {
     	LiftSubsystem.getInstance();
     	PassiveSubsystem.getInstance();
     	CameraSubsystem.getInstance();
+    	GyroSubsystem.getInstance();
     }	
     
     public void autonomousInit() {

@@ -26,11 +26,12 @@ public class DriveSubsystem extends BasicSubsystem {
 	private static DriveSubsystem instance;
 	
 	private static final double Kp = 0, Ki = 0, Kd = 0;
+	private static final double GYRO_Kp = 0.05, GYRO_Ki = 0, GYRO_Kd = 0.1;
 	
 	private boolean overrideOperatorButton, twoPersonDrive = true, isForward, isHalfSpeed;
 	private boolean leftEncEnabled, rightEncEnabled;
 	
-	private PIDController drivePID;
+	private PIDController drivePID, gyroPID;
 	
 	private MultiCANTalon leftMotors, rightMotors;
 	private MultiMotor leftMotorsPract, rightMotorsPract;
@@ -38,6 +39,7 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	private final double COUNTS_TO_FEET = 1;
 	private final double COUNTS_TO_FEET_PRACT = 1;
+	private final double GYRO_MAX_STEP = .2;
 	
 	private double driveTolerance;
 
@@ -110,6 +112,19 @@ public class DriveSubsystem extends BasicSubsystem {
 				});
 		drivePID.setOutputRange(-1, 1);
 		drivePID.setAbsoluteTolerance(1);
+		
+		gyroPID = new PIDController(
+			GYRO_Kp, GYRO_Ki, GYRO_Kd,
+			GyroSubsystem.getInstance().getRotationTracker(),
+			new PIDOutput() {
+				public void pidWrite(double output) {
+					output = Math.max(Math.min(getLeftPower() + GYRO_MAX_STEP , output), getLeftPower() - GYRO_MAX_STEP);
+					setPower(output, -output);
+				}
+		});
+		gyroPID.setOutputRange(-.75, .75);
+		gyroPID.setAbsoluteTolerance(3);
+		SmartDashboard.putData("GYRO!", gyroPID);
 	}
 	
 	public static DriveSubsystem getInstance() {
@@ -304,17 +319,34 @@ public class DriveSubsystem extends BasicSubsystem {
     	drivePID.enable();
     }
     
+    public void setGyroPID(double angle) {
+    	gyroPID.setSetpoint(angle);
+    	gyroPID.enable();
+    }
+    
     public void stopDrivePID() {
     	drivePID.disable();
+    }
+    
+    public void stopGyroPID() {
+    	gyroPID.disable();
     }
     
     public double getDriveSetPoint() {
     	return drivePID.getSetpoint();
     }
+
+    public double getGyroSetPoint() {
+    	return gyroPID.getSetpoint();
+    }
     
     public void setDriveTolerance(double feet) {
     	drivePID.setAbsoluteTolerance(feet);
     	driveTolerance = feet;
+    }
+    
+    public void setGyroTolerance(double degrees) {
+    	gyroPID.setAbsoluteTolerance(degrees);
     }
     
     public double getDriveTolerance() {
@@ -323,6 +355,10 @@ public class DriveSubsystem extends BasicSubsystem {
     
     public boolean drivePIDOnTarget() {
     	return drivePID.onTarget();
+    }
+    
+    public boolean gyroPIDOnTarget() {
+    	return gyroPID.onTarget();
     }
     
     public void updateSmartDashboard(){

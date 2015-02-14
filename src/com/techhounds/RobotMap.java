@@ -1,5 +1,7 @@
 package com.techhounds;
 
+import edu.wpi.first.wpilibj.I2C;
+
 public class RobotMap {
 	
 	public static final int DOES_NOT_EXIST = -1;
@@ -93,5 +95,9 @@ public class RobotMap {
 		
 		public static final int LEDS_PRACT = 36;
 		public static final int LED_1_PRACT = 1;
+	}
+	
+	public static class Gyro {
+		public static final I2C.Port GYRO = I2C.Port.kMXP;
 	}
 }

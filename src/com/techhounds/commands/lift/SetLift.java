@@ -1,5 +1,6 @@
 package com.techhounds.commands.lift;
 
+import com.techhounds.subsystems.GyroSubsystem;
 import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -34,6 +35,7 @@ public class SetLift extends Command {
     	if (direction != null){
     		lift.setBrake(power == 0 || direction == LiftSubsystem.STOPPED);
     		lift.setLift(direction, power);
+    		GyroSubsystem.getInstance().resetGyro();
     	}
     	if (grabPosition != null)
     		lift.setGrabPosition(grabPosition);

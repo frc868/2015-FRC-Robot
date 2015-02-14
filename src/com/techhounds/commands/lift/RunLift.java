@@ -1,5 +1,6 @@
 package com.techhounds.commands.lift;
 
+import com.techhounds.subsystems.GyroSubsystem;
 import com.techhounds.subsystems.LiftSubsystem;
 import com.techhounds.subsystems.PassiveSubsystem;
 
@@ -9,10 +10,12 @@ public class RunLift extends Command{
 	
 	private LiftSubsystem lift;
 	private PassiveSubsystem stop;
+	private GyroSubsystem gyro;
 	
 	public RunLift() {
 		lift = LiftSubsystem.getInstance();
 		stop = PassiveSubsystem.getInstance();
+		gyro = GyroSubsystem.getInstance();
 		requires(lift);
 		requires(stop);
 		setInterruptible(false);
@@ -42,6 +45,10 @@ public class RunLift extends Command{
 		if (lift.isAtBottom()){
 			lift.resetEncHeight();
 			lift.setBrakeHeight(0);
+		}
+		
+		if(lift.getDirection() == LiftSubsystem.DOWN && gyro.getTilt() > 5 && lift.getWatchForTilt()) {
+			lift.stopLift();
 		}
 			
 		lift.setPower();

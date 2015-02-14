@@ -50,6 +50,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	private double lastIRVal = 0;
 	private double brakeMult = 10;
 	private double brakeHeight = 0;
+	private boolean watchForTilt = true;
 	private boolean braked = false;
 	private double power = 0;
 	private int direction = STOPPED;
@@ -267,5 +268,13 @@ public class LiftSubsystem extends BasicSubsystem {
 
 	protected void initDefaultCommand() {
 		setDefaultCommand(new RunLift());		
+	}
+
+	public boolean getWatchForTilt() {
+		return watchForTilt;
+	}
+
+	public void setWatchForTilt(boolean watchForTilt) {
+		this.watchForTilt = watchForTilt;
 	}
 }
