@@ -125,6 +125,7 @@ public class DriveSubsystem extends BasicSubsystem {
 		gyroPID.setOutputRange(-.75, .75);
 		gyroPID.setAbsoluteTolerance(3);
 		SmartDashboard.putData("GYRO!", gyroPID);
+		SmartDashboard.putData(this);
 	}
 	
 	public static DriveSubsystem getInstance() {
@@ -140,6 +141,10 @@ public class DriveSubsystem extends BasicSubsystem {
     	
     	double onePower = OI.getDriverLeftYAxis(), oneSteer = OI.getDriverRightXAxis(), 
     			twoPower = OI.getOperatorLeftYAxis(), twoSteer = OI.getOperatorRightXAxis();
+    	
+    	SmartDashboard.putString("","Driver Power: " + onePower + " Driver Steer: " + oneSteer);
+    	SmartDashboard.putString("","Operator Power: " + twoPower + " Operator Steer: " + twoSteer);
+    	
     	
     	if (!getTwoPersonDrive()){
 	        powerMag = onePower;
@@ -178,6 +183,8 @@ public class DriveSubsystem extends BasicSubsystem {
         
         double left = powerMag + steerMag;
         double right = powerMag - steerMag;
+        
+        SmartDashboard.putString("Power Values", "Left: " + left + " Right: " + right);
         
         setPower(left, right);
 	}

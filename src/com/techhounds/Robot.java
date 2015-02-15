@@ -57,7 +57,7 @@ public class Robot extends IterativeRobot {
     
     public void teleopInit() {
 
-    	if (auton != null)
+    	if(auton != null)
     		auton.cancel();
     	
 		System.out.println("*******\n"+
@@ -69,6 +69,10 @@ public class Robot extends IterativeRobot {
     }
     
     public void disabledInit(){
+    	
+    	if(auton != null)
+    		auton.cancel();
+    	
     	LEDSubsystem.getInstance().standby();
     }
     

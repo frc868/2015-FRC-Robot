@@ -24,6 +24,7 @@ public class SetLift extends Command {
     	this.direction = direction;
     	lift = LiftSubsystem.getInstance();
     	this.power = pwr;
+    	
     }
     
     public SetLift(boolean grabPosition) {
