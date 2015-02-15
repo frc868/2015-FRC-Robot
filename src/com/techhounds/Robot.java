@@ -32,7 +32,8 @@ public class Robot extends IterativeRobot {
     }
     
     public void initSubsystems() {
-    	
+
+    	GyroSubsystem.getInstance();
     	FeederSubsystem.getInstance();
     	BinSubsystem.getInstance();
     	CompSubsystem.getInstance();
@@ -41,7 +42,6 @@ public class Robot extends IterativeRobot {
     	LiftSubsystem.getInstance();
     	PassiveSubsystem.getInstance();
     	CameraSubsystem.getInstance();
-    	GyroSubsystem.getInstance();
     }	
     
     public void autonomousInit() {

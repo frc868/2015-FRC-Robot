@@ -17,6 +17,7 @@ public class LEDSubsystem extends BasicSubsystem {
     private static final byte DEFAULT_BRIGHTNESS = (byte)127;
     
     final int LED_1;
+    final int LED_2;
     final int[] LED_LIST;
     
     public int curCmd = 0;
@@ -31,17 +32,19 @@ public class LEDSubsystem extends BasicSubsystem {
 		
 		if (Robot.isFinal()){
 			LED_1 = RobotMap.LED.LED_1;
-			LED_LIST = new int[]{LED_1};
+			LED_2 = RobotMap.LED.LED_2;
+			LED_LIST = new int[]{LED_1, LED_2};
 			enabled = new boolean [LED_LIST.length];
 			
-			if (enabled[0] = RobotMap.LED.LED_1 != RobotMap.DOES_NOT_EXIST)
+			if ((enabled[0] = LED_LIST[0] != RobotMap.DOES_NOT_EXIST) || (enabled[1] = LED_LIST[1] != RobotMap.DOES_NOT_EXIST))
 				leds = new I2C(Port.kMXP, RobotMap.LED.LEDS);
 		}else{
 			LED_1 = RobotMap.LED.LED_1_PRACT;
-			LED_LIST = new int[]{LED_1};
+			LED_2 = RobotMap.LED.LED_2_PRACT;
+			LED_LIST = new int[]{LED_1, LED_2};
 			enabled = new boolean [LED_LIST.length];
 			
-			if (enabled[0] = LED_LIST[0] != RobotMap.DOES_NOT_EXIST)
+			if ((enabled[0] = LED_LIST[0] != RobotMap.DOES_NOT_EXIST) || (enabled[1] = LED_LIST[1] != RobotMap.DOES_NOT_EXIST))
 				leds = new I2C(Port.kMXP, RobotMap.LED.LEDS_PRACT);
 		}
 		

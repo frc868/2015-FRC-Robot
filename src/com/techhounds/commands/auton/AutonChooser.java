@@ -13,8 +13,9 @@ public class AutonChooser {
 		"3 Tote",
 		"3 Tote Reverse",
 		"2 Tote",
-		"1 Tote",
 		"1 Bin 1 Tote",
+		"1 Tote",
+		"1 Bin",
 		"Move To Auto Zone",
 		"Do Nothing"};
 
@@ -24,8 +25,9 @@ public class AutonChooser {
 				new ThreeTote(true, 2),
 				new ReverseThreeTote(true, true, true),
 				new TwoTote(),
-				new OneTote(),
 				new BinAndTote(),
+				new OneTote(),
+				new OneBin(),
 				new MoveToAutoZone(1.5),
 				new DoNothing()
 		};

@@ -92,12 +92,14 @@ public class RobotMap {
 	public static class LED {
 		public static final int LEDS = 36;
 		public static final int LED_1 = 1;
+		public static final int LED_2 = 2;
 		
 		public static final int LEDS_PRACT = 36;
 		public static final int LED_1_PRACT = 1;
+		public static final int LED_2_PRACT = DOES_NOT_EXIST;
 	}
 	
 	public static class Gyro {
-		public static final I2C.Port GYRO = I2C.Port.kMXP;
+		public static final I2C.Port GYRO = null;//I2C.Port.kMXP;
 	}
 }

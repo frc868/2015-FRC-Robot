@@ -15,12 +15,18 @@ public class GyroSubsystem extends BasicSubsystem {
 	private GyroItg3200 gyro;
 	private RotationTracker tilt, lean, rotation;
 	
+	public boolean gyroEnabled;
+	
 	private GyroSubsystem() {
-		gyro = new GyroItg3200(RobotMap.Gyro.GYRO, false);
 		
-		tilt = getTiltTracker();
-		lean = getLeanTracker();
-		rotation = getRotationTracker();
+		if(gyroEnabled = RobotMap.Gyro.GYRO != null) {
+
+			gyro = new GyroItg3200(RobotMap.Gyro.GYRO, false);
+			
+			tilt = getTiltTracker();
+			lean = getLeanTracker();
+			rotation = getRotationTracker();		
+		}
 	}
 	
 	public static GyroSubsystem getInstance() {
@@ -31,9 +37,9 @@ public class GyroSubsystem extends BasicSubsystem {
 	
 	@Override
 	public void updateSmartDashboard() {
-		SmartDashboard.putNumber("Tilt", tilt.getAngle());
-		SmartDashboard.putNumber("Lean", lean.getAngle());
-		SmartDashboard.putNumber("Rotation", rotation.getAngle());
+		SmartDashboard.putNumber("Tilt", getTilt());
+		SmartDashboard.putNumber("Lean", getLean());
+		SmartDashboard.putNumber("Rotation", getRotation());
 	}
 
 	@Override
@@ -42,30 +48,31 @@ public class GyroSubsystem extends BasicSubsystem {
 	}
 	
 	public double getTilt() {
-		return tilt.getAngle();
+		return gyroEnabled ? tilt.getAngle() : 0.0;
 	}
 	
 	public double getLean() {
-		return lean.getAngle();
+		return gyroEnabled ? lean.getAngle() : 0.0;
 	}
 	
 	public double getRotation() {
-		return rotation.getAngle();
+		return gyroEnabled ? rotation.getAngle() : 0.0;
 	}
 	
 	public RotationTracker getTiltTracker() {
-		return gyro.getRotationZ();
+		return gyroEnabled ? gyro.getRotationZ() : null;
 	}
 	
 	public RotationTracker getLeanTracker() {
-		return gyro.getRotationY();
+		return gyroEnabled ? gyro.getRotationY() : null;
 	}
 	
 	public RotationTracker getRotationTracker() {
-		return new RotationTrackerInverted(gyro.getRotationX());
+		return gyroEnabled ? new RotationTrackerInverted(gyro.getRotationX()) : null;
 	}
 	
 	public void resetGyro() {
-		gyro.reset();
+		if (gyroEnabled)
+			gyro.reset();
 	}
 }

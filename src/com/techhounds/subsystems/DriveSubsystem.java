@@ -113,18 +113,20 @@ public class DriveSubsystem extends BasicSubsystem {
 		drivePID.setOutputRange(-1, 1);
 		drivePID.setAbsoluteTolerance(1);
 		
-		gyroPID = new PIDController(
-			GYRO_Kp, GYRO_Ki, GYRO_Kd,
-			GyroSubsystem.getInstance().getRotationTracker(),
-			new PIDOutput() {
-				public void pidWrite(double output) {
-					output = Math.max(Math.min(getLeftPower() + GYRO_MAX_STEP , output), getLeftPower() - GYRO_MAX_STEP);
-					setPower(output, -output);
-				}
-		});
-		gyroPID.setOutputRange(-.75, .75);
-		gyroPID.setAbsoluteTolerance(3);
-		SmartDashboard.putData("GYRO!", gyroPID);
+		if (GyroSubsystem.getInstance().gyroEnabled){
+			gyroPID = new PIDController(
+				GYRO_Kp, GYRO_Ki, GYRO_Kd,
+				GyroSubsystem.getInstance().getRotationTracker(),
+				new PIDOutput() {
+					public void pidWrite(double output) {
+						output = Math.max(Math.min(getLeftPower() + GYRO_MAX_STEP , output), getLeftPower() - GYRO_MAX_STEP);
+						setPower(output, -output);
+					}
+			});
+			gyroPID.setOutputRange(-.75, .75);
+			gyroPID.setAbsoluteTolerance(3);
+			SmartDashboard.putData("GYRO!", gyroPID);
+		}
 		SmartDashboard.putData(this);
 	}
 	
@@ -327,6 +329,8 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public void setGyroPID(double angle) {
+    	if (!GyroSubsystem.getInstance().gyroEnabled)
+    		return;
     	gyroPID.setSetpoint(angle);
     	gyroPID.enable();
     }
@@ -336,6 +340,8 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public void stopGyroPID() {
+    	if (!GyroSubsystem.getInstance().gyroEnabled)
+    		return;
     	gyroPID.disable();
     }
     
@@ -344,6 +350,8 @@ public class DriveSubsystem extends BasicSubsystem {
     }
 
     public double getGyroSetPoint() {
+    	if (!GyroSubsystem.getInstance().gyroEnabled)
+    		return 0;
     	return gyroPID.getSetpoint();
     }
     
@@ -353,6 +361,8 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public void setGyroTolerance(double degrees) {
+    	if (!GyroSubsystem.getInstance().gyroEnabled)
+    		return;
     	gyroPID.setAbsoluteTolerance(degrees);
     }
     
@@ -365,6 +375,8 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public boolean gyroPIDOnTarget() {
+    	if (!GyroSubsystem.getInstance().gyroEnabled)
+    		return false;
     	return gyroPID.onTarget();
     }
     
