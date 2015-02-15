@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	
 	private Command auton;
-	private static boolean finalRobot = false;
+	private static boolean finalRobot = true;
 	
 	public static boolean isFinal(){
 		return finalRobot;
