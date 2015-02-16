@@ -232,7 +232,7 @@ public class OI {
     	SmartDashboard.putData("One Crate", new FirstTote());
     	SmartDashboard.putData("Next Crate", new NextTote(false));
     	SmartDashboard.putData("Final Crate", new NextTote(true));
-    	SmartDashboard.putData("Two Tote", new TwoTote());
+    	SmartDashboard.putData("Two Tote", new TwoTote(true, 2));
     	SmartDashboard.putData("Three Tote", new ThreeTote(true, 2));
     	SmartDashboard.putData("Turn 90?", new ManualTurn(.75, 1.5, false));
     	SmartDashboard.putData("Reverse Three Tote, Start L", new ReverseThreeTote(true, true, true));

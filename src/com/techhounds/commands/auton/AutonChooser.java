@@ -24,7 +24,7 @@ public class AutonChooser {
 		Command [] options = new Command[] {
 				new ThreeTote(true, 2),
 				new ReverseThreeTote(true, true, true),
-				new TwoTote(),
+				new TwoTote(true, 2),
 				new BinAndTote(),
 				new OneTote(),
 				new OneBin(),
