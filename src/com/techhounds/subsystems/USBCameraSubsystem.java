@@ -9,6 +9,8 @@ public class USBCameraSubsystem extends BasicSubsystem {
 	
 	private USBCameraSubsystem() {
 		server = CameraServer.getInstance();
+		setQuality(50);
+		startCapture();
 	}
 	
 	public static USBCameraSubsystem getInstance() {
@@ -17,11 +19,15 @@ public class USBCameraSubsystem extends BasicSubsystem {
 		return instance;
 	}
 	
-	public void setCameraQuality(int quality) {
-		server.setQuality(quality);
+	public void setQuality(int quality) {
+		server.setQuality(50);
 	}
 	
-	public void startUSBCapture(String port) {
+	private void startCapture() {
+		server.startAutomaticCapture();
+	}
+	
+	public void startCapture(String port) {
 		server.startAutomaticCapture(port);
 	}
 
