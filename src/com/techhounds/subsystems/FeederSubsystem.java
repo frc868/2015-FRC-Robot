@@ -21,7 +21,7 @@ public class FeederSubsystem extends Subsystem {
 	
 	private static FeederSubsystem instance;
 	
-	public static final double FEED_IN = -0.3, FEED_OUT = 0.3, STOPPED = 0;
+	public static final double FEED_IN = -0.75, FEED_OUT = 0.75, STOPPED = 0;
 	public static final boolean OPEN = true, CLOSED = false;
 	
 	private double leftMotorMult = 1, rightMotorMult = 1;

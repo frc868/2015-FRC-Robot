@@ -30,7 +30,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final double OFF_GROUND_HEIGHT = 0.2;
 	
 	public static final double LIFT_POWER = 0.8;
-	public static final double COUNTS_TO_FEET = (24.0 / 12) / 497.0;
+	public static final double COUNTS_TO_FEET = (32.25 / 12) / 5752.0;
 	public static final double COUNTS_TO_FEET_PRACT = (24.0 / 12) / 497.0;
 	public static final double UP_BRAKE_MULT = 10;
 	public static final double DOWN_BRAKE_MULT = 4; 
@@ -197,7 +197,7 @@ public class LiftSubsystem extends BasicSubsystem {
 		if (braked){
 			brakeHeight = getEncHeight();
 			if (getDirection() == DOWN){
-				brakeHeight -= .1; 
+				brakeHeight -= .25; 
 				setBrakeMult(DOWN_BRAKE_MULT);
 			}else if (getDirection() == UP)
 				setBrakeMult(UP_BRAKE_MULT);

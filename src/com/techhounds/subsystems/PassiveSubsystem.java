@@ -14,7 +14,7 @@ public class PassiveSubsystem extends BasicSubsystem {
 	private static PassiveSubsystem instance;
 	
 	public static boolean STOPPED = true, FREE = false;
-	public static boolean OPEN = false, CLOSED = true;
+	public static boolean OPEN = true, CLOSED = false;
 	
 	private boolean stopSolEnabled, armSolEnabled;
 	

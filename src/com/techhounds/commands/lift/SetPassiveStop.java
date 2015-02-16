@@ -32,7 +32,7 @@ public class SetPassiveStop extends Command {
     	if (stopPos != null)
     		pass.setStopPosition(stopPos);
     	if (armPos != null)
-    		pass.setStopPosition(armPos);
+    		pass.setArmPosition(armPos);
     }
 
     protected void execute() {
