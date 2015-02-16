@@ -1,5 +1,6 @@
 package com.techhounds.subsystems;
 
+import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 import com.techhounds.gyro.GyroItg3200;
 import com.techhounds.gyro.RotationTracker;
@@ -18,14 +19,25 @@ public class GyroSubsystem extends BasicSubsystem {
 	public boolean gyroEnabled;
 	
 	private GyroSubsystem() {
-		
-		if(gyroEnabled = RobotMap.Gyro.GYRO != null) {
 
-			gyro = new GyroItg3200(RobotMap.Gyro.GYRO, false);
-			
-			tilt = getTiltTracker();
-			lean = getLeanTracker();
-			rotation = getRotationTracker();		
+		if (Robot.isFinal()){
+			if(gyroEnabled = RobotMap.Gyro.GYRO != null) {
+	
+				gyro = new GyroItg3200(RobotMap.Gyro.GYRO, false);
+				
+				tilt = getTiltTracker();
+				lean = getLeanTracker();
+				rotation = getRotationTracker();		
+			}
+		}else{
+			if(gyroEnabled = RobotMap.Gyro.GYRO_PRACT != null) {
+				
+				gyro = new GyroItg3200(RobotMap.Gyro.GYRO_PRACT, false);
+				
+				tilt = getTiltTracker();
+				lean = getLeanTracker();
+				rotation = getRotationTracker();		
+			}
 		}
 	}
 	

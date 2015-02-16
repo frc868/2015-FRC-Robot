@@ -13,10 +13,10 @@ public class RobotMap {
 	
 	public static class Drive{
 
-		public static final int RIGHT_MOTOR_1 = 0;
-		public static final int RIGHT_MOTOR_2 = 1;
-		public static final int LEFT_MOTOR_1 = 3;
-		public static final int LEFT_MOTOR_2 = 4;
+		public static final int RIGHT_MOTOR_1 = 18;
+		public static final int RIGHT_MOTOR_2 = 14;
+		public static final int LEFT_MOTOR_1 = 12;
+		public static final int LEFT_MOTOR_2 = 16;
 		
 		public static final int LEFT_ENC = DOES_NOT_EXIST;
 		public static final int RIGHT_ENC = DOES_NOT_EXIST;
@@ -35,18 +35,18 @@ public class RobotMap {
 	
 	public static class Lift{
 		
-		public static final int MOTOR_1 = 6;
-		public static final int MOTOR_2 = 7;
-		public static final int DIGITAL_INPUT_TOP = 0;
-		public static final int DIGITAL_INPUT_BOTTOM = 1;
-		public static final int GRAB_SOL = 0;
+		public static final int MOTOR_1 = 20;
+		public static final int MOTOR_2 = 15;
+		public static final int DIGITAL_INPUT_TOP = DOES_NOT_EXIST;
+		public static final int DIGITAL_INPUT_BOTTOM = DOES_NOT_EXIST;
+		public static final int GRAB_SOL = 7;
 		public static final int BRAKE_SOL = DOES_NOT_EXIST;
-		public static final int ENCODER_A = 4;
-		public static final int ENCODER_B = 5;
-		public static final int IR_SENSOR = 3;
+		public static final int ENCODER_A = DOES_NOT_EXIST;
+		public static final int ENCODER_B = DOES_NOT_EXIST;
+		public static final int IR_SENSOR = 0;
 		
-		public static final int PASSIVE_STOP_SOL = DOES_NOT_EXIST;//3;
-		public static final int PASSIVE_ARM_SOL = DOES_NOT_EXIST;
+		public static final int PASSIVE_STOP_SOL = 5;
+		public static final int PASSIVE_ARM_SOL = 6;
 		
 		public static final int MOTOR_1_PRACT = 6;
 		public static final int MOTOR_2_PRACT = 7;
@@ -74,9 +74,9 @@ public class RobotMap {
 	}
 	
 	public static class Feeder{
-		public static final int LEFT_MOTOR = DOES_NOT_EXIST;
-		public static final int RIGHT_MOTOR = DOES_NOT_EXIST;
-		public static final int SOL = DOES_NOT_EXIST;
+		public static final int LEFT_MOTOR = 10;
+		public static final int RIGHT_MOTOR = 13;
+		public static final int SOL = 4;
 		
 		public static final int LEFT_MOTOR_PRACT = DOES_NOT_EXIST;
 		public static final int RIGHT_MOTOR_PRACT = DOES_NOT_EXIST;
@@ -100,6 +100,7 @@ public class RobotMap {
 	}
 	
 	public static class Gyro {
-		public static final I2C.Port GYRO = null;//I2C.Port.kMXP;
+		public static final I2C.Port GYRO = I2C.Port.kMXP;
+		public static final I2C.Port GYRO_PRACT = null;//I2C.Port.kMXP;
 	}
 }

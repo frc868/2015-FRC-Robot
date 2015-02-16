@@ -68,7 +68,7 @@ public class LiftSubsystem extends BasicSubsystem {
 								new CANTalon(RobotMap.Lift.MOTOR_2)},
 						new boolean[]{false, false},
 						FeedbackDevice.QuadEncoder,
-						false, true, true, true, true);
+						true, true, true, false, false);
 				motors.setCountsPerFeet(1 / COUNTS_TO_FEET);
 				motors.resetEnc();
 				encEnabled = true;
@@ -117,11 +117,11 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public boolean isAtTop() {
-		return topEnabled ? (Robot.isFinal() ? motors.getForwardSwitch() : !checkTop.get()) : true;
+		return topEnabled ? (Robot.isFinal() ? motors.getBackwardSwitch() : !checkTop.get()) : true;
 	}
 	
 	public boolean isAtBottom() {
-		return bottomEnabled ? (Robot.isFinal() ? motors.getBackwardSwitch() : !checkBottom.get()) : true;
+		return bottomEnabled ? (Robot.isFinal() ? motors.getForwardSwitch() : !checkBottom.get()) : true;
 	}
 	
 	public double getPower() {

@@ -9,15 +9,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RunLift extends Command{
 	
 	private LiftSubsystem lift;
-	private PassiveSubsystem stop;
 	private GyroSubsystem gyro;
 	
 	public RunLift() {
 		lift = LiftSubsystem.getInstance();
-		stop = PassiveSubsystem.getInstance();
 		gyro = GyroSubsystem.getInstance();
 		requires(lift);
-		requires(stop);
 		setInterruptible(false);
 	}
 
@@ -37,9 +34,6 @@ public class RunLift extends Command{
 			double pow = diff > 0 ? diff * lift.getBrakeMult() * LiftSubsystem.LIFT_POWER : 0;
 			int dir = diff > 0 ? LiftSubsystem.UP : LiftSubsystem.DOWN;
 			lift.setLift(dir, pow);
-			stop.setStopPosition(PassiveSubsystem.STOPPED);
-		}else{
-			stop.setStopPosition(PassiveSubsystem.FREE);
 		}
 		
 		if (lift.isAtBottom()){

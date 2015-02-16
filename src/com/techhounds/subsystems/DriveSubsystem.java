@@ -49,17 +49,17 @@ public class DriveSubsystem extends BasicSubsystem {
 		if (Robot.isFinal()){
 			leftMotors = new MultiCANTalon(
 					new CANTalon[]{
-							new CANTalon(RobotMap.Drive.RIGHT_MOTOR_1),
-							new CANTalon(RobotMap.Drive.RIGHT_MOTOR_2)},
+							new CANTalon(RobotMap.Drive.LEFT_MOTOR_1),
+							new CANTalon(RobotMap.Drive.LEFT_MOTOR_2)},
 					new boolean[]{false, false},
 					FeedbackDevice.QuadEncoder,
 					false, false, false, false, false);
 			
 			rightMotors = new MultiCANTalon(
 					new CANTalon[]{
-							new CANTalon(RobotMap.Drive.LEFT_MOTOR_1),
-							new CANTalon(RobotMap.Drive.LEFT_MOTOR_2)},
-					new boolean[]{true, true},
+							new CANTalon(RobotMap.Drive.RIGHT_MOTOR_1),
+							new CANTalon(RobotMap.Drive.RIGHT_MOTOR_2)},
+					new boolean[]{true, false},
 					FeedbackDevice.QuadEncoder,
 					false, false, false, false, false);
 			leftMotors.setCountsPerFeet(1 / COUNTS_TO_FEET);
@@ -384,6 +384,8 @@ public class DriveSubsystem extends BasicSubsystem {
 //        SmartDashboard.putData("drivePID", drivePID);
     	SmartDashboard.putNumber("Left Drive Power", getLeftPower());
     	SmartDashboard.putNumber("Right Drive Power", getRightPower());
+    	SmartDashboard.putNumber("Left Drive Count", getLeftCount());
+    	SmartDashboard.putNumber("Right Drive Count", getRightCount());
     }
     
     public void initDefaultCommand() {

@@ -9,9 +9,13 @@ public class MultiCANTalon implements SpeedController{
 
 	private CANTalon[] motors;
 	private double COUNTS_PER_FEET;
+	private boolean[] inverted;
+	private boolean encInverted;
 	
 	public MultiCANTalon(CANTalon[] motors, boolean[] inverted, FeedbackDevice enc, boolean encReversed, boolean forwardSwitch, boolean backSwitch, boolean forwardReversed, boolean backReversed){
 		this.motors = motors;
+		this.inverted = inverted;
+		encInverted = encReversed;
 		motors[0].enableBrakeMode(true);
 		motors[0].reverseOutput(inverted[0]);
 		motors[0].enableLimitSwitch(forwardSwitch, backSwitch);
@@ -24,8 +28,6 @@ public class MultiCANTalon implements SpeedController{
 			motors[i].changeControlMode(CANTalon.ControlMode.Follower);
 			motors[i].set(motors[0].getDeviceID());
 			motors[i].reverseOutput(inverted[i]);
-////			 Not sure if this is necessary, in general I don't think followers will ever want these enabled
-//			motors[i].enableLimitSwitch(false, false);
 		}
 	}
 	
@@ -34,17 +36,18 @@ public class MultiCANTalon implements SpeedController{
 	}
 
 	public double get() {
-		return motors[0].getOutputVoltage() / motors[0].getBusVoltage();
+		return inverted[0] ? -motors[0].getOutputVoltage() / motors[0].getBusVoltage() :
+			motors[0].getOutputVoltage() / motors[0].getBusVoltage();
 	}
 
 	public void set(double power, byte syncGroup) {
-		motors[0].changeControlMode(ControlMode.PercentVbus);
 		set(power);
 	}
 
 	public void set(double power) {
 		motors[0].changeControlMode(ControlMode.PercentVbus);
 		power = Math.max(Math.min(power, 1), -1);
+		power = inverted[0] ? -power : power;
 		motors[0].set(power);
 	}
 
@@ -85,7 +88,7 @@ public class MultiCANTalon implements SpeedController{
 	}
 	
 	public double getCount(){
-		return motors[0].getEncPosition();
+		return encInverted ? -motors[0].getEncPosition() : motors[0].getEncPosition();
 	}
 	
 	public double getDistance(){
@@ -93,11 +96,14 @@ public class MultiCANTalon implements SpeedController{
 	}
 	
 	public double getSpeed(){
-		return motors[0].getEncVelocity() / COUNTS_PER_FEET;
+		return encInverted ? -motors[0].getEncVelocity() / COUNTS_PER_FEET : motors[0].getEncVelocity() / COUNTS_PER_FEET;
 	}
 	
 	public void setEncDistance(double dist){
-		motors[0].setPosition(dist * COUNTS_PER_FEET);
+		if (encInverted)
+			motors[0].setPosition(-dist * COUNTS_PER_FEET);
+		else
+			motors[0].setPosition(dist * COUNTS_PER_FEET);
 	}
 	
 	public void resetEnc() {

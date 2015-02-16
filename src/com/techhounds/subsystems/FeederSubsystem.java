@@ -1,10 +1,12 @@
 package com.techhounds.subsystems;
 
+import com.techhounds.MultiCANTalon;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
@@ -20,12 +22,12 @@ public class FeederSubsystem extends Subsystem {
 	private static FeederSubsystem instance;
 	
 	public static final double FEED_IN = -0.3, FEED_OUT = 0.3, STOPPED = 0;
-	public static final boolean OPEN = false, CLOSED = true;
+	public static final boolean OPEN = true, CLOSED = false;
 	
 	private double leftMotorMult = 1, rightMotorMult = 1;
-	private boolean leftEnabled, rightEnabled, solEnabled;
+	private boolean solEnabled, motorsEnabled;
 	
-	private CANTalon left, right;
+	private MultiCANTalon motors;
 	private Solenoid sol;
 	
 	private FeederSubsystem() {
@@ -34,20 +36,17 @@ public class FeederSubsystem extends Subsystem {
 		if (!Robot.isFinal())
 			return;
 					
-		if(leftEnabled = RobotMap.Feeder.LEFT_MOTOR != RobotMap.DOES_NOT_EXIST){
-			left = new CANTalon(RobotMap.Feeder.LEFT_MOTOR);
-			left.enableBrakeMode(true);
-			left.changeControlMode(ControlMode.PercentVbus);
-			left.reverseOutput(false);
+		if (motorsEnabled = (RobotMap.Feeder.LEFT_MOTOR != RobotMap.DOES_NOT_EXIST && 
+				RobotMap.Feeder.RIGHT_MOTOR != RobotMap.DOES_NOT_EXIST)){
+			motors = new MultiCANTalon(
+					new CANTalon[]{
+						new CANTalon(RobotMap.Feeder.LEFT_MOTOR),
+						new CANTalon(RobotMap.Feeder.RIGHT_MOTOR)},
+					new boolean[]{false, true},
+					FeedbackDevice.QuadEncoder,
+					false, false, false, false, false);
 		}
-		
-		if(rightEnabled = RobotMap.Feeder.RIGHT_MOTOR != RobotMap.DOES_NOT_EXIST){
-			right = new CANTalon(RobotMap.Feeder.RIGHT_MOTOR);
-			right.enableBrakeMode(true);
-			right.changeControlMode(ControlMode.PercentVbus);
-			right.reverseOutput(true);
-		}
-		
+				
 		if(solEnabled = RobotMap.Feeder.SOL != RobotMap.DOES_NOT_EXIST)
 			sol = new Solenoid(RobotMap.Feeder.SOL);
 	}
@@ -58,27 +57,13 @@ public class FeederSubsystem extends Subsystem {
 		return instance;
 	}
 		
-	public double getLeftPower() {
-		return leftEnabled ? left.get() : 0;
-	}
-	
-	public double getRightPower() {
-		return rightEnabled ? right.get() : 0;
-	}
-	
-	public double getAvgPower() {
-		return (getLeftPower() + getRightPower()) / 2;
-	}
-	
-	public void setPower(double leftPower, double rightPower) {
-		if (leftEnabled)
-			left.set(Robot.checkRange(leftPower, -1, 1) * leftMotorMult);
-		if (rightEnabled)
-			right.set(Robot.checkRange(rightPower, -1, 1) * rightMotorMult);
+	public double getPower() {
+		return motorsEnabled ? motors.get() : 0;
 	}
 	
 	public void setPower(double power) {
-		setPower(power, power);
+		if (motorsEnabled)
+			motors.set(power);
 	}
 	
 	public boolean getPosition() {
@@ -91,7 +76,7 @@ public class FeederSubsystem extends Subsystem {
 	}
 	
 	public void stopArms() {
-		setPower(0, 0);
+		setPower(0);
 	}
 	
 	public void updateSmartDashboard() {
