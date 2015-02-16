@@ -10,6 +10,7 @@ public class RobotMap {
 	public static final int OPERATOR_PORT = 1;
 	
 	public static final int CAMERA_ENABLED = 1;
+	public static final String CAMERA_USB = "cam0";
 	
 	public static class Drive{
 

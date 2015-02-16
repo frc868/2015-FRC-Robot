@@ -33,6 +33,7 @@ public class Robot extends IterativeRobot {
     
     public void initSubsystems() {
 
+    	USBCameraSubsystem.getInstance().startUSBCapture(RobotMap.CAMERA_USB);
     	GyroSubsystem.getInstance();
     	FeederSubsystem.getInstance();
     	BinSubsystem.getInstance();
