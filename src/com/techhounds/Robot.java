@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
     	
     	initSubsystems();
 		OI.getInstance();
-//		(new UpdateDashboard()).start();
+		(new UpdateDashboard()).start();
 		
 		System.out.println("*******\n"+
 							"TEAM 868 CAN ROBOT NOW!\n" +
@@ -58,10 +58,8 @@ public class Robot extends IterativeRobot {
 
     	auton = AutonChooser.getSelected();
     	auton.start();
-		(new UpdateDashboard()).start();
-//    	(new UpdateUSB()).start();
-//    	
-		System.out.println("*******\n"+
+
+    	System.out.println("*******\n"+
 							"TEAM 868 CAN AUTON NOW!\n" +
 							"*******");
     }
@@ -74,10 +72,7 @@ public class Robot extends IterativeRobot {
 		System.out.println("*******\n"+
 							"TEAM 868 CAN TELEOP NOW!\n" +
 							"*******");
-
-		(new UpdateDashboard()).start();
-//		(new UpdateUSB()).start();
-//		
+		
 		DriveSubsystem.getInstance().updateLEDCommand();
     }
     

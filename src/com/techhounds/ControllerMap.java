@@ -103,9 +103,9 @@ public class ControllerMap {
         	int angle = joystick.getPOV();
         	
         	if (!eightDirectional){
-	            if (button == ControllerMap.RIGHT) {
+	            if (button == ControllerMap.LEFT) {
 	                return angle == 270 || angle == 315 || angle == 225;
-	            } else if (button == ControllerMap.LEFT) {
+	            } else if (button == ControllerMap.RIGHT) {
 	                return angle == 90 || angle == 45 || angle== 135;
 	            } else if (button == ControllerMap.UP) {
 	                return angle == 0 || angle == 45 || angle == 315;

@@ -21,7 +21,7 @@ public class GyroSubsystem extends BasicSubsystem {
 	private GyroSubsystem() {
 
 		if (Robot.isFinal()){
-			if(gyroEnabled = RobotMap.Gyro.GYRO != null) {
+			if(gyroEnabled = RobotMap.Gyro.GYRO != null) { 
 	
 				gyro = new GyroItg3200(RobotMap.Gyro.GYRO, false);
 				

@@ -34,21 +34,21 @@ public class USBCameraSubsystem extends BasicSubsystem {
 	}
 	
 	public void setQuality(int quality) {
-		server.setQuality(50);
+//		server.setQuality(50);
 	}
 	
 	private void startCapture() {
-		server.startAutomaticCapture();
+//		server.startAutomaticCapture();
 	}
 	
 	public void startCapture(String port) {
-		server.startAutomaticCapture(port);
+//		server.startAutomaticCapture(port);
 	}
 	
 	public void updateCamera() {
 		
-		NIVision.IMAQdxGrab(session, frame, 1);
-        CameraServer.getInstance().setImage(frame);
+//		NIVision.IMAQdxGrab(session, frame, 1);
+//        CameraServer.getInstance().setImage(frame);
 
 	}
 

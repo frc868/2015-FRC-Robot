@@ -1,11 +1,11 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.commands.Debug;
-import com.techhounds.commands.SetFeeder;
 import com.techhounds.commands.driving.DriveTime;
 import com.techhounds.commands.driving.ManualTurn;
 import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.driving.WaitForIR;
+import com.techhounds.commands.feeder.SetFeeder;
 import com.techhounds.commands.lift.SetLift;
 import com.techhounds.commands.lift.SetLiftHeight;
 import com.techhounds.commands.lift.WaitForLiftSwitch;

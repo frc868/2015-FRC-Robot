@@ -1,26 +1,23 @@
 package com.techhounds;
 
-import com.techhounds.commands.SetFeeder;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.AutonDrive;
 import com.techhounds.commands.auton.DriveToClosestTote;
+import com.techhounds.commands.auton.FirstTote;
 import com.techhounds.commands.auton.MoveToAutoZone;
 import com.techhounds.commands.auton.NextTote;
-import com.techhounds.commands.auton.FirstTote;
 import com.techhounds.commands.auton.ReverseThreeTote;
 import com.techhounds.commands.auton.ThreeTote;
 import com.techhounds.commands.auton.TwoTote;
-import com.techhounds.commands.bin.SetBin;
 import com.techhounds.commands.driving.DriveTime;
-import com.techhounds.commands.driving.ManualTurn;
 import com.techhounds.commands.driving.OperatorHalfDrive;
 import com.techhounds.commands.driving.RotateToAngle;
-import com.techhounds.commands.driving.ToggleDriveMode;
-import com.techhounds.commands.lift.NextLevel;
+import com.techhounds.commands.feeder.SetFeeder;
 import com.techhounds.commands.lift.SetLift;
-import com.techhounds.commands.lift.SetLiftHeight;
 import com.techhounds.commands.lift.SetPassiveStop;
-import com.techhounds.subsystems.*;
+import com.techhounds.subsystems.FeederSubsystem;
+import com.techhounds.subsystems.LiftSubsystem;
+import com.techhounds.subsystems.PassiveSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -53,11 +50,13 @@ public class OI {
 	private final int passiveIn =		PS4Map.L1;
 	private final int passiveOut =		PS4Map.R1;
 	private final int passivePushStop = PS4Map.L2;
-	private final int feederClose =		PS4Map.LEFT;
-	private final int feederOpen =		PS4Map.RIGHT;
-	private final int feederIn =		PS4Map.DOWN;
-	private final int feederOut =		PS4Map.UP;
-	
+//	private final int feederClose =		PS4Map.LEFT;
+//	private final int feederOpen =		PS4Map.RIGHT;
+//	private final int feederIn =		PS4Map.DOWN;
+//	private final int feederOut =		PS4Map.UP;
+	private final int feederPosToggle =	PS4Map.RIGHT;
+	private final int feederOutToggle = PS4Map.UP;
+	private final int feederInToggle = 	PS4Map.DOWN;
 
 //	private final int toggleForward = 	ControllerMap.START;
 //    private final int toggleHalf = 		ControllerMap.RT;
@@ -154,20 +153,28 @@ public class OI {
         passStop.whenPressed(new SetPassiveStop(PassiveSubsystem.STOPPED));
         passStop.whenReleased(new SetPassiveStop(PassiveSubsystem.FREE));
         
-        Button feedClose = driver.createButton(feederClose);
-        feedClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
+//        Button feedClose = driver.createButton(feederClose);
+//        feedClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
+//        
+//        Button feedOpen = driver.createButton(feederOpen);
+//        feedOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
+//        
+//        Button feedIn = driver.createButton(feederIn);
+//        feedIn.whenPressed(new SetFeeder(FeederSubsystem.FEED_IN));
+//        feedIn.whenReleased(new SetFeeder(0));
+//        
+//        Button feedOut = driver.createButton(feederOut);
+//        feedOut.whenPressed(new SetFeeder(FeederSubsystem.FEED_OUT));
+//        feedOut.whenReleased(new SetFeeder(0));
+//        
+        Button feederPositionToggle = driver.createButton(feederPosToggle);
+        feederPositionToggle.whenPressed(new SetFeeder(true, true));
         
-        Button feedOpen = driver.createButton(feederOpen);
-        feedOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
+        Button feederPushOutToggle = driver.createButton(feederOutToggle);
+        feederPushOutToggle.whenPressed(new SetFeeder(true, FeederSubsystem.FEED_OUT));
         
-        Button feedIn = driver.createButton(feederIn);
-        feedIn.whenPressed(new SetFeeder(FeederSubsystem.FEED_IN));
-        feedIn.whenReleased(new SetFeeder(0));
-        
-        Button feedOut = driver.createButton(feederOut);
-        feedOut.whenPressed(new SetFeeder(FeederSubsystem.FEED_OUT));
-        feedOut.whenReleased(new SetFeeder(0));
-        
+        Button feederPullInToggle = driver.createButton(feederInToggle);
+        feederPullInToggle.whenPressed(new SetFeeder(true, FeederSubsystem.FEED_IN));
     }
     
     public void initOperator() {

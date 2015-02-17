@@ -46,8 +46,8 @@ public class RobotMap {
 		public static final int ENCODER_B = DOES_NOT_EXIST;
 		public static final int IR_SENSOR = 0;
 		
-		public static final int PASSIVE_STOP_SOL = 5;
-		public static final int PASSIVE_ARM_SOL = 6;
+		public static final int PASSIVE_STOP_SOL = DOES_NOT_EXIST;//5;
+		public static final int PASSIVE_ARM_SOL = DOES_NOT_EXIST;//6;
 		
 		public static final int MOTOR_1_PRACT = 6;
 		public static final int MOTOR_2_PRACT = 7;

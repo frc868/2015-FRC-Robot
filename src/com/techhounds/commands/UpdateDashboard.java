@@ -15,6 +15,7 @@ public class UpdateDashboard extends Command {
 	
 	public UpdateDashboard() {
 		super("Update Dashboard");
+		setRunWhenDisabled(true);
 		timer = new Timer();
 	}
 
@@ -25,7 +26,7 @@ public class UpdateDashboard extends Command {
 
 	protected void execute() {
 		
-		if(timer.get() >= 0.3) {
+		if(timer.get() >= 0.35) {
 			for(BasicSubsystem sub : BasicSubsystem.subsystems)
 				sub.updateSmartDashboard();
 			timer.reset();
