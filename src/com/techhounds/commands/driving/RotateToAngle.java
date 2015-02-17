@@ -7,15 +7,18 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class RotateToAngle extends Command {
 
-	private double angle;
 	private DriveSubsystem drive;
 	private GyroSubsystem gyro;
 	
-	public RotateToAngle(double angle) {
+	private double angle;
+	private double timeout;
+	
+	public RotateToAngle(double angle, double timeout) {
 		drive = DriveSubsystem.getInstance();
 		gyro = GyroSubsystem.getInstance();
 		
 		this.angle = angle;
+		this.timeout = timeout;
 		
 		requires(drive);
 	}
@@ -31,7 +34,7 @@ public class RotateToAngle extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return drive.gyroPIDOnTarget();
+		return drive.gyroPIDOnTarget() || timeSinceInitialized() >= timeout;
 	}
 
 	@Override

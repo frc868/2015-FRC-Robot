@@ -2,6 +2,7 @@ package com.techhounds;
 
 import com.techhounds.commands.SetFeeder;
 import com.techhounds.commands.auton.AutonChooser;
+import com.techhounds.commands.auton.AutonDrive;
 import com.techhounds.commands.auton.DriveToClosestTote;
 import com.techhounds.commands.auton.MoveToAutoZone;
 import com.techhounds.commands.auton.NextTote;
@@ -234,16 +235,15 @@ public class OI {
     	SmartDashboard.putData("Final Crate", new NextTote(true));
     	SmartDashboard.putData("Two Tote", new TwoTote(true, 2));
     	SmartDashboard.putData("Three Tote", new ThreeTote(true, 2));
-    	SmartDashboard.putData("Turn 90?", new ManualTurn(.75, 1.5, false));
     	SmartDashboard.putData("Reverse Three Tote, Start L", new ReverseThreeTote(true, true, true));
     	SmartDashboard.putData("Reverse Three Tote, Start R", new ReverseThreeTote(true, false, true));
-    	SmartDashboard.putData("Move Forward", new DriveTime(.75, .4, false));
     	
+    	SmartDashboard.putData("Move Forward", new DriveTime(.75, .4, false));
 
-    	SmartDashboard.putData("Gyro Rotate 90", new RotateToAngle(90));
-    	SmartDashboard.putData("Gyro Rotate 270", new RotateToAngle(270));
-    	SmartDashboard.putData("Gyro Rotate 180", new RotateToAngle(180));
-    	SmartDashboard.putData("Gyro Rotate 0", new RotateToAngle(0));
+    	SmartDashboard.putData("Gyro Rotate 90", new RotateToAngle(90, 1));
+    	SmartDashboard.putData("Gyro Rotate 270", new RotateToAngle(270, 3));
+    	SmartDashboard.putData("Gyro Rotate 180", new RotateToAngle(180, 2));
+    	SmartDashboard.putData("Drive PID", new AutonDrive(6.75, 3));
     }
     
     public int getAutonChoice() {

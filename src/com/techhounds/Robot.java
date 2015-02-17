@@ -2,14 +2,23 @@
 package com.techhounds;
 
 import com.techhounds.commands.UpdateDashboard;
+import com.techhounds.commands.UpdateUSB;
 import com.techhounds.commands.auton.AutonChooser;
-import com.techhounds.subsystems.*;
+import com.techhounds.subsystems.BinSubsystem;
+import com.techhounds.subsystems.CameraSubsystem;
+import com.techhounds.subsystems.CompSubsystem;
+import com.techhounds.subsystems.DriveSubsystem;
+import com.techhounds.subsystems.FeederSubsystem;
+import com.techhounds.subsystems.GyroSubsystem;
+import com.techhounds.subsystems.LEDSubsystem;
+import com.techhounds.subsystems.LiftSubsystem;
+import com.techhounds.subsystems.PassiveSubsystem;
+import com.techhounds.subsystems.USBCameraSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	
@@ -50,7 +59,8 @@ public class Robot extends IterativeRobot {
     	auton = AutonChooser.getSelected();
     	auton.start();
 		(new UpdateDashboard()).start();
-    	
+//    	(new UpdateUSB()).start();
+//    	
 		System.out.println("*******\n"+
 							"TEAM 868 CAN AUTON NOW!\n" +
 							"*******");
@@ -66,7 +76,8 @@ public class Robot extends IterativeRobot {
 							"*******");
 
 		(new UpdateDashboard()).start();
-		
+//		(new UpdateUSB()).start();
+//		
 		DriveSubsystem.getInstance().updateLEDCommand();
     }
     

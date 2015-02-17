@@ -1,5 +1,6 @@
 package com.techhounds.commands.auton;
 
+import com.techhounds.Robot;
 import com.techhounds.subsystems.CameraSubsystem;
 import com.techhounds.subsystems.DriveSubsystem;
 
@@ -38,7 +39,10 @@ public class DriveToClosestTote extends Command {
     	power = cam.getDistValue();
     	offset = cam.getOffsetValue();
     	
-    	drive.setPower(power + offset, (power - offset) * .9);
+    	if (Robot.isFinal())
+    		drive.setPower(power + offset, power - offset);
+    	else
+    		drive.setPower(power + offset, (power - offset) * .9);
     }
 
     protected boolean isFinished() {

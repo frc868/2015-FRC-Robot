@@ -25,8 +25,8 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	private static DriveSubsystem instance;
 	
-	private static final double Kp = 0, Ki = 0, Kd = 0;
-	private static final double GYRO_Kp = 0.05, GYRO_Ki = 0, GYRO_Kd = 0.1;
+	private static final double Kp = 0.1, Ki = 0, Kd = 0.05;
+	private static final double GYRO_Kp = 0.0125, GYRO_Ki = 0, GYRO_Kd = 0.015;
 	
 	private boolean overrideOperatorButton, twoPersonDrive = true, isForward, isHalfSpeed;
 	private boolean leftEncEnabled, rightEncEnabled;
@@ -37,9 +37,11 @@ public class DriveSubsystem extends BasicSubsystem {
 	private MultiMotor leftMotorsPract, rightMotorsPract;
 	private Counter leftEnc, rightEnc;
 	
-	private final double COUNTS_TO_FEET = 1;
+	private final double COUNTS_TO_FEET = (81.0 / 12.0) / 50850;
 	private final double COUNTS_TO_FEET_PRACT = 1;
 	private final double GYRO_MAX_STEP = .2;
+	private final double MAX_CHANGE_UP = .1;
+	private final double MAX_CHANGE_DOWN = .1;
 	
 	private double driveTolerance;
 
@@ -53,7 +55,7 @@ public class DriveSubsystem extends BasicSubsystem {
 							new CANTalon(RobotMap.Drive.LEFT_MOTOR_2)},
 					new boolean[]{false, false},
 					FeedbackDevice.QuadEncoder,
-					false, false, false, false, false);
+					true, false, false, false, false);
 			
 			rightMotors = new MultiCANTalon(
 					new CANTalon[]{
@@ -66,6 +68,7 @@ public class DriveSubsystem extends BasicSubsystem {
 			rightMotors.setCountsPerFeet(1 / COUNTS_TO_FEET);
 			leftMotors.resetEnc();
 			rightMotors.resetEnc();
+			
 			
 			leftEncEnabled = true;
 			rightEncEnabled = true;
@@ -112,6 +115,7 @@ public class DriveSubsystem extends BasicSubsystem {
 				});
 		drivePID.setOutputRange(-1, 1);
 		drivePID.setAbsoluteTolerance(1);
+		SmartDashboard.putData("DrivePID", drivePID);
 		
 		if (GyroSubsystem.getInstance().gyroEnabled){
 			gyroPID = new PIDController(
@@ -125,9 +129,8 @@ public class DriveSubsystem extends BasicSubsystem {
 			});
 			gyroPID.setOutputRange(-.75, .75);
 			gyroPID.setAbsoluteTolerance(3);
-			SmartDashboard.putData("GYRO!", gyroPID);
+			SmartDashboard.putData("GyroPID", gyroPID);
 		}
-		SmartDashboard.putData(this);
 	}
 	
 	public static DriveSubsystem getInstance() {
@@ -175,6 +178,8 @@ public class DriveSubsystem extends BasicSubsystem {
         
         if (isHalfSpeed){
         	powerMag *= .5;
+        	steerMag *= .6;
+        }else{
         	steerMag *= .6;
         }
         
@@ -295,6 +300,9 @@ public class DriveSubsystem extends BasicSubsystem {
     	leftPower = Math.max(Math.min(leftPower, 1), -1);
     	rightPower = Math.max(Math.min(rightPower, 1), -1);
     	
+    	leftPower = Math.max(Math.min(leftPower, getLeftPower() + MAX_CHANGE_UP), getLeftPower() - MAX_CHANGE_DOWN);
+    	rightPower = Math.max(Math.min(rightPower, getRightPower() + MAX_CHANGE_UP), getRightPower() - MAX_CHANGE_DOWN);
+    	
     	if(Robot.isFinal()){
     		leftMotors.set(leftPower);
     		rightMotors.set(rightPower);
@@ -386,6 +394,8 @@ public class DriveSubsystem extends BasicSubsystem {
     	SmartDashboard.putNumber("Right Drive Power", getRightPower());
     	SmartDashboard.putNumber("Left Drive Count", getLeftCount());
     	SmartDashboard.putNumber("Right Drive Count", getRightCount());
+    	SmartDashboard.putNumber("Left Drive Dist", getLeftDistance());
+    	SmartDashboard.putNumber("Right Drive Dist", getRightDistance());
     }
     
     public void initDefaultCommand() {

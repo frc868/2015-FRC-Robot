@@ -12,16 +12,18 @@ public class AutonDrive extends Command {
 	private static DriveSubsystem drive;
 	
 	public double distance;
+	private double timeout; 
 
-    public AutonDrive(double distance, double tol) {
+    public AutonDrive(double distance, double tol, double timeout) {
     	drive = DriveSubsystem.getInstance();
     	requires(drive);
     	drive.setDriveTolerance(tol);
     	this.distance = distance;
+    	this.timeout = timeout;
     }
     
-    public AutonDrive(double distance) {
-    	this(distance, 1);
+    public AutonDrive(double distance, double timeout) {
+    	this(distance, 1, timeout);
     }
 
     protected void initialize() {
@@ -33,7 +35,7 @@ public class AutonDrive extends Command {
     }
 
     protected boolean isFinished() {
-        return drive.drivePIDOnTarget();
+        return drive.drivePIDOnTarget() || timeSinceInitialized() >= timeout;
     }
 
     protected void end(){

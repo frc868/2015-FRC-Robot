@@ -28,7 +28,7 @@ public class AutonChooser {
 				new BinAndTote(),
 				new OneTote(),
 				new OneBin(),
-				new MoveToAutoZone(1.5),
+				new AutonDrive(8.5, 3),
 				new DoNothing()
 		};
 		
