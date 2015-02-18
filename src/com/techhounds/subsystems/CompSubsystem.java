@@ -5,6 +5,7 @@ import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class CompSubsystem extends Subsystem {
@@ -38,7 +39,7 @@ public class CompSubsystem extends Subsystem {
 	}
 	
 	public void updateSmartDashboard() {
-		
+		SmartDashboard.putBoolean("Compressor Running", comp.enabled());
 	}
 
     public void initDefaultCommand() {

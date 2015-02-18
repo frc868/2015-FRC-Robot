@@ -45,10 +45,7 @@ public class SetFeeder extends Command {
     	
     	if(toggle != null && toggle) {
     		if(power != null) {
-    			if(power == FeederSubsystem.FEED_IN)
-    				feed.setPower(feed.getPower() != FeederSubsystem.STOPPED ? FeederSubsystem.STOPPED : FeederSubsystem.FEED_IN);
-    			else if(power == FeederSubsystem.FEED_OUT)
-    				feed.setPower(feed.getPower() != FeederSubsystem.STOPPED ? FeederSubsystem.STOPPED : FeederSubsystem.FEED_OUT);
+    			feed.setPower(feed.getPower() != FeederSubsystem.STOPPED ? FeederSubsystem.STOPPED : power);
     		} else {
     			feed.setPosition(!feed.getPosition());
     		}

@@ -1,32 +1,32 @@
 package com.techhounds.commands;
 
-import com.techhounds.subsystems.USBCameraSubsystem;
+import com.techhounds.subsystems.LEDSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class UpdateUSB extends Command {
+public class Wink extends Command {
 
-	private USBCameraSubsystem camera;
+	LEDSubsystem led;
 	
-    public UpdateUSB() {
-        camera = USBCameraSubsystem.getInstance();
+    public Wink() {
+    	led = LEDSubsystem.getInstance();
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	led.wink();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	camera.updateCamera();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

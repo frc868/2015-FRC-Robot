@@ -5,6 +5,7 @@ import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -64,7 +65,8 @@ public class PassiveSubsystem extends BasicSubsystem {
 	}
 	
 	public void updateSmartDashboard() {
-		
+		SmartDashboard.putBoolean("Passive Arm In", !getArmPosition());
+		SmartDashboard.putBoolean("Passive Stop In", !getStopPosition());
 	}
 	
     public void initDefaultCommand() {

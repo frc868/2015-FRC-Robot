@@ -1,6 +1,7 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.commands.driving.ManualTurn;
+import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.driving.WaitForIR;
 import com.techhounds.commands.lift.SetLift;
 import com.techhounds.commands.lift.SetLiftHeight;
@@ -22,7 +23,9 @@ public class OneBin extends CommandGroup {
 		
 		//lift first tote and turn and move
 		addParallel(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
-		addSequential(new ManualTurn(.6, .9, true));
-		addSequential(new MoveToAutoZone(1.75, .25));
+		addSequential(new RotateToAngle(-90, 1));
+		addSequential(new AutonDrive(9, 2));
+//		addSequential(new ManualTurn(.6, .9, true));
+//		addSequential(new MoveToAutoZone(1.75, .25));
     }
 }

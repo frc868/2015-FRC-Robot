@@ -1,5 +1,7 @@
 package com.techhounds;
 
+import com.techhounds.commands.WaitForToteLift;
+import com.techhounds.commands.Wink;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.AutonDrive;
 import com.techhounds.commands.auton.DriveToClosestTote;
@@ -251,6 +253,9 @@ public class OI {
     	SmartDashboard.putData("Gyro Rotate 270", new RotateToAngle(270, 3));
     	SmartDashboard.putData("Gyro Rotate 180", new RotateToAngle(180, 2));
     	SmartDashboard.putData("Drive PID", new AutonDrive(6.75, 3));
+    	
+    	SmartDashboard.putData("Wait Tote Lift", new WaitForToteLift());
+    	SmartDashboard.putData("Wink", new Wink());
     }
     
     public int getAutonChoice() {
@@ -271,7 +276,7 @@ public class OI {
 	       }
 	       
 	       return send;
-	    }
+	}
     
     public static double getDriverRightXAxis() {
     	return driver.getRightStickX();

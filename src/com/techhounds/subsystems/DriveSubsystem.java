@@ -234,8 +234,8 @@ public class DriveSubsystem extends BasicSubsystem {
 	}
 	
     public void setDriveMode(boolean forward){
-        isForward = forward;
-        updateLEDCommand();
+//        isForward = forward;
+//        updateLEDCommand();
     }
     
     public void setHalfSpeed(boolean isHalfSpeed){
@@ -244,7 +244,7 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public void toggleDriveMode(){
-        setDriveMode(!isForward);
+//        setDriveMode(!isForward);
     }
     
     public void setTwoPersonDrive(boolean isTwoPeople){

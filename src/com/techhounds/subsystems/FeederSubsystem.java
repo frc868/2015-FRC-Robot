@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class FeederSubsystem extends Subsystem {
@@ -80,7 +81,8 @@ public class FeederSubsystem extends Subsystem {
 	}
 	
 	public void updateSmartDashboard() {
-		
+		SmartDashboard.putBoolean("Feeder Solenoid In", !getPosition());
+		SmartDashboard.putString("Feeder Direction", getPower() > 0 ? "OUT" : getPower() == 0 ? "STOPPED" : "IN");
 	}
 
     public void initDefaultCommand() {

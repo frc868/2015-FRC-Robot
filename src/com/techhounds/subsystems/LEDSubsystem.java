@@ -23,7 +23,7 @@ public class LEDSubsystem extends BasicSubsystem {
     public int curCmd = 0;
     
     public static final byte OFF_CMD = 0, STANDBY_CMD = 1, YELLOW_DOT_CMD = 2, DRIVE_CMD = 3, 
-    		FORWARD_FULL = 4, FORWARD_HALF = 5, BACKWARD_FULL = 6, BACKWARD_HALF = 7, BRIGHT_CMD = 10;
+    		FORWARD_FULL = 4, FORWARD_HALF = 5, BACKWARD_FULL = 6, BACKWARD_HALF = 7, WINK_CMD = 8, BRIGHT_CMD = 10;
 	
     private boolean[] enabled;
     
@@ -56,6 +56,10 @@ public class LEDSubsystem extends BasicSubsystem {
 		if(instance == null)
 			instance = new LEDSubsystem();
 		return instance;
+	}
+	
+	public int getCommand(){
+		return curCmd;
 	}
 	
 	public void standby(){
@@ -96,6 +100,11 @@ public class LEDSubsystem extends BasicSubsystem {
 	public void backwardHalf(){
 		sendToAll(BACKWARD_HALF);
 		curCmd = BACKWARD_HALF;
+	}
+	
+	public void wink(){
+		sendToAll(WINK_CMD);
+		curCmd = WINK_CMD;
 	}
 	
 	public void updateDrive(){

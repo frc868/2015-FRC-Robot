@@ -145,12 +145,12 @@ public class BinSubsystem extends BasicSubsystem {
     }
 
 	public void updateSmartDashboard() {
-		SmartDashboard.putNumber("Bin Enc Count", getEncCount());
-		SmartDashboard.putNumber("Bin Enc Height", getEncHeight());
-		SmartDashboard.putBoolean("Bin Top Switch", isAtTop());
-		SmartDashboard.putBoolean("Bin Bottom Switch", isAtBottom());
-		SmartDashboard.putNumber("Bin Direction", getDirection());
-		SmartDashboard.putNumber("Bin Power", getPower());
+//		SmartDashboard.putNumber("Bin Enc Count", getEncCount());
+//		SmartDashboard.putNumber("Bin Enc Height", getEncHeight());
+//		SmartDashboard.putBoolean("Bin Top Switch", isAtTop());
+//		SmartDashboard.putBoolean("Bin Bottom Switch", isAtBottom());
+//		SmartDashboard.putNumber("Bin Direction", getDirection());
+//		SmartDashboard.putNumber("Bin Power", getPower());
 	}
 }
 

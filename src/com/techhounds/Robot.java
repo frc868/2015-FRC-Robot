@@ -2,7 +2,6 @@
 package com.techhounds;
 
 import com.techhounds.commands.UpdateDashboard;
-import com.techhounds.commands.UpdateUSB;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.subsystems.BinSubsystem;
 import com.techhounds.subsystems.CameraSubsystem;
@@ -56,8 +55,7 @@ public class Robot extends IterativeRobot {
     
     public void autonomousInit() {
 
-    	auton = AutonChooser.getSelected();
-    	auton.start();
+    	(auton = AutonChooser.getSelected()).start();
 
     	System.out.println("*******\n"+
 							"TEAM 868 CAN AUTON NOW!\n" +

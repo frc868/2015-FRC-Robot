@@ -14,17 +14,14 @@ public class USBCameraSubsystem extends BasicSubsystem {
 	private Image frame;
 	
 	private USBCameraSubsystem() {
-//		server = CameraServer.getInstance();
-//		setQuality(50);
-//		startCapture();
-//		
-//		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-//
-//        session = NIVision.IMAQdxOpenCamera("cam0",
-//                NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-//        NIVision.IMAQdxConfigureGrab(session);
-//        
-//		NIVision.IMAQdxStartAcquisition(session);
+		
+		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+
+        session = NIVision.IMAQdxOpenCamera("cam0",
+                NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        NIVision.IMAQdxConfigureGrab(session);
+        
+        startSession();
 	}
 	
 	public static USBCameraSubsystem getInstance() {
@@ -33,27 +30,23 @@ public class USBCameraSubsystem extends BasicSubsystem {
 		return instance;
 	}
 	
-	public void setQuality(int quality) {
-//		server.setQuality(50);
-	}
-	
-	private void startCapture() {
-//		server.startAutomaticCapture();
-	}
-	
-	public void startCapture(String port) {
-//		server.startAutomaticCapture(port);
+	private void startSession() {
+		NIVision.IMAQdxStartAcquisition(session);
 	}
 	
 	public void updateCamera() {
 		
-//		NIVision.IMAQdxGrab(session, frame, 1);
-//        CameraServer.getInstance().setImage(frame);
-
+		NIVision.IMAQdxGrab(session, frame, 1);
+        CameraServer.getInstance().setImage(frame);
+	}
+	
+	private void stopSession() {
+		NIVision.IMAQdxStopAcquisition(session);
 	}
 
 	@Override
 	public void updateSmartDashboard() {
+		updateCamera();
 	}
 
 	@Override
