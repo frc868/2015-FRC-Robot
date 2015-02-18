@@ -32,6 +32,8 @@ public class ControllerMap {
     
     protected static final double DEADZONE = 0.05;
     
+    private int type;
+    
     public boolean eightDirectional;
     protected int[] buttonSet;
     protected Joystick joystick;
@@ -53,12 +55,18 @@ public class ControllerMap {
         else
             buttonSet = logitech;
         
+        this.type = type;
+        
         eightDirectional = false;
     }
     
     public ControllerMap(Joystick joystick, int type, boolean isEightDirectional){
     	this(joystick, type);
     	eightDirectional = isEightDirectional;
+    }
+    
+    public int getType() {
+    	return type;
     }
     
     public double getLeftStickX(){

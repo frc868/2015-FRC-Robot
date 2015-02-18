@@ -16,6 +16,8 @@ public class PS4Map extends ControllerMap {
     
     private static final int[] ps4 =		{ 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 0, 2, 1, 5};
     
+    public static final int TYPE = 4;
+    
     public PS4Map(Joystick joystick){
     	super(joystick);
         buttonSet = ps4;
@@ -25,4 +27,5 @@ public class PS4Map extends ControllerMap {
     	this(joystick);
     	eightDirectional = isEightDirectional;
     }
+    
 }
