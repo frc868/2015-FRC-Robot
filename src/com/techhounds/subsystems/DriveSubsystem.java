@@ -131,6 +131,9 @@ public class DriveSubsystem extends BasicSubsystem {
 			gyroPID.setAbsoluteTolerance(3);
 			SmartDashboard.putData("GyroPID", gyroPID);
 		}
+		
+		// Default Half Speed
+		setHalfSpeed(true);
 	}
 	
 	public static DriveSubsystem getInstance() {

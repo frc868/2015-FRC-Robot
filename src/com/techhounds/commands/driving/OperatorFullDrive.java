@@ -7,23 +7,23 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * @author Anonymous :J
  */
-public class OperatorHalfDrive extends Command {
+public class OperatorFullDrive extends Command {
 	
-	DriveSubsystem drive;
-	boolean halfSpeed;
+	private DriveSubsystem drive;
+	private boolean fullSpeed;
 
-    public OperatorHalfDrive(boolean halfSpeed) {
+    public OperatorFullDrive(boolean fullSpeed) {
         drive = DriveSubsystem.getInstance();
-        this.halfSpeed = halfSpeed;
+        this.fullSpeed = fullSpeed;
     }
 
     protected void initialize() {
-    	if(halfSpeed){
-    		drive.setOverrideOperator(drive.getHalfSpeed());
-    		drive.setHalfSpeed(true);
-    	}else{
+    	if(fullSpeed){
     		if(!drive.getOverrideOperator())
     			drive.setHalfSpeed(false);
+    	}else{
+    		drive.setOverrideOperator(drive.getHalfSpeed());
+    		drive.setHalfSpeed(true);
     	}
     }
 

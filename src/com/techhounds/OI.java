@@ -12,7 +12,7 @@ import com.techhounds.commands.auton.ReverseThreeTote;
 import com.techhounds.commands.auton.ThreeTote;
 import com.techhounds.commands.auton.TwoTote;
 import com.techhounds.commands.driving.DriveTime;
-import com.techhounds.commands.driving.OperatorHalfDrive;
+import com.techhounds.commands.driving.OperatorFullDrive;
 import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.feeder.SetFeeder;
 import com.techhounds.commands.lift.SetLift;
@@ -116,8 +116,8 @@ public class OI {
 //        Button toggleHalfSpeed = driver.createButton(toggleHalf);
 //        toggleHalfSpeed.whenPressed(new ToggleDriveMode(false, true, false));
         Button toggleHalfSpeed = driver.createButton(toggleHalf);
-        toggleHalfSpeed.whenPressed(new OperatorHalfDrive(true));
-        toggleHalfSpeed.whenReleased(new OperatorHalfDrive(false));
+        toggleHalfSpeed.whenPressed(new OperatorFullDrive(true));
+        toggleHalfSpeed.whenReleased(new OperatorFullDrive(false));
 
         Button setLiftUp = driver.createButton(liftUp);
         setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
@@ -185,8 +185,8 @@ public class OI {
 //        toggleDriveForward.whenPressed(new ToggleDriveMode(true, false, false));
         
         Button pushHalfSpeed = operator.createButton(opPushHalf);
-        pushHalfSpeed.whenPressed(new OperatorHalfDrive(true));
-        pushHalfSpeed.whenReleased(new OperatorHalfDrive(false));
+        pushHalfSpeed.whenPressed(new OperatorFullDrive(true));
+        pushHalfSpeed.whenReleased(new OperatorFullDrive(false));
 
         Button setLiftUp = operator.createButton(opLiftUp);
         setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
