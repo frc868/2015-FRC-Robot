@@ -40,23 +40,23 @@ public class OI {
 		
 	//Driver buttons
 //	private final int toggleForward = 	PS4Map.OPTIONS; // i like it
-	private final int toggleFull = 		PS4Map.R2;
-	private final int liftUp = 			PS4Map.TRIANGLE;
-	private final int liftDown = 		PS4Map.CROSS;
-	private final int liftIn = 			PS4Map.SQUARE;
-	private final int liftOut = 		PS4Map.CIRCLE;
+	private final int toggleFull = 		PlaystationMap.R2;
+	private final int liftUp = 			PlaystationMap.TRIANGLE;
+	private final int liftDown = 		PlaystationMap.CROSS;
+	private final int liftIn = 			PlaystationMap.SQUARE;
+	private final int liftOut = 		PlaystationMap.CIRCLE;
 //	private final int oneToteHeight = 	PS4Map.R1;
 //	private final int toteOnGround = 	PS4Map.R2;
 //	private final int upOneLevel = 		PS4Map.UP;
 //	private final int downOneLevel = 	PS4Map.DOWN;
-	private final int passiveIn =		PS4Map.L1;
-	private final int passiveOut =		PS4Map.R1;
-	private final int passivePushStop = PS4Map.L2;
+	private final int passiveIn =		PlaystationMap.L1;
+	private final int passiveOut =		PlaystationMap.R1;
+	private final int passivePushStop = PlaystationMap.L2;
 //	private final int feederClose =		PS4Map.LEFT;
 //	private final int feederOpen =		PS4Map.RIGHT;
-	private final int feederIn =		PS4Map.DOWN;
-	private final int feederOut =		PS4Map.UP;
-	private final int feederPosToggle =	PS4Map.RIGHT;
+	private final int feederIn =		PlaystationMap.DOWN;
+	private final int feederOut =		PlaystationMap.UP;
+	private final int feederPosToggle =	PlaystationMap.RIGHT;
 //	private final int feederOutToggle = PS4Map.UP;
 //	private final int feederInToggle = 	PS4Map.DOWN;
 
@@ -91,7 +91,7 @@ public class OI {
     
 	public OI() {
 		
-		driver = new PS4Map(new Joystick(RobotMap.DRIVER_PORT));
+		driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS3);
 //		driver = new ControllerMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.LOGITECH, true);
 		operator = new ControllerMap(new Joystick(RobotMap.OPERATOR_PORT), ControllerMap.LOGITECH, true);
 		

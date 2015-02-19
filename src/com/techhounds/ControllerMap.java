@@ -20,15 +20,12 @@ public class ControllerMap {
     		DIAG_UP_LEFT = 19, DIAG_DOWN_RIGHT = 20, DIAG_DOWN_LEFT = 21;
                 
     //These are also magic numbers
-    public static final int LOGITECH = 0, TOMEE = 1, PS3 = 2;
+    public static final int LOGITECH = 0, TOMEE = 1;
     
     /** TOMEE Cannot get the whole DPad */
     private static final int[] tomee =      { 3, 2, 4, 1, 8, 6, 7, 5, 10, 9, 1, 3, 2, 5};
     
     private static final int[] logitech =   { 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 0, 2, 1, 3};
-    
-    /** PS3 Cannot get DPAD UP and DOWN) */
-    private static final int[] ps3 =        { 1, 2, 3, 4, 6, 10, 5, 9, 8, 7, 1, 4, 2, 5};
     
     protected static final double DEADZONE = 0.05;
     
@@ -48,9 +45,7 @@ public class ControllerMap {
     }
     
     protected ControllerMap(int type){
-        if(type == PS3)
-            buttonSet = ps3;
-        else if(type == TOMEE)
+    	if(type == TOMEE)
             buttonSet = tomee;
         else
             buttonSet = logitech;

@@ -8,23 +8,28 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * @author Atif Niyaz
  */
-public class PS4Map extends ControllerMap {
+public class PlaystationMap extends ControllerMap {
 
 	public static final int CROSS = 0, CIRCLE = 1, SQUARE = 2, TRIANGLE = 3, R1 = 4, R2 = 5, L1 = 6,
-    		L2 = 7, OPTIONS = 8, SHARE = 9, 
-    		LEFT_HOR = 10, RIGHT_HOR = 11, LEFT_VERT = 12, RIGHT_VERT = 13;
+    		L2 = 7, START = 8, SELECT = 9, OPTIONS = 8, SHARE = 9;
     
     private static final int[] ps4 =		{ 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 0, 2, 1, 5};
     
-    public static final int TYPE = 4;
+    private static final int[] ps3 =        { 1, 2, 3, 4, 6, 10, 5, 9, 8, 7, 0, 3, 1, 4};
     
-    public PS4Map(Joystick joystick){
+    public static final int PS3 = 2, PS4 = 3;
+    
+    public PlaystationMap(Joystick joystick, int type){
     	super(joystick);
-        buttonSet = ps4;
+    	
+    	if(type == PS4)
+    		buttonSet = ps4;
+    	else
+    		buttonSet = ps3;
     }
 
-    public PS4Map(Joystick joystick, int type, boolean isEightDirectional){
-    	this(joystick);
+    public PlaystationMap(Joystick joystick, int type, boolean isEightDirectional){
+    	this(joystick, type);
     	eightDirectional = isEightDirectional;
     }
     
