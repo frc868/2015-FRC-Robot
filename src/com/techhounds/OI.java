@@ -40,7 +40,7 @@ public class OI {
 		
 	//Driver buttons
 //	private final int toggleForward = 	PS4Map.OPTIONS; // i like it
-	private final int toggleHalf = 		PS4Map.R2;
+	private final int toggleFull = 		PS4Map.R2;
 	private final int liftUp = 			PS4Map.TRIANGLE;
 	private final int liftDown = 		PS4Map.CROSS;
 	private final int liftIn = 			PS4Map.SQUARE;
@@ -115,9 +115,9 @@ public class OI {
         
 //        Button toggleHalfSpeed = driver.createButton(toggleHalf);
 //        toggleHalfSpeed.whenPressed(new ToggleDriveMode(false, true, false));
-        Button toggleHalfSpeed = driver.createButton(toggleHalf);
-        toggleHalfSpeed.whenPressed(new OperatorFullDrive(true));
-        toggleHalfSpeed.whenReleased(new OperatorFullDrive(false));
+        Button toggleFullSpeed = driver.createButton(toggleFull);
+        toggleFullSpeed.whenPressed(new OperatorFullDrive(true));
+        toggleFullSpeed.whenReleased(new OperatorFullDrive(false));
 
         Button setLiftUp = driver.createButton(liftUp);
         setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
