@@ -1,6 +1,7 @@
 package com.techhounds;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,4 +34,19 @@ public class PlaystationMap extends ControllerMap {
     	eightDirectional = isEightDirectional;
     }
     
+    public void startRumble() { 
+    	if(buttonSet != ps3) 
+    		return; 
+    	
+    	joystick.setRumble(RumbleType.kLeftRumble, 1); 
+    	joystick.setRumble(RumbleType.kRightRumble, 1); 
+    } 
+    
+    public void stopRumble() { 
+    	if(buttonSet != ps3) 
+    		return; 
+    	
+    	joystick.setRumble(RumbleType.kLeftRumble, 0); 
+    	joystick.setRumble(RumbleType.kRightRumble, 0); 
+    }
 }
