@@ -2,6 +2,7 @@ package com.techhounds;
 
 import com.techhounds.commands.WaitForToteLift;
 import com.techhounds.commands.Wink;
+import com.techhounds.commands.Rumble;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.AutonDrive;
 import com.techhounds.commands.auton.DriveToClosestTote;
@@ -33,7 +34,7 @@ public class OI {
 	
 	private static OI instance;
 	
-	private static ControllerMap driver;
+	private static PlaystationMap driver;
 	private static ControllerMap operator;
 	
 	private SendableChooser autonChoice;
@@ -91,7 +92,7 @@ public class OI {
     
 	public OI() {
 		
-		driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_SCP);
+		driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_DS4);
 //		driver = new ControllerMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.LOGITECH, true);
 		operator = new ControllerMap(new Joystick(RobotMap.OPERATOR_PORT), ControllerMap.LOGITECH, true);
 		
@@ -177,6 +178,10 @@ public class OI {
 //        
 //        Button feederPullInToggle = driver.createButton(feederInToggle);
 //        feederPullInToggle.whenPressed(new SetFeeder(true, FeederSubsystem.FEED_IN));
+        
+        // Rumble Test
+        Button rumblePS4 = driver.createButton(PlaystationMap.OPTIONS);
+        rumblePS4.whenPressed(new Rumble(driver, 2.0));
     }
     
     public void initOperator() {
