@@ -91,7 +91,7 @@ public class OI {
     
 	public OI() {
 		
-		driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS3);
+		driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_SCP);
 //		driver = new ControllerMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.LOGITECH, true);
 		operator = new ControllerMap(new Joystick(RobotMap.OPERATOR_PORT), ControllerMap.LOGITECH, true);
 		

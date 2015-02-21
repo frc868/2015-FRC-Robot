@@ -14,17 +14,22 @@ public class PlaystationMap extends ControllerMap {
 	public static final int CROSS = 0, CIRCLE = 1, SQUARE = 2, TRIANGLE = 3, R1 = 4, R2 = 5, L1 = 6,
     		L2 = 7, START = 8, SELECT = 9, OPTIONS = 8, SHARE = 9;
     
-    private static final int[] ps4 =		{ 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 0, 2, 1, 5};
+    private static final int[] ps4_win =		{ 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 0, 2, 1, 5};
     
-    private static final int[] ps3 =        { 1, 2, 3, 4, 6, 10, 5, 9, 8, 7, 0, 3, 1, 4};
+    // Seperate One for SCP Drivers
+    private static final int[] ps4_scp =		{ 1, 2, 3, 4, 6, 10, 5, 9, 8, -1, 0, 4, 1, 5};
     
-    public static final int PS3 = 2, PS4 = 3;
+    private static final int[] ps3 =        	{ 1, 2, 3, 4, 6, 10, 5, 9, 8, 7, 0, 3, 1, 4};
+    
+    public static final int PS3 = 2, PS4_WIN = 3, PS4_SCP = 4;
     
     public PlaystationMap(Joystick joystick, int type){
     	super(joystick);
     	
-    	if(type == PS4)
-    		buttonSet = ps4;
+    	if(type == PS4_WIN)
+    		buttonSet = ps4_win;
+    	else if(type == PS4_SCP)
+    		buttonSet = ps4_scp;
     	else
     		buttonSet = ps3;
     }
@@ -35,7 +40,7 @@ public class PlaystationMap extends ControllerMap {
     }
     
     public void startRumble() { 
-    	if(buttonSet != ps3) 
+    	if(buttonSet == ps4_win) 
     		return; 
     	
     	joystick.setRumble(RumbleType.kLeftRumble, 1); 
