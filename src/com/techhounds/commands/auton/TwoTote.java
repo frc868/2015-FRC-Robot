@@ -34,9 +34,9 @@ public class TwoTote extends CommandGroup {
 		 */
 //		addParallel(new DriveToClosestTote(1));
 //		addSequential(new WaitForIR(6, 2, true));						
-//		addSequential(new SetFeeder(FeederSubsystem.FEED_IN, FeederSubsystem.CLOSED));	//Made sequential (instantaneous)
+//		addParallel(new SetFeeder(FeederSubsystem.FEED_IN, FeederSubsystem.CLOSED));	//Made sequential (instantaneous)
 //		addSequential(new WaitForIR(3, 2, true));										//Note: see if we can keeping moving forward while collecting and lifting totes
-//		addSequential(new SetFeeder(FeederSubsystem.STOPPED, FeederSubsystem.OPEN));	//Made sequential		
+//		addParallel(new SetFeeder(FeederSubsystem.STOPPED, FeederSubsystem.OPEN));	//Made sequential		
 		addSequential(new SetLift(LiftSubsystem.CLOSED));								//		''
 		addSequential(new WaitCommand(.2));												//removed waitforchildren, shortened wait
 		
@@ -54,7 +54,7 @@ public class TwoTote extends CommandGroup {
 		addParallel(new DriveToClosestTote(1));
 		addSequential(new WaitCommand(1));
 		addSequential(new WaitForIR(6, 2, true));
-		addSequential(new SetFeeder(FeederSubsystem.FEED_IN, FeederSubsystem.CLOSED));	//made sequential
+		addParallel(new SetFeeder(FeederSubsystem.FEED_IN, FeederSubsystem.CLOSED));	//made sequential
 //		addSequential(new WaitForIR(3, 2, true));
 		addSequential(new WaitCommand(.25));
 		
@@ -63,13 +63,13 @@ public class TwoTote extends CommandGroup {
 		 * While doing that the lift will open and go down.
 		 * Then once it is down, close the Lift.
 		 */
-		addSequential(new SetFeeder(FeederSubsystem.STOPPED));							//made sequential, moved opening to later
+		addParallel(new SetFeeder(FeederSubsystem.STOPPED));							//made sequential, moved opening to later
 		addSequential(new SetLift(LiftSubsystem.DOWN));									//''
 		addSequential(new WaitCommand(.1));												//added delay
 		addSequential(new SetLift(LiftSubsystem.OPEN));									//''
 		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
 		addSequential(new SetLift(LiftSubsystem.CLOSED));
-		addSequential(new SetFeeder(FeederSubsystem.OPEN));								//moved opening to here
+		addParallel(new SetFeeder(FeederSubsystem.OPEN));								//moved opening to here
 		addSequential(new WaitCommand(.2));												//shortened delay
 		
 		/*

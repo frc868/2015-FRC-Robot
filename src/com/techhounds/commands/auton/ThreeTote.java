@@ -31,11 +31,11 @@ public class ThreeTote extends CommandGroup {
 		 */
 //		addParallel(new DriveToClosestTote(1));
 //		addSequential(new WaitForIR(6, 2, true));						
-//		addSequential(new SetFeeder(FeederSubsystem.FEED_IN, FeederSubsystem.CLOSED));	//Made sequential (instantaneous)
-//		addSequential(new WaitForIR(3, 2, true));										//Note: see if we can keeping moving forward while collecting and lifting totes
-//		addSequential(new SetFeeder(FeederSubsystem.STOPPED, FeederSubsystem.OPEN));	//Made sequential		
-		addSequential(new SetLift(LiftSubsystem.CLOSED));								//		''
-		addSequential(new WaitCommand(.1));												//removed waitforchildren, shortened wait
+//		addParallel(new SetFeeder(FeederSubsystem.FEED_IN, FeederSubsystem.CLOSED));
+//		addSequential(new WaitForIR(3, 2, true));
+//		addParallel(new SetFeeder(FeederSubsystem.STOPPED, FeederSubsystem.OPEN));		
+		addSequential(new SetLift(LiftSubsystem.CLOSED));
+		addSequential(new WaitCommand(.1));
 		
 		/*
 		 * Lift the tote to one tote height
@@ -49,14 +49,16 @@ public class ThreeTote extends CommandGroup {
 //		addSequential(new DriveTime(1.5, .3, false));
 		if (waitTime >= .1)
 			addSequential(new WaitCommand(waitTime - .1));
+		addParallel(new SetFeeder(FeederSubsystem.FEED_IN));
 		addParallel(new DriveToClosestTote(1));
 		addSequential(new WaitCommand(1));
 		addSequential(new WaitForIR(6, 2, true));
-		addSequential(new WaitForChildren());//redundant
-		addSequential(new SetFeeder(FeederSubsystem.FEED_IN, FeederSubsystem.CLOSED));	//made sequential
+		addSequential(new DriveTime(0, 0, true));
+		addSequential(new WaitForChildren());
+		addParallel(new SetFeeder(FeederSubsystem.STOPPED, FeederSubsystem.CLOSED));
 		addSequential(new SetLift(LiftSubsystem.DOWN));
-		addSequential(new WaitCommand(.1));												//added delay
-		addSequential(new SetLift(LiftSubsystem.OPEN));									//''
+		addSequential(new WaitCommand(.1));
+		addSequential(new SetLift(LiftSubsystem.OPEN));
 //		addSequential(new WaitForIR(3, 2, true));
 		addSequential(new WaitCommand(.15));
 		
@@ -65,11 +67,11 @@ public class ThreeTote extends CommandGroup {
 		 * While doing that the lift will open and go down.
 		 * Then once it is down, close the Lift.
 		 */
-		addSequential(new SetFeeder(FeederSubsystem.STOPPED));							//made sequential, moved opening to later									//''
+//		addParallel(new SetFeeder(FeederSubsystem.STOPPED));
 		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
 		addSequential(new SetLift(LiftSubsystem.CLOSED));
-		addSequential(new SetFeeder(FeederSubsystem.OPEN));								//moved opening to here
-		addSequential(new WaitCommand(.1));												//shortened delay
+		addParallel(new SetFeeder(FeederSubsystem.OPEN));
+		addSequential(new WaitCommand(.1));
 		
 		/*
 		 * Lift the tote to one tote height
@@ -82,26 +84,28 @@ public class ThreeTote extends CommandGroup {
 		addParallel(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
 //		addSequential(new DriveTime(1, .4, false));
 		addSequential(new WaitCommand(1));
+		addParallel(new SetFeeder(FeederSubsystem.FEED_IN));
 		addParallel(new DriveToClosestTote(1));
 		addSequential(new WaitCommand(1));
 		addSequential(new WaitForIR(6, 2, true));
+		addSequential(new DriveTime(0, 0, true));
 		addSequential(new WaitForChildren());//redundant
-		addSequential(new SetFeeder(FeederSubsystem.FEED_IN, FeederSubsystem.CLOSED));	//''
-		addSequential(new SetLift(LiftSubsystem.DOWN));
+		addParallel(new SetFeeder(FeederSubsystem.STOPPED, FeederSubsystem.CLOSED));
+	//	addSequential(new SetLift(LiftSubsystem.DOWN));
 		addSequential(new WaitCommand(.1));
-		addSequential(new SetLift(LiftSubsystem.OPEN));
-		addSequential(new WaitCommand(.15));
+	//	addSequential(new SetLift(LiftSubsystem.OPEN));
+	//	addSequential(new WaitCommand(.15));
 		
 		/*
 		 * Set Feeder so it stops and it will open
 		 * While doing that the lift will open and go down.
 		 * Then once it is down, close the Lift.
 		 */
-		addSequential(new SetFeeder(FeederSubsystem.STOPPED));							//same as block two above
-		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
-		addSequential(new SetLift(LiftSubsystem.CLOSED));
-		addSequential(new SetFeeder(FeederSubsystem.OPEN));
-		addSequential(new WaitCommand(.1));
+//		addParallel(new SetFeeder(FeederSubsystem.STOPPED));
+	//	addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
+	//	addSequential(new SetLift(LiftSubsystem.CLOSED));
+	//	addParallel(new SetFeeder(FeederSubsystem.OPEN));
+	//	addSequential(new WaitCommand(.1));
 		
 		/*
 		 * Lift tote so its .2 feet above surface
@@ -110,14 +114,16 @@ public class ThreeTote extends CommandGroup {
 		 * Set Lift down until it hits limit switch
 		 * Open lift
 		 */
-		addSequential(new SetLiftHeight(LiftSubsystem.OFF_GROUND_HEIGHT));				//using variable instead of ".2"
+		//addSequential(new SetLiftHeight(LiftSubsystem.OFF_GROUND_HEIGHT));
 
 		if (turnAndMove){
     		addSequential(new RotateToAngle(90, 1));
     		addSequential(new AutonDrive(9, 2));
     		addSequential(new SetLift(LiftSubsystem.DOWN));
-    		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
+    		addSequential(new WaitCommand(.1));
     		addSequential(new SetLift(LiftSubsystem.OPEN));
+    		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
+    		addParallel(new SetFeeder(FeederSubsystem.OPEN));
     		addSequential(new DriveTime(.4, -.4, true));
     	}
 			

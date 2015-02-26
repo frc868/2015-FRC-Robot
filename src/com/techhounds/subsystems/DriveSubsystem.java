@@ -181,9 +181,9 @@ public class DriveSubsystem extends BasicSubsystem {
         
         if (isHalfSpeed){
         	powerMag *= .5;
-        	steerMag *= .6;
+        	steerMag *= .4;
         }else{
-        	steerMag *= .6;
+        	steerMag *= .4;
         }
         
         if (!posPower)

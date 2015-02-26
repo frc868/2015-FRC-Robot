@@ -19,6 +19,9 @@ public class DriveToClosestTote extends Command {
 	private double offset = 0;
 	private Double minTime;
 	
+	private int badFrames = 0;
+	private boolean finished = false;
+	
     public DriveToClosestTote() {
     	drive = DriveSubsystem.getInstance();
     	cam = CameraSubsystem.getInstance();
@@ -43,14 +46,21 @@ public class DriveToClosestTote extends Command {
     		drive.setPower(power + offset, power - offset);
     	else
     		drive.setPower(power + offset, (power - offset) * .9);
+    	
+    	if (power < .1){
+    		badFrames++;
+    		if (badFrames > 2)
+    			finished = true;
+    	}else
+    		badFrames = 0;
     }
 
     protected boolean isFinished() {
-        return minTime == null ? power < .1 : timeSinceInitialized() >= minTime && power < .1;
+        return minTime == null ? finished : timeSinceInitialized() >= minTime && finished;
     }
 
     protected void end() {
-    	
+    	drive.setPower(.05);
     }
 
     protected void interrupted() {

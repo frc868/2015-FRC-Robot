@@ -58,11 +58,13 @@ public class SetFeeder extends Command {
     }
 
     protected void execute() {
-    	
+    	if (feed.getLeftSensorInRange() && feed.getRightSensorInRange()){
+    		feed.stopArms();
+    	}
     }
 
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     protected void end() {

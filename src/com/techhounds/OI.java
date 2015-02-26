@@ -55,8 +55,8 @@ public class OI {
 	private final int passivePushStop = PlaystationMap.L2;
 //	private final int feederClose =		PS4Map.LEFT;
 //	private final int feederOpen =		PS4Map.RIGHT;
-	private final int feederIn =		PlaystationMap.DOWN;
-	private final int feederOut =		PlaystationMap.UP;
+	private final int feederIn =		PlaystationMap.DOWN;//TEMP
+	private final int feederOut =		PlaystationMap.UP;//TEMP
 	private final int feederPosToggle =	PlaystationMap.RIGHT;
 //	private final int feederOutToggle = PS4Map.UP;
 //	private final int feederInToggle = 	PS4Map.DOWN;
@@ -72,7 +72,7 @@ public class OI {
 	
     //Tweaker buttons
 //  	private final int opToggleForward = 	ControllerMap.START;
-    private final int opPushHalf = 			ControllerMap.RT;
+//    private final int opPushHalf = 			ControllerMap.RT;
     private final int opLiftUp = 			ControllerMap.Y;
     private final int opLiftDown = 			ControllerMap.A;
     private final int opLiftIn = 			ControllerMap.X;
@@ -84,9 +84,8 @@ public class OI {
 	private final int opPassiveIn =			ControllerMap.RB;
 	private final int opPassiveOut =		ControllerMap.RT;
 	private final int opPassiveStop = 		ControllerMap.LT;
-	private final int opPassiveFree = 		ControllerMap.LB;
-	private final int opFeederClose =		ControllerMap.RIGHT;
-	private final int opFeederOpen =		ControllerMap.LEFT;
+	private final int opFeederClose =		ControllerMap.LB;
+//	private final int opFeederOpen =		ControllerMap.LEFT;
 	private final int opFeederIn =			ControllerMap.DOWN;
 	private final int opFeederOut =			ControllerMap.UP;
     
@@ -189,9 +188,9 @@ public class OI {
 //    	Button toggleDriveForward = operator.createButton(opToggleForward);
 //        toggleDriveForward.whenPressed(new ToggleDriveMode(true, false, false));
         
-        Button pushHalfSpeed = operator.createButton(opPushHalf);
-        pushHalfSpeed.whenPressed(new OperatorFullDrive(true));
-        pushHalfSpeed.whenReleased(new OperatorFullDrive(false));
+//        Button pushHalfSpeed = operator.createButton(opPushHalf);
+//        pushHalfSpeed.whenPressed(new OperatorFullDrive(true));
+//        pushHalfSpeed.whenReleased(new OperatorFullDrive(false));
 
         Button setLiftUp = operator.createButton(opLiftUp);
         setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
@@ -223,14 +222,12 @@ public class OI {
         passStop.whenPressed(new SetPassiveStop(PassiveSubsystem.STOPPED));
         passStop.whenReleased(new SetPassiveStop(PassiveSubsystem.FREE));
         
-        Button passFree = operator.createButton(opPassiveFree);
-        passFree.whenPressed(new SetPassiveStop(PassiveSubsystem.FREE));
-        
         Button feedClose = operator.createButton(opFeederClose);
         feedClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
+        feedClose.whenReleased(new SetFeeder(FeederSubsystem.OPEN));
         
-        Button feedOpen = operator.createButton(opFeederOpen);
-        feedOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
+//        Button feedOpen = operator.createButton(opFeederOpen);
+//        feedOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
         
         Button feedIn = operator.createButton(opFeederIn);
         feedIn.whenPressed(new SetFeeder(FeederSubsystem.FEED_IN));
@@ -265,7 +262,7 @@ public class OI {
     }
     
     public int getAutonChoice() {
-        return ((Integer) this.autonChoice.getSelected()).intValue();
+        return ((Integer) autonChoice.getSelected()).intValue();
     }
    
     private SendableChooser createChoices(String label, String [] choices) {

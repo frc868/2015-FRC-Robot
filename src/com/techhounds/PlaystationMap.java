@@ -16,7 +16,7 @@ public class PlaystationMap extends ControllerMap {
     
     private static final int[] ps4_win =		{ 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 0, 2, 1, 5};
     
-    // Separate One for DS4 Drivers
+    // Separate One fort up DS4 Drivers
     private static final int[] ps4_ds4 =		{ 1, 2, 3, 4, 6, 10, 5, 9, 8, 7, 0, 4, 1, 5};
     
     private static final int[] ps3 =        	{ 1, 2, 3, 4, 6, 10, 5, 9, 8, 7, 0, 3, 1, 4};

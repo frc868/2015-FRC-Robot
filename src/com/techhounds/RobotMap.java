@@ -80,10 +80,15 @@ public class RobotMap {
 		public static final int LEFT_MOTOR = 10;
 		public static final int RIGHT_MOTOR = 13;
 		public static final int SOL = 4;
+		public static final int LEFT_SENSOR = DOES_NOT_EXIST;
+		public static final int RIGHT_SENSOR = DOES_NOT_EXIST;
 		
 		public static final int LEFT_MOTOR_PRACT = DOES_NOT_EXIST;
 		public static final int RIGHT_MOTOR_PRACT = DOES_NOT_EXIST;
 		public static final int SOL_PRACT = DOES_NOT_EXIST;
+		public static final int LEFT_SENSOR_PRACT = DOES_NOT_EXIST;
+		public static final int RIGHT_SENSOR_PRACT = DOES_NOT_EXIST;
+		
 	}
 	
 	public static class Compressor {
