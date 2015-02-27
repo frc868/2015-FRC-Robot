@@ -54,7 +54,6 @@ public class ThreeTote extends CommandGroup {
 		addSequential(new WaitCommand(1));
 		addSequential(new WaitForIR(6, 2, true));
 		addSequential(new DriveTime(0, 0, true));
-		addSequential(new WaitForChildren());
 		addParallel(new SetFeeder(FeederSubsystem.STOPPED, FeederSubsystem.CLOSED));
 		addSequential(new SetLift(LiftSubsystem.DOWN));
 		addSequential(new WaitCommand(.1));
@@ -89,7 +88,6 @@ public class ThreeTote extends CommandGroup {
 		addSequential(new WaitCommand(1));
 		addSequential(new WaitForIR(6, 2, true));
 		addSequential(new DriveTime(0, 0, true));
-		addSequential(new WaitForChildren());//redundant
 		addParallel(new SetFeeder(FeederSubsystem.STOPPED, FeederSubsystem.CLOSED));
 	//	addSequential(new SetLift(LiftSubsystem.DOWN));
 		addSequential(new WaitCommand(.1));

@@ -16,6 +16,7 @@ import com.techhounds.commands.driving.DriveTime;
 import com.techhounds.commands.driving.OperatorFullDrive;
 import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.feeder.SetFeeder;
+import com.techhounds.commands.lift.NextLevel;
 import com.techhounds.commands.lift.SetLift;
 import com.techhounds.commands.lift.SetPassiveStop;
 import com.techhounds.subsystems.FeederSubsystem;
@@ -79,7 +80,7 @@ public class OI {
     private final int opLiftOut = 			ControllerMap.B;
 //	private final int opOneToteHeight = 	ControllerMap.RB;
 //	private final int opToteOnGround =	 	ControllerMap.RT;
-//	private final int opUpOneLevel = 		ControllerMap.UP;
+	private final int opUpOneLevel = 		ControllerMap.BACK;
 //	private final int opDownOneLevel = 		ControllerMap.DOWN;
 	private final int opPassiveIn =			ControllerMap.RB;
 	private final int opPassiveOut =		ControllerMap.RT;
@@ -88,6 +89,7 @@ public class OI {
 //	private final int opFeederOpen =		ControllerMap.LEFT;
 	private final int opFeederIn =			ControllerMap.DOWN;
 	private final int opFeederOut =			ControllerMap.UP;
+	private final int opOpenAll = 			ControllerMap.START;
     
 	public OI() {
 		
@@ -211,6 +213,9 @@ public class OI {
 //        
 //        Button offGround = operator.createButton(opToteOnGround);
 //        offGround.whenPressed(new SetLiftHeight(0));
+        
+	    Button upLevel = operator.createButton(opUpOneLevel);
+	    upLevel.whenPressed(new NextLevel(LiftSubsystem.UP));
 
         Button passIn = operator.createButton(opPassiveIn);
         passIn.whenPressed(new SetPassiveStop(PassiveSubsystem.CLOSED, 0));
@@ -236,6 +241,11 @@ public class OI {
         Button feedOut = operator.createButton(opFeederOut);
         feedOut.whenPressed(new SetFeeder(FeederSubsystem.FEED_OUT));
         feedOut.whenReleased(new SetFeeder(0));
+        
+        Button openAll = operator.createButton(opOpenAll);
+        openAll.whenPressed(new SetLift(LiftSubsystem.OPEN));
+        openAll.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
+        openAll.whenPressed(new SetPassiveStop(PassiveSubsystem.OPEN, 0));
         
     }
     

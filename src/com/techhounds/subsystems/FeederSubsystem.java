@@ -86,11 +86,11 @@ public class FeederSubsystem extends Subsystem {
 	}
 	
 	public double getLeftSensor() {
-		return leftEnabled ? left.getVoltage() : 0;
+		return leftEnabled ? left.getVoltage() : MIN_LEFT_DIST;
 	}
 	
 	public double getRightSensor() {
-		return rightEnabled ? right.getVoltage() : 0;
+		return rightEnabled ? right.getVoltage() : MIN_RIGHT_DIST;
 	}
 	
 	public double getLeftDistance() {

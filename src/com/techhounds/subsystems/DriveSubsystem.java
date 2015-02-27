@@ -183,7 +183,7 @@ public class DriveSubsystem extends BasicSubsystem {
         	powerMag *= .5;
         	steerMag *= .4;
         }else{
-        	steerMag *= .4;
+        	steerMag *= .75;
         }
         
         if (!posPower)
