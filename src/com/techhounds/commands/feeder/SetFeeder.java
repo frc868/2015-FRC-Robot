@@ -13,26 +13,29 @@ public class SetFeeder extends Command {
 	public Double power;
 	private Boolean position, toggle;
 	
+	private SetFeeder(){
+		setInterruptible(true);
+    	feed = FeederSubsystem.getInstance();
+    	requires(feed);
+	}
+	
     public SetFeeder(double power, boolean position) {
         this(power);
         this.position = position;
     }
     
     public SetFeeder(double power){
-    	feed = FeederSubsystem.getInstance();
-    	requires(feed);
+    	this();
     	this.power = power;
     }
     
     public SetFeeder(boolean position){
-    	feed = FeederSubsystem.getInstance();
-    	requires(feed);
+    	this();
     	this.position = position;
     }
     
     public SetFeeder(boolean toggle, boolean doesntMatter) {
-    	feed = FeederSubsystem.getInstance();
-    	requires(feed);
+    	this();
     	this.toggle = toggle;
     }
     

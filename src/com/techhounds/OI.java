@@ -42,7 +42,7 @@ public class OI {
 		
 	//Driver buttons
 //	private final int toggleForward = 	PS4Map.OPTIONS; // i like it
-	private final int toggleFull = 		PlaystationMap.R2;
+//	private final int toggleFull = 		PlaystationMap.R2;
 	private final int liftUp = 			PlaystationMap.TRIANGLE;
 	private final int liftDown = 		PlaystationMap.CROSS;
 	private final int liftIn = 			PlaystationMap.SQUARE;
@@ -51,14 +51,14 @@ public class OI {
 //	private final int toteOnGround = 	PS4Map.R2;
 //	private final int upOneLevel = 		PS4Map.UP;
 //	private final int downOneLevel = 	PS4Map.DOWN;
-	private final int passiveIn =		PlaystationMap.L1;
-	private final int passiveOut =		PlaystationMap.R1;
-	private final int passivePushStop = PlaystationMap.L2;
-//	private final int feederClose =		PS4Map.LEFT;
-//	private final int feederOpen =		PS4Map.RIGHT;
-	private final int feederIn =		PlaystationMap.DOWN;//TEMP
-	private final int feederOut =		PlaystationMap.UP;//TEMP
-	private final int feederPosToggle =	PlaystationMap.RIGHT;
+	private final int passiveIn =		PlaystationMap.LEFT;
+	private final int passiveOut =		PlaystationMap.RIGHT;
+	private final int passivePushStop = PlaystationMap.UP;
+	private final int feederClose =		PlaystationMap.L1;
+	private final int feederOpen =		PlaystationMap.R1;
+	private final int feederIn =		PlaystationMap.L2;//TEMP
+	private final int feederOut =		PlaystationMap.R2;//TEMP
+//	private final int feederPosToggle =	PlaystationMap.RIGHT;
 //	private final int feederOutToggle = PS4Map.UP;
 //	private final int feederInToggle = 	PS4Map.DOWN;
 
@@ -85,8 +85,8 @@ public class OI {
 	private final int opPassiveIn =			ControllerMap.RB;
 	private final int opPassiveOut =		ControllerMap.RT;
 	private final int opPassiveStop = 		ControllerMap.LT;
-	private final int opFeederClose =		ControllerMap.LB;
-//	private final int opFeederOpen =		ControllerMap.LEFT;
+//	private final int opFeederClose =		ControllerMap.LB;
+	private final int opFeederOpen =		ControllerMap.LB;
 	private final int opFeederIn =			ControllerMap.DOWN;
 	private final int opFeederOut =			ControllerMap.UP;
 	private final int opOpenAll = 			ControllerMap.START;
@@ -117,9 +117,9 @@ public class OI {
         
 //        Button toggleHalfSpeed = driver.createButton(toggleHalf);
 //        toggleHalfSpeed.whenPressed(new ToggleDriveMode(false, true, false));
-        Button toggleFullSpeed = driver.createButton(toggleFull);
-        toggleFullSpeed.whenPressed(new OperatorFullDrive(true));
-        toggleFullSpeed.whenReleased(new OperatorFullDrive(false));
+//        Button toggleFullSpeed = driver.createButton(toggleFull);
+//        toggleFullSpeed.whenPressed(new OperatorFullDrive(true));
+//        toggleFullSpeed.whenReleased(new OperatorFullDrive(false));
 
         Button setLiftUp = driver.createButton(liftUp);
         setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
@@ -157,11 +157,11 @@ public class OI {
         passStop.whenPressed(new SetPassiveStop(PassiveSubsystem.STOPPED));
         passStop.whenReleased(new SetPassiveStop(PassiveSubsystem.FREE));
         
-//        Button feedClose = driver.createButton(feederClose);
-//        feedClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
-//        
-//        Button feedOpen = driver.createButton(feederOpen);
-//        feedOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
+        Button feedClose = driver.createButton(feederClose);
+        feedClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
+        
+        Button feedOpen = driver.createButton(feederOpen);
+        feedOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
 //        
         Button feedIn = driver.createButton(feederIn);
         feedIn.whenPressed(new SetFeeder(FeederSubsystem.FEED_IN));
@@ -171,8 +171,8 @@ public class OI {
         feedOut.whenPressed(new SetFeeder(FeederSubsystem.FEED_OUT));
         feedOut.whenReleased(new SetFeeder(0));
         
-        Button feederPositionToggle = driver.createButton(feederPosToggle);
-        feederPositionToggle.whenPressed(new SetFeeder(true, true));
+//        Button feederPositionToggle = driver.createButton(feederPosToggle);
+//        feederPositionToggle.whenPressed(new SetFeeder(true, true));
         
 //        Button feederPushOutToggle = driver.createButton(feederOutToggle);
 //        feederPushOutToggle.whenPressed(new SetFeeder(true, FeederSubsystem.FEED_OUT));
@@ -227,12 +227,13 @@ public class OI {
         passStop.whenPressed(new SetPassiveStop(PassiveSubsystem.STOPPED));
         passStop.whenReleased(new SetPassiveStop(PassiveSubsystem.FREE));
         
-        Button feedClose = operator.createButton(opFeederClose);
-        feedClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
-        feedClose.whenReleased(new SetFeeder(FeederSubsystem.OPEN));
+//        Button feedClose = operator.createButton(opFeederClose);
+//        feedClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
+//        feedClose.whenReleased(new SetFeeder(FeederSubsystem.OPEN));
         
-//        Button feedOpen = operator.createButton(opFeederOpen);
-//        feedOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
+        Button feedOpen = operator.createButton(opFeederOpen);
+        feedOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
+        feedOpen.whenReleased(new SetFeeder(FeederSubsystem.CLOSED));
         
         Button feedIn = operator.createButton(opFeederIn);
         feedIn.whenPressed(new SetFeeder(FeederSubsystem.FEED_IN));
