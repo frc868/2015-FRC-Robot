@@ -60,7 +60,7 @@ public class BinSubsystem extends BasicSubsystem {
 			enc = new Encoder(RobotMap.Bin.ENCODER_A, RobotMap.Bin.ENCODER_B);
 			enc.setDistancePerPulse(COUNT_TO_FEET);
 		}
-		SmartDashboard.putData(this);
+//		SmartDashboard.putData(this);
 	}
 	
 	public static BinSubsystem getInstance() {

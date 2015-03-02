@@ -1,5 +1,6 @@
 package com.techhounds.commands.auton;
 
+import com.techhounds.commands.Wink;
 import com.techhounds.commands.driving.DriveTime;
 import com.techhounds.commands.driving.ManualTurn;
 import com.techhounds.commands.driving.RotateToAngle;
@@ -20,25 +21,8 @@ public class TwoTote extends CommandGroup {
 
 	public TwoTote(boolean turnAndMove, double waitTime) {
 
-		/*
-		 * Wait for other robots to push bins out of the way
-		 */
-		addSequential(new WaitCommand(waitTime));
-		
-		/*
-		 * Drive to Tote.
-		 * Wait till Tote is 6 inches away
-		 * Set Feeder so it is closed and going in.
-		 * Wait till Tote is 2 inch away
-		 * Open the feeder and stop it and close the lift
-		 */
-//		addParallel(new DriveToClosestTote(1));
-//		addSequential(new WaitForIR(6, 2, true));						
-//		addParallel(new SetFeeder(FeederSubsystem.FEED_IN, FeederSubsystem.CLOSED));	//Made sequential (instantaneous)
-//		addSequential(new WaitForIR(3, 2, true));										//Note: see if we can keeping moving forward while collecting and lifting totes
-//		addParallel(new SetFeeder(FeederSubsystem.STOPPED, FeederSubsystem.OPEN));	//Made sequential		
-		addSequential(new SetLift(LiftSubsystem.CLOSED));								//		''
-		addSequential(new WaitCommand(.2));												//removed waitforchildren, shortened wait
+		addSequential(new SetLift(LiftSubsystem.CLOSED));
+		addSequential(new WaitCommand(.1));
 		
 		/*
 		 * Lift the tote to one tote height
@@ -50,69 +34,21 @@ public class TwoTote extends CommandGroup {
 		 */
 		addParallel(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
 //		addSequential(new DriveTime(1.5, .3, false));
-		addSequential(new WaitCommand(1));
+		if (waitTime >= .1)
+			addSequential(new WaitCommand(waitTime - .1));
+		addParallel(new SetFeeder(FeederSubsystem.FEED_IN));
 		addParallel(new DriveToClosestTote(1));
 		addSequential(new WaitCommand(1));
 		addSequential(new WaitForIR(6, 2, true));
-		addParallel(new SetFeeder(FeederSubsystem.FEED_IN, FeederSubsystem.CLOSED));	//made sequential
-//		addSequential(new WaitForIR(3, 2, true));
-		addSequential(new WaitCommand(.25));
+		addSequential(new DriveTime(0, 0, true));
+		addParallel(new SetFeeder(FeederSubsystem.CLOSED));
 		
-		/*
-		 * Set Feeder so it stops and it will open
-		 * While doing that the lift will open and go down.
-		 * Then once it is down, close the Lift.
-		 */
-		addParallel(new SetFeeder(FeederSubsystem.STOPPED));							//made sequential, moved opening to later
-		addSequential(new SetLift(LiftSubsystem.DOWN));									//''
-		addSequential(new WaitCommand(.1));												//added delay
-		addSequential(new SetLift(LiftSubsystem.OPEN));									//''
-		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
-		addSequential(new SetLift(LiftSubsystem.CLOSED));
-		addParallel(new SetFeeder(FeederSubsystem.OPEN));								//moved opening to here
-		addSequential(new WaitCommand(.2));												//shortened delay
 		
-		/*
-		 * Lift tote so its .2 feet above surface
-		 * Rotate 90 degrees approximately
-		 * Move into Auto Zone
-		 * Set Lift down until it hits limit switch
-		 * Open lift
-		 */
-		addSequential(new SetLiftHeight(LiftSubsystem.OFF_GROUND_HEIGHT));				//using variable instead of ".2"
-
 		if (turnAndMove){
-//    		addSequential(new ManualTurn(.6, 1.2, false));						//should change to gyroPID
     		addSequential(new RotateToAngle(90, 1));
-//    		addSequential(new MoveToAutoZone(true));							//should change to drivePID
+    		addParallel(new SetFeeder(FeederSubsystem.STOPPED));
     		addSequential(new AutonDrive(9, 2));
-    		addSequential(new SetLift(LiftSubsystem.DOWN));								//''
-    		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
-    		addSequential(new SetLift(LiftSubsystem.OPEN));
-    		addSequential(new DriveTime(.1, -.4, true));
     	}
-		
-//		//grab first tote
-//		addParallel(new DriveToClosestTote(1));
-//		addSequential(new WaitForIR(6, 2, true));
-//		addSequential(new SetLift(LiftSubsystem.CLOSED));
-//		addSequential(new WaitCommand(.3));
-//		
-//		//lift first tote and drive to second tote
-//		addParallel(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
-//		addSequential(new WaitCommand(.3));
-//		addParallel(new DriveToClosestTote(1));
-//		addSequential(new WaitForIR(6, 2, true, 1));
-//    	
-//		//move lift down to second tote
-//    	addSequential(new SetLift(LiftSubsystem.OPEN));
-//    	addSequential(new SetLift(LiftSubsystem.DOWN));
-//    	addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
-//    	
-//    	//grab second tote and lift a little
-//    	addSequential(new SetLift(LiftSubsystem.CLOSED));
-//    	addSequential(new WaitCommand(.3));
-//    	addSequential(new SetLiftHeight(.2));
-		
+		addSequential(new Wink());
 	}
 }

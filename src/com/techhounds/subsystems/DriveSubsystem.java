@@ -115,7 +115,7 @@ public class DriveSubsystem extends BasicSubsystem {
 				});
 		drivePID.setOutputRange(-1, 1);
 		drivePID.setAbsoluteTolerance(1);
-		SmartDashboard.putData("DrivePID", drivePID);
+//		SmartDashboard.putData("DrivePID", drivePID);
 		
 		if (GyroSubsystem.getInstance().gyroEnabled){
 			gyroPID = new PIDController(
@@ -129,7 +129,7 @@ public class DriveSubsystem extends BasicSubsystem {
 			});
 			gyroPID.setOutputRange(-.75, .75);
 			gyroPID.setAbsoluteTolerance(3);
-			SmartDashboard.putData("GyroPID", gyroPID);
+//			SmartDashboard.putData("GyroPID", gyroPID);
 		}
 		
 		// Default Half Speed
@@ -150,8 +150,8 @@ public class DriveSubsystem extends BasicSubsystem {
     	double onePower = OI.getDriverLeftYAxis(), oneSteer = OI.getDriverRightXAxis(), 
     			twoPower = OI.getOperatorLeftYAxis(), twoSteer = OI.getOperatorRightXAxis();
     	
-    	SmartDashboard.putString("","Driver Power: " + onePower + " Driver Steer: " + oneSteer);
-    	SmartDashboard.putString("","Operator Power: " + twoPower + " Operator Steer: " + twoSteer);
+//    	SmartDashboard.putString("","Driver Power: " + onePower + " Driver Steer: " + oneSteer);
+//    	SmartDashboard.putString("","Operator Power: " + twoPower + " Operator Steer: " + twoSteer);
     	
     	
     	if (!getTwoPersonDrive()){
@@ -180,8 +180,8 @@ public class DriveSubsystem extends BasicSubsystem {
         	powerMag *= -1;
         
         if (isHalfSpeed){
-        	powerMag *= .5;
-        	steerMag *= .4;
+        	powerMag *= .6;
+        	steerMag *= .6;
         }else{
         	steerMag *= .75;
         }
@@ -393,12 +393,12 @@ public class DriveSubsystem extends BasicSubsystem {
     
     public void updateSmartDashboard(){
 //        SmartDashboard.putData("drivePID", drivePID);
-    	SmartDashboard.putNumber("Left Drive Power", getLeftPower());
-    	SmartDashboard.putNumber("Right Drive Power", getRightPower());
-    	SmartDashboard.putNumber("Left Drive Count", getLeftCount());
-    	SmartDashboard.putNumber("Right Drive Count", getRightCount());
-    	SmartDashboard.putNumber("Left Drive Dist", getLeftDistance());
-    	SmartDashboard.putNumber("Right Drive Dist", getRightDistance());
+//    	SmartDashboard.putNumber("Left Drive Power", getLeftPower());
+//    	SmartDashboard.putNumber("Right Drive Power", getRightPower());
+//    	SmartDashboard.putNumber("Left Drive Count", getLeftCount());
+//    	SmartDashboard.putNumber("Right Drive Count", getRightCount());
+//    	SmartDashboard.putNumber("Left Drive Dist", getLeftDistance());
+//    	SmartDashboard.putNumber("Right Drive Dist", getRightDistance());
     }
     
     public void initDefaultCommand() {

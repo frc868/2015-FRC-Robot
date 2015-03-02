@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-public class FeederSubsystem extends Subsystem {
+public class FeederSubsystem extends BasicSubsystem {
     
 	/*
 	 *-----------------This Subsystem is Final Robot ONLY!---------------------------
@@ -25,7 +25,7 @@ public class FeederSubsystem extends Subsystem {
 	
 	public static final double FEED_IN = -0.75, FEED_OUT = 0.75, STOPPED = 0;
 	public static final boolean OPEN = false, CLOSED = true;
-	public static final double MIN_RIGHT_DIST = 1, MIN_LEFT_DIST = 1;
+	public static final double MIN_RIGHT_DIST = .5, MIN_LEFT_DIST = .5;
 	
 	private double leftMotorMult = 1, rightMotorMult = 1;
 	private boolean solEnabled, motorsEnabled, leftEnabled, rightEnabled;
@@ -94,19 +94,26 @@ public class FeederSubsystem extends Subsystem {
 	}
 	
 	public double getLeftDistance() {
-		return getLeftSensor();
+		double vol = getLeftSensor();
+
+		return -0.0046 * Math.pow(vol, 4) + 0.669 * Math.pow(vol, 3) - 0.2921 * Math.pow(vol, 2) + 0.1078 * vol + 2;
 	}
 	
 	public double getRightDistance(){
-		return getRightSensor();
+		double vol = getRightSensor();
+
+		return -Math.pow(5, -15) * Math.pow(vol, 4) - 0.0037 * Math.pow(vol, 3) + 
+				0.0778 * Math.pow(vol, 2) - 0.555 * vol + 1.9968;
 	}
 	
 	public boolean getRightSensorInRange(){
-		return getRightDistance() < MIN_RIGHT_DIST;
+//		return getRightDistance() < MIN_RIGHT_DIST;
+		return getRightSensor() > 1.7;
 	}
 	
 	public boolean getLeftSensorInRange(){
-		return getLeftDistance() < MIN_LEFT_DIST;
+//		return getLeftDistance() < MIN_LEFT_DIST;
+		return getLeftSensor() > 1.7;
 	}
 	
 	public void stopArms() {
@@ -116,7 +123,9 @@ public class FeederSubsystem extends Subsystem {
 	public void updateSmartDashboard() {
 		SmartDashboard.putNumber("Left Feeder Sensor", getLeftSensor());
 		SmartDashboard.putNumber("Right Feeder Sensor", getRightSensor());
-//		SmartDashboard.putBoolean("Feeder Solenoid In", !getPosition());
+		SmartDashboard.putNumber("Left Feeder Sensor Dist", getLeftDistance());
+		SmartDashboard.putNumber("Right Feeder Sensor Dist", getRightDistance());
+		SmartDashboard.putBoolean("Collector Out", getPosition());
 //		SmartDashboard.putString("Feeder Direction", getPower() > 0 ? "OUT" : getPower() == 0 ? "STOPPED" : "IN");
 	}
 

@@ -71,7 +71,7 @@ public class Robot extends IterativeRobot {
 							"TEAM 868 CAN TELEOP NOW!\n" +
 							"*******");
 		
-		DriveSubsystem.getInstance().updateLEDCommand();
+//		DriveSubsystem.getInstance().updateLEDCommand();
     }
     
     public void disabledInit(){

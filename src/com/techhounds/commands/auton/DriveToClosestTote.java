@@ -39,11 +39,11 @@ public class DriveToClosestTote extends Command {
     }
 
     protected void execute() {
-    	power = cam.getDistValue();
-    	offset = cam.getOffsetValue();
+    	power = cam.getDistValue() * 4 / 3;				//getDistValueis .3
+    	offset = cam.getOffsetValue() * 10;       //getOffsetValue is .1
     	
     	if (Robot.isFinal())
-    		drive.setPower(power + offset, power - offset);
+    		drive.setPower((power + offset) * .9, power - offset);
     	else
     		drive.setPower(power + offset, (power - offset) * .9);
     	

@@ -231,9 +231,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public double getIRDist(){
-		if (IREnabled)
-			return voltsToDist(IRSensor.getVoltage());
-		return 0;
+		return IREnabled ? voltsToDist(IRSensor.getVoltage()) : 0;
 	}
 	
 	public double getIRAvgDist(){
@@ -263,20 +261,20 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public void updateSmartDashboard() {
-		SmartDashboard.putNumber("Lift Enc Count", getEncCount());
-		SmartDashboard.putNumber("Lift Enc Height", getEncHeight());
-		SmartDashboard.putBoolean("Lift Top Switch", isAtTop());
-		SmartDashboard.putBoolean("Lift Bottom Switch", isAtBottom());
-		SmartDashboard.putNumber("Lift Brake Height", getBrakeHeight());
-		SmartDashboard.putNumber("Lift Power", getPower());
+//		SmartDashboard.putNumber("Lift Enc Count", getEncCount());
+//		SmartDashboard.putNumber("Lift Enc Height", getEncHeight());
+//		SmartDashboard.putBoolean("Lift Top Switch", isAtTop());
+//		SmartDashboard.putBoolean("Lift Bottom Switch", isAtBottom());
+//		SmartDashboard.putNumber("Lift Brake Height", getBrakeHeight());
+//		SmartDashboard.putNumber("Lift Power", getPower());
 		SmartDashboard.putNumber("Lift IR Dist", getIRDist());
 		SmartDashboard.putNumber("Lift IR Voltage", IRSensor.getVoltage());
-		SmartDashboard.putNumber("Lift IR Avg Volt", IRSensor.getAverageVoltage());
+//		SmartDashboard.putNumber("Lift IR Avg Volt", IRSensor.getAverageVoltage());
 		SmartDashboard.putNumber("Lift IR Avd Dist", getIRAvgDist());
-		SmartDashboard.putBoolean("Passive Switch", getPassiveSwitch());
-		
-		SmartDashboard.putBoolean("Lift Open", getGrabPosition());
-		SmartDashboard.putBoolean("Lift is Braked", getBraked());
+//		SmartDashboard.putBoolean("Passive Switch", getPassiveSwitch());
+//		
+		SmartDashboard.putBoolean("Lift Arms Open", !getGrabPosition());
+//		SmartDashboard.putBoolean("Lift is Braked", getBraked());
 	}
 
 	protected void initDefaultCommand() {

@@ -39,7 +39,7 @@ public class CompSubsystem extends Subsystem {
 	}
 	
 	public void updateSmartDashboard() {
-		SmartDashboard.putBoolean("Compressor Running", comp.enabled());
+//		SmartDashboard.putBoolean("Compressor Running", comp.enabled());
 	}
 
     public void initDefaultCommand() {

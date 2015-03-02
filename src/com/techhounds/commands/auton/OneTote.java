@@ -1,5 +1,6 @@
 package com.techhounds.commands.auton;
 
+import com.techhounds.commands.Wink;
 import com.techhounds.commands.driving.DriveTime;
 import com.techhounds.commands.driving.ManualTurn;
 import com.techhounds.commands.driving.RotateToAngle;
@@ -28,8 +29,9 @@ public class OneTote extends CommandGroup {
 		//lift first tote and turn and move
 		addParallel(new SetLiftHeight(LiftSubsystem.OFF_GROUND_HEIGHT));
 		addSequential(new RotateToAngle(90, 1));
-		addSequential(new AutonDrive(9, 2));
+		addSequential(new AutonDrive(9.5, 2));
 //		addSequential(new ManualTurn(.6, .9, false));
 //		addSequential(new MoveToAutoZone(1.75, .25));
+		addSequential(new Wink());
     }
 }

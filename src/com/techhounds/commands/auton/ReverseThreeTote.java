@@ -1,5 +1,6 @@
 package com.techhounds.commands.auton;
 
+import com.techhounds.commands.Wink;
 import com.techhounds.commands.driving.DriveTime;
 import com.techhounds.commands.driving.ManualTurn;
 import com.techhounds.commands.driving.RotateToAngle;
@@ -43,6 +44,7 @@ public class ReverseThreeTote extends CommandGroup {
     		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
     		addSequential(new SetLift(LiftSubsystem.OPEN));
     		addSequential(new DriveTime(.1, -.4, true));
+    		addSequential(new Wink());
     	}
     	
 //    	

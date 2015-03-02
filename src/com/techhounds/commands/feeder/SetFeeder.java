@@ -48,22 +48,20 @@ public class SetFeeder extends Command {
     	
     	if(toggle != null && toggle) {
     		if(power != null) {
-    			feed.setPower(feed.getPower() != FeederSubsystem.STOPPED ? FeederSubsystem.STOPPED : power);
+    			setPower(feed.getPower() != FeederSubsystem.STOPPED ? FeederSubsystem.STOPPED : power);
     		} else {
     			feed.setPosition(!feed.getPosition());
     		}
     	} else {
 	    	if (power != null)
-	    		feed.setPower(power);
+	    		setPower(power);
 	    	if (position != null)
 	    		feed.setPosition(position);
     	}
     }
 
     protected void execute() {
-    	if (feed.getLeftSensorInRange() && feed.getRightSensorInRange()){
-    		feed.stopArms();
-    	}
+    	setPower(feed.getPower());
     }
 
     protected boolean isFinished() {
@@ -76,5 +74,13 @@ public class SetFeeder extends Command {
 
     protected void interrupted() {
     	end();
+    }
+    
+    private void setPower(double power){
+    	if (feed.getLeftSensorInRange() && feed.getRightSensorInRange() && power * FeederSubsystem.FEED_IN > 0){
+    		feed.stopArms();
+    	}else{
+    		feed.setPower(power);
+    	}
     }
 }

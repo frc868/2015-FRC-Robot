@@ -23,7 +23,7 @@ public class AutonDrive extends Command {
     }
     
     public AutonDrive(double distance, double timeout) {
-    	this(distance, 1, timeout);
+    	this(distance, .25, timeout);
     }
 
     protected void initialize() {

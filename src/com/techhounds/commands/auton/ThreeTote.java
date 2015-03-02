@@ -1,6 +1,7 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.commands.Debug;
+import com.techhounds.commands.Wink;
 import com.techhounds.commands.driving.DriveTime;
 import com.techhounds.commands.driving.ManualTurn;
 import com.techhounds.commands.driving.RotateToAngle;
@@ -54,7 +55,7 @@ public class ThreeTote extends CommandGroup {
 		addSequential(new WaitCommand(1));
 		addSequential(new WaitForIR(6, 2, true));
 		addSequential(new DriveTime(0, 0, true));
-		addParallel(new SetFeeder(FeederSubsystem.STOPPED, FeederSubsystem.CLOSED));
+		addParallel(new SetFeeder(FeederSubsystem.CLOSED));
 		addSequential(new SetLift(LiftSubsystem.DOWN));
 		addSequential(new WaitCommand(.1));
 		addSequential(new SetLift(LiftSubsystem.OPEN));
@@ -81,14 +82,14 @@ public class ThreeTote extends CommandGroup {
 		 * Wait till Tote is 2 inches away
 		 */
 		addParallel(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
-//		addSequential(new DriveTime(1, .4, false));
+		addParallel(new SetFeeder(FeederSubsystem.STOPPED));
 		addSequential(new WaitCommand(1));
 		addParallel(new SetFeeder(FeederSubsystem.FEED_IN));
 		addParallel(new DriveToClosestTote(1));
 		addSequential(new WaitCommand(1));
 		addSequential(new WaitForIR(6, 2, true));
 		addSequential(new DriveTime(0, 0, true));
-		addParallel(new SetFeeder(FeederSubsystem.STOPPED, FeederSubsystem.CLOSED));
+		addParallel(new SetFeeder(FeederSubsystem.CLOSED));
 	//	addSequential(new SetLift(LiftSubsystem.DOWN));
 		addSequential(new WaitCommand(.1));
 	//	addSequential(new SetLift(LiftSubsystem.OPEN));
@@ -116,14 +117,16 @@ public class ThreeTote extends CommandGroup {
 
 		if (turnAndMove){
     		addSequential(new RotateToAngle(90, 1));
+    		addParallel(new SetFeeder(FeederSubsystem.STOPPED));
     		addSequential(new AutonDrive(9, 2));
     		addSequential(new SetLift(LiftSubsystem.DOWN));
     		addSequential(new WaitCommand(.1));
     		addSequential(new SetLift(LiftSubsystem.OPEN));
     		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
     		addParallel(new SetFeeder(FeederSubsystem.OPEN));
-    		addSequential(new DriveTime(.4, -.4, true));
+    		addParallel(new DriveTime(.5, -.5, true));
     	}
+		addSequential(new Wink());
 			
 //		
 //		addSequential(new Debug("1"));

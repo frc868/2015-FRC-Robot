@@ -49,7 +49,7 @@ public class SetLiftHeight extends Command {
     	else if (direction == LiftSubsystem.DOWN)
     		finalHeight = initHeight - dist;
     	
-    	SmartDashboard.putString("SetLiftHeight", "init: " + initHeight + ", isAbs: " + isAbsolute + ", dir: " + direction + ", dist: " + dist + ", Fin: " + finalHeight);
+//    	SmartDashboard.putString("SetLiftHeight", "init: " + initHeight + ", isAbs: " + isAbsolute + ", dir: " + direction + ", dist: " + dist + ", Fin: " + finalHeight);
     }
 
     protected void execute() {

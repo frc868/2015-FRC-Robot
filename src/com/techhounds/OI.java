@@ -55,13 +55,15 @@ public class OI {
 	private final int passiveOut =		PlaystationMap.RIGHT;
 	private final int passivePushStop = PlaystationMap.UP;
 	private final int feederClose =		PlaystationMap.L1;
-	private final int feederOpen =		PlaystationMap.R1;
-	private final int feederIn =		PlaystationMap.L2;//TEMP
+	private final int feederOpen =		PlaystationMap.L2;
+	private final int feederIn =		PlaystationMap.R1;//TEMP
 	private final int feederOut =		PlaystationMap.R2;//TEMP
 //	private final int feederPosToggle =	PlaystationMap.RIGHT;
 //	private final int feederOutToggle = PS4Map.UP;
 //	private final int feederInToggle = 	PS4Map.DOWN;
-
+	private final int allOpen = 		PlaystationMap.OPTIONS;
+	private final int wink = 			PlaystationMap.SHARE;
+	
 //	private final int toggleForward = 	ControllerMap.START;
 //    private final int toggleHalf = 		ControllerMap.RT;
 //    private final int liftUp = 			ControllerMap.Y;
@@ -90,10 +92,12 @@ public class OI {
 	private final int opFeederIn =			ControllerMap.DOWN;
 	private final int opFeederOut =			ControllerMap.UP;
 	private final int opOpenAll = 			ControllerMap.START;
+	private final int opFeederOffA =		ControllerMap.LEFT;
+	private final int opFeederOffB = 		ControllerMap.RIGHT;
     
 	public OI() {
 		
-		driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_DS4);
+		driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_WIN);
 //		driver = new ControllerMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.LOGITECH, true);
 		operator = new ControllerMap(new Joystick(RobotMap.OPERATOR_PORT), ControllerMap.LOGITECH, true);
 		
@@ -179,10 +183,19 @@ public class OI {
 //        
 //        Button feederPullInToggle = driver.createButton(feederInToggle);
 //        feederPullInToggle.whenPressed(new SetFeeder(true, FeederSubsystem.FEED_IN));
+
+        Button openAll = driver.createButton(allOpen);
+        openAll.whenPressed(new SetLift(LiftSubsystem.OPEN));
+        openAll.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
+        openAll.whenPressed(new SetPassiveStop(PassiveSubsystem.OPEN, 0));
+        openAll.whenPressed(new Wink());
+        
+        Button winky = driver.createButton(wink);
+        winky.whenPressed(new Wink());
         
         // Rumble Test
-        Button rumblePS4 = driver.createButton(PlaystationMap.OPTIONS);
-        rumblePS4.whenPressed(new Rumble(driver, 2.0));
+//        Button rumblePS4 = driver.createButton(PlaystationMap.OPTIONS);
+//        rumblePS4.whenPressed(new Rumble(driver, 2.0));
     }
     
     public void initOperator() {
@@ -247,29 +260,36 @@ public class OI {
         openAll.whenPressed(new SetLift(LiftSubsystem.OPEN));
         openAll.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
         openAll.whenPressed(new SetPassiveStop(PassiveSubsystem.OPEN, 0));
+        openAll.whenPressed(new Wink());
+        
+        Button feederStopA = operator.createButton(opFeederOffA);
+        feederStopA.whenPressed(new SetFeeder(FeederSubsystem.STOPPED));
+        
+        Button feederStopB = operator.createButton(opFeederOffB);
+        feederStopB.whenPressed(new SetFeeder(FeederSubsystem.STOPPED));
         
     }
     
     public void initSD() {
-    	SmartDashboard.putData("Move To Zone", new MoveToAutoZone(1.5));
+//    	SmartDashboard.putData("Move To Zone", new MoveToAutoZone(1.5));
     	SmartDashboard.putData("Goto Closest Tote", new DriveToClosestTote());
-    	SmartDashboard.putData("One Crate", new FirstTote());
-    	SmartDashboard.putData("Next Crate", new NextTote(false));
-    	SmartDashboard.putData("Final Crate", new NextTote(true));
-    	SmartDashboard.putData("Two Tote", new TwoTote(true, 2));
-    	SmartDashboard.putData("Three Tote", new ThreeTote(true, 2));
-    	SmartDashboard.putData("Reverse Three Tote, Start L", new ReverseThreeTote(true, true, true));
-    	SmartDashboard.putData("Reverse Three Tote, Start R", new ReverseThreeTote(true, false, true));
-    	
-    	SmartDashboard.putData("Move Forward", new DriveTime(.75, .4, false));
-
-    	SmartDashboard.putData("Gyro Rotate 90", new RotateToAngle(90, 1));
-    	SmartDashboard.putData("Gyro Rotate 270", new RotateToAngle(270, 3));
-    	SmartDashboard.putData("Gyro Rotate 180", new RotateToAngle(180, 2));
-    	SmartDashboard.putData("Drive PID", new AutonDrive(6.75, 3));
-    	
-    	SmartDashboard.putData("Wait Tote Lift", new WaitForToteLift());
-    	SmartDashboard.putData("Wink", new Wink());
+//    	SmartDashboard.putData("One Crate", new FirstTote());
+//    	SmartDashboard.putData("Next Crate", new NextTote(false));
+//    	SmartDashboard.putData("Final Crate", new NextTote(true));
+//    	SmartDashboard.putData("Two Tote", new TwoTote(true, 2));
+//    	SmartDashboard.putData("Three Tote", new ThreeTote(true, 2));
+//    	SmartDashboard.putData("Reverse Three Tote, Start L", new ReverseThreeTote(true, true, true));
+//    	SmartDashboard.putData("Reverse Three Tote, Start R", new ReverseThreeTote(true, false, true));
+//    	
+//    	SmartDashboard.putData("Move Forward", new DriveTime(.75, .4, false));
+//
+//    	SmartDashboard.putData("Gyro Rotate 90", new RotateToAngle(90, 1));
+//    	SmartDashboard.putData("Gyro Rotate 270", new RotateToAngle(270, 3));
+//    	SmartDashboard.putData("Gyro Rotate 180", new RotateToAngle(180, 2));
+//    	SmartDashboard.putData("Drive PID", new AutonDrive(6.75, 3));
+//    	
+//    	SmartDashboard.putData("Wait Tote Lift", new WaitForToteLift());
+//    	SmartDashboard.putData("Wink", new Wink());
     }
     
     public int getAutonChoice() {

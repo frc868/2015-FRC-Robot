@@ -49,9 +49,9 @@ public class GyroSubsystem extends BasicSubsystem {
 	
 	@Override
 	public void updateSmartDashboard() {
-		SmartDashboard.putNumber("Tilt", getTilt());
-		SmartDashboard.putNumber("Lean", getLean());
-		SmartDashboard.putNumber("Rotation", getRotation());
+//		SmartDashboard.putNumber("Tilt", getTilt());
+//		SmartDashboard.putNumber("Lean", getLean());
+//		SmartDashboard.putNumber("Rotation", getRotation());
 	}
 
 	@Override

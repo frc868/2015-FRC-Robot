@@ -10,6 +10,7 @@ public class RobotMap {
 	public static final int OPERATOR_PORT = 1;
 	
 	public static final int CAMERA_ENABLED = 1;
+	public static final int USB_CAMERA_ENABLED = DOES_NOT_EXIST;
 	public static final String CAMERA_USB = "cam0";
 	
 	public static class Drive{
@@ -80,8 +81,8 @@ public class RobotMap {
 		public static final int LEFT_MOTOR = 10;
 		public static final int RIGHT_MOTOR = 13;
 		public static final int SOL = 4;
-		public static final int LEFT_SENSOR = DOES_NOT_EXIST;
-		public static final int RIGHT_SENSOR = DOES_NOT_EXIST;
+		public static final int LEFT_SENSOR = 2;
+		public static final int RIGHT_SENSOR = 1;
 	}
 	
 	public static class Compressor {

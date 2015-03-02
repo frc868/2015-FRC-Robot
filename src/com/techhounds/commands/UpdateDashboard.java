@@ -1,6 +1,7 @@
 package com.techhounds.commands;
 
 import com.techhounds.subsystems.BasicSubsystem;
+import com.techhounds.subsystems.LEDSubsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -29,6 +30,7 @@ public class UpdateDashboard extends Command {
 		if(timer.get() >= 0.35) {
 			for(BasicSubsystem sub : BasicSubsystem.subsystems)
 				sub.updateSmartDashboard();
+			LEDSubsystem.getInstance().standby();
 			timer.reset();
 		}
 	}
