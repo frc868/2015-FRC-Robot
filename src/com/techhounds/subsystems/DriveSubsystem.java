@@ -148,11 +148,7 @@ public class DriveSubsystem extends BasicSubsystem {
     	boolean posPower, posSteer;
     	
     	double onePower = OI.getDriverLeftYAxis(), oneSteer = OI.getDriverRightXAxis(), 
-    			twoPower = OI.getOperatorLeftYAxis(), twoSteer = OI.getOperatorRightXAxis();
-    	
-//    	SmartDashboard.putString("","Driver Power: " + onePower + " Driver Steer: " + oneSteer);
-//    	SmartDashboard.putString("","Operator Power: " + twoPower + " Operator Steer: " + twoSteer);
-    	
+    			twoPower = OI.getOperatorRightYAxis(), twoSteer = OI.getOperatorRightXAxis();
     	
     	if (!getTwoPersonDrive()){
 	        powerMag = onePower;

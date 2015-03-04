@@ -24,13 +24,13 @@ public class PlaystationMap extends ControllerMap {
     public static final int PS3 = 2, PS4_WIN = 3, PS4_DS4 = 4;
     
     public PlaystationMap(Joystick joystick, int type){
-    	super(joystick);
+    	super(joystick, type);
     	
     	if(type == PS4_WIN)
     		buttonSet = ps4_win;
     	else if(type == PS4_DS4)
     		buttonSet = ps4_ds4;
-    	else
+    	else if (type == PS3)
     		buttonSet = ps3;
     }
 
@@ -40,7 +40,7 @@ public class PlaystationMap extends ControllerMap {
     }
     
     public void startRumble() { 
-    	if(buttonSet == ps4_win) 
+    	if(buttonSet != ps4_ds4 || buttonSet != ps3) 
     		return; 
     	
     	joystick.setRumble(RumbleType.kLeftRumble, 1); 
@@ -49,7 +49,7 @@ public class PlaystationMap extends ControllerMap {
     } 
     
     public void stopRumble() { 
-    	if(buttonSet == ps4_win) 
+    	if(buttonSet != ps4_ds4 || buttonSet != ps3) 
     		return; 
     	
     	joystick.setRumble(RumbleType.kLeftRumble, 0); 

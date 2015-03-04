@@ -37,8 +37,13 @@ public class FeederSubsystem extends BasicSubsystem {
 	private FeederSubsystem() {
 		super("ArmsSubsystem");
 		
-		if (!Robot.isFinal())
+		if (!Robot.isFinal()){
+			solEnabled = false;
+			motorsEnabled = false;
+			leftEnabled = false;
+			rightEnabled = false;
 			return;
+		}
 					
 		if (motorsEnabled = (RobotMap.Feeder.LEFT_MOTOR != RobotMap.DOES_NOT_EXIST && 
 				RobotMap.Feeder.RIGHT_MOTOR != RobotMap.DOES_NOT_EXIST)){

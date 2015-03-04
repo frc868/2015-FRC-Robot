@@ -1,5 +1,6 @@
 package com.techhounds.commands.lift;
 
+import com.techhounds.OI;
 import com.techhounds.subsystems.GyroSubsystem;
 import com.techhounds.subsystems.LiftSubsystem;
 import com.techhounds.subsystems.PassiveSubsystem;
@@ -23,6 +24,19 @@ public class RunLift extends Command{
 	}
 
 	protected void execute() {
+		
+		if (LiftSubsystem.OP_STICK_CONTROL){
+			double pow = OI.getOperatorLeftYAxis();
+			int dir = pow != 0 ? (pow > 0 ? LiftSubsystem.UP : LiftSubsystem.DOWN) : LiftSubsystem.STOPPED;
+			
+			lift.setLift(dir, pow);
+			if (pow != 0){
+				lift.setBrake(false);
+			}else if (!lift.getBraked()){
+				lift.setBrake(true);
+			}
+		}
+		
 		if ((lift.getDirection() == LiftSubsystem.UP && !lift.isAtTop()) ||
 				(lift.getDirection() == LiftSubsystem.DOWN && !lift.isAtBottom())){
 		} else {

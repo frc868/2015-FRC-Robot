@@ -39,6 +39,8 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final boolean CLOSED = true, OPEN = false;
 	public static final boolean BRAKE = false, UNBRAKE = true;
 	
+	public static final boolean OP_STICK_CONTROL = true;
+	
 	private MultiCANTalon motors;
 	private MultiMotor motorsPract;
 	private Solenoid grabSol;
