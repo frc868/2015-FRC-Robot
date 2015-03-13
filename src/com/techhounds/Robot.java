@@ -8,6 +8,7 @@ import com.techhounds.subsystems.CameraSubsystem;
 import com.techhounds.subsystems.CompSubsystem;
 import com.techhounds.subsystems.DriveSubsystem;
 import com.techhounds.subsystems.FeederSubsystem;
+import com.techhounds.subsystems.FishingPoleSubsystem;
 import com.techhounds.subsystems.GyroSubsystem;
 import com.techhounds.subsystems.LEDSubsystem;
 import com.techhounds.subsystems.LiftSubsystem;
@@ -22,7 +23,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 	
 	private Command auton;
-	private static boolean finalRobot = true;
+	private static boolean finalRobot = false;
 	
 	public static boolean isFinal(){
 		return finalRobot;
@@ -44,13 +45,13 @@ public class Robot extends IterativeRobot {
     	USBCameraSubsystem.getInstance();
     	GyroSubsystem.getInstance();
     	FeederSubsystem.getInstance();
-    	BinSubsystem.getInstance();
     	CompSubsystem.getInstance();
     	DriveSubsystem.getInstance();
     	LEDSubsystem.getInstance().standby();
     	LiftSubsystem.getInstance();
     	PassiveSubsystem.getInstance();
     	CameraSubsystem.getInstance();
+    	FishingPoleSubsystem.getInstance();
     }	
     
     public void autonomousInit() {

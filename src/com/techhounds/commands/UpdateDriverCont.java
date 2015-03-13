@@ -8,15 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class UpdateDriverCont extends Command {
-
-	private OI oi;
 	
     public UpdateDriverCont() {
-    	oi = OI.getInstance();
     }
 
     protected void initialize() {
-    	oi.updateDriverCont();
+    	OI.updateDriverCont();
     }
 
     protected void execute() {

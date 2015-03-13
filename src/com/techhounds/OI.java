@@ -24,6 +24,7 @@ import com.techhounds.subsystems.FeederSubsystem;
 import com.techhounds.subsystems.LiftSubsystem;
 import com.techhounds.subsystems.PassiveSubsystem;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -40,36 +41,29 @@ public class OI {
 	private static ControllerMap operator;
 	
 	private SendableChooser autonChoice;
-	private SendableChooser driverContChoice;
+	private static SendableChooser driverContChoice;
 		
 	//Driver buttons
-	private int liftUp;		Button setLiftUp;
-	private int liftDown;	Button setLiftDown;
-	private int liftIn;		Button setLiftIn;
-	private int liftOut;	Button setLiftOut;
-//	private int oneToteHeight;
-//	private int toteOnGround;
-//	private int upOneLevel;
-//	private int downOneLevel;
-	private int passiveIn;		Button passIn;
-	private int passiveOut;		Button passOut;
-	private int passivePushStop;Button passStop;
-	private int feederClose;	Button feedClose;
-	private int feederOpen;		Button feedOpen;
-	private int feederIn;		Button feedIn;
-	private int feederOut;		Button feedOut;
-	private int allOpen;		Button openAll;
-	private int wink;			Button winky;
+	private static int liftUp;		static Button setLiftUp;
+	private static int liftDown;	static Button setLiftDown;
+	private static int liftIn;		static Button setLiftIn;
+	private static int liftOut;		static Button setLiftOut;
+	private static int passiveIn;		static Button passIn;
+	private static int passiveOut;		static Button passOut;
+	private static int passivePushStop;	static Button passStop;
+	private static int feederClose;		static Button feedClose;
+	private static int feederOpen;		static Button feedOpen;
+	private static int feederIn;		static Button feedIn;
+	private static int feederOut;		static Button feedOut;
+	private static int allOpen;			static Button openAll;
+	private static int wink;			static Button winky;
 	
     //Tweaker buttons
     private final int opLiftUp = 			ControllerMap.Y;		Button opSetLiftUp;
     private final int opLiftDown = 			ControllerMap.A;		Button opSetLiftDown;
     private final int opLiftIn = 			ControllerMap.X;		Button opSetLiftIn;
     private final int opLiftOut = 			ControllerMap.B;		Button opSetLiftOut;
-//	private final int opOneToteHeight = 	ControllerMap.RB;
-//	private final int opToteOnGround =	 	ControllerMap.RT;
 	private final int opUpOneLevel = 		ControllerMap.BACK;		Button opUpLevel;
-//	private final int opDownOneLevel = 		ControllerMap.DOWN;
 	private final int opPassiveIn =			ControllerMap.RB;		Button opPassIn;
 	private final int opPassiveOut =		ControllerMap.RT;		Button opPassOut;
 	private final int opPassiveStop = 		ControllerMap.LT;		Button opPassStop;
@@ -81,10 +75,19 @@ public class OI {
 	private final int opFeederOffA =		ControllerMap.LEFT;		Button opFeedOffA;
 	private final int opFeederOffB = 		ControllerMap.RIGHT;	Button opFeedOffB;
 	
-	public void updateDriverCont(){
-		driver = (PlaystationMap) driverContChoice.getSelected();
+	public static void updateDriverCont(){
+		
+		int choice = (int) driverContChoice.getSelected();
+		
+		if (choice == 0)
+			driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_DS4);
+		else if (choice == 1)
+			driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_WIN);
+		else if (choice == 2)
+			driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.LOGITECH, true);
+		
 		if (driver.type == PlaystationMap.LOGITECH){
-
+			
 			liftUp = 			ControllerMap.Y;
 			liftDown = 			ControllerMap.A;
 			liftIn = 			ControllerMap.X;
@@ -100,7 +103,7 @@ public class OI {
 			wink = 				ControllerMap.BACK;
 			
 		}else{
-			
+
 			liftUp = 			PlaystationMap.TRIANGLE;
 			liftDown = 			PlaystationMap.CROSS;
 			liftIn = 			PlaystationMap.SQUARE;
@@ -120,13 +123,13 @@ public class OI {
 	}
 	
 	public OI() {
+
+		autonChoice = createAutonChoices();
+		driverContChoice = createDriverChoices();
 		
 		updateDriverCont();
 		operator = new ControllerMap(new Joystick(RobotMap.OPERATOR_PORT), ControllerMap.LOGITECH, true);
 		
-		autonChoice = createAutonChoices();
-		driverContChoice = createDriverChoices();
-
     	initOperator();
     	initSD();
 	}
@@ -137,7 +140,7 @@ public class OI {
 		return instance;
 	}
 
-    public void initDriver() {
+    public static void initDriver() {
 
         setLiftUp = driver.createButton(liftUp);
         setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
@@ -153,18 +156,6 @@ public class OI {
         setLiftOut = driver.createButton(liftOut);
         setLiftOut.whenPressed(new SetLift(LiftSubsystem.OPEN));
 
-//        Button oneHeight = driver.createButton(oneToteHeight);
-//        oneHeight.whenPressed(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
-//        
-//        Button offGround = driver.createButton(toteOnGround);
-//        offGround.whenPressed(new SetLiftHeight(0));
-        
-//        Button upLevel = driver.createButton(upOneLevel);
-//        upLevel.whenPressed(new NextLevel(LiftSubsystem.UP));
-//
-//        Button downLevel = driver.createButton(downOneLevel);
-//        downLevel.whenPressed(new NextLevel(LiftSubsystem.DOWN));
-        
         passIn = driver.createButton(passiveIn);
         passIn.whenPressed(new SetPassiveStop(PassiveSubsystem.CLOSED, 0));
 
@@ -197,10 +188,6 @@ public class OI {
         
         winky = driver.createButton(wink);
         winky.whenPressed(new Wink());
-        
-        // Rumble Test
-//        Button rumblePS4 = driver.createButton(PlaystationMap.OPTIONS);
-//        rumblePS4.whenPressed(new Rumble(driver, 2.0));
     }
     
     public void initOperator() {
@@ -218,12 +205,6 @@ public class OI {
         
         opSetLiftOut = operator.createButton(opLiftOut);
         opSetLiftOut.whenPressed(new SetLift(LiftSubsystem.OPEN));
-
-//        Button oneHeight = operator.createButton(opOneToteHeight);
-//        oneHeight.whenPressed(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
-//        
-//        Button offGround = operator.createButton(opToteOnGround);
-//        offGround.whenPressed(new SetLiftHeight(0));
         
 	    opUpLevel = operator.createButton(opUpOneLevel);
 	    opUpLevel.whenPressed(new NextLevel(LiftSubsystem.UP));
@@ -265,7 +246,6 @@ public class OI {
         
         opFeedOffB = operator.createButton(opFeederOffB);
         opFeedOffB.whenPressed(new SetFeeder(FeederSubsystem.STOPPED));
-        
     }
     
     public void initSD() {
@@ -316,9 +296,9 @@ public class OI {
     
 	private SendableChooser createDriverChoices(){
 		SendableChooser send = new SendableChooser();
-	    send.addDefault("Aryaman's DS4", new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_DS4));
-	    send.addObject("Aryaman's WIN", new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_WIN));
-	    send.addObject("Logitech", new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.LOGITECH, true));
+	    send.addDefault("Aryaman's SWARTZ", new Integer(0));
+	    send.addObject("Aryaman's Driver Station", new Integer(1));
+	    send.addObject("Logitech", new Integer(2));
         SmartDashboard.putData("Driver Controller", send);
 	    return send;	
 	}
@@ -355,4 +335,3 @@ public class OI {
     	return operator.getLeftStickY();
     }
 }
-

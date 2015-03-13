@@ -42,6 +42,7 @@ public class SetLiftHeight extends Command {
     		dist = Math.abs(initHeight - target);
     	}
     	lift.setBrake(false);
+    	lift.setCmdRunning(true);
     	lift.setLift(direction, LiftSubsystem.LIFT_POWER);
     	
     	if (direction == LiftSubsystem.UP)
@@ -66,6 +67,7 @@ public class SetLiftHeight extends Command {
     	lift.setLift(LiftSubsystem.STOPPED, 0);
     	lift.setBrake(true);
     	lift.setBrakeHeight(finalHeight);
+    	lift.setCmdRunning(false);
     }
 
     protected void interrupted() {

@@ -48,6 +48,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	private AnalogInput IRSensor;
 	private Encoder enc;
 	
+	private boolean cmdRunning = false;
 	private double IRBadCount = 0;
 	private double lastIRVal = 0;
 	private double brakeMult = 10;
@@ -260,6 +261,14 @@ public class LiftSubsystem extends BasicSubsystem {
 				49.609 * volts * volts +
 				-80.118 * volts +
 				53.37;
+	}
+
+	public void setCmdRunning(boolean running){
+		cmdRunning = running; 
+	}
+	
+	public boolean getCmdRunning(){
+		return cmdRunning;
 	}
 	
 	public void updateSmartDashboard() {

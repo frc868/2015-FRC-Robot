@@ -77,16 +77,14 @@ public class DriveSubsystem extends BasicSubsystem {
 					new SpeedController[]{
 							new Victor(RobotMap.Drive.LEFT_MOTOR_1_PRACT),
 							new Victor(RobotMap.Drive.LEFT_MOTOR_2_PRACT),
-							new Victor(RobotMap.Drive.LEFT_MOTOR_3_PRACT),
-							},
+							new Victor(RobotMap.Drive.LEFT_MOTOR_3_PRACT),},
 					new boolean[]{false, false, false});
 			
 			rightMotorsPract = new MultiMotor(
 					new SpeedController[]{
 							new Victor(RobotMap.Drive.RIGHT_MOTOR_1_PRACT),
 							new Victor(RobotMap.Drive.RIGHT_MOTOR_2_PRACT),
-							new Victor(RobotMap.Drive.RIGHT_MOTOR_3_PRACT),
-							},
+							new Victor(RobotMap.Drive.RIGHT_MOTOR_3_PRACT),},
 					new boolean[]{true, true, true});
 			
 			if(leftEncEnabled = RobotMap.Drive.LEFT_ENC_PRACT != RobotMap.DOES_NOT_EXIST){
@@ -296,11 +294,11 @@ public class DriveSubsystem extends BasicSubsystem {
     
     public void setPower(double leftPower, double rightPower){
     	
-    	leftPower = Math.max(Math.min(leftPower, 1), -1);
-    	rightPower = Math.max(Math.min(rightPower, 1), -1);
-    	
     	leftPower = Math.max(Math.min(leftPower, getLeftPower() + MAX_CHANGE_UP), getLeftPower() - MAX_CHANGE_DOWN);
     	rightPower = Math.max(Math.min(rightPower, getRightPower() + MAX_CHANGE_UP), getRightPower() - MAX_CHANGE_DOWN);
+
+    	leftPower = Math.max(Math.min(leftPower, 1), -1);
+    	rightPower = Math.max(Math.min(rightPower, 1), -1);
     	
     	if(Robot.isFinal()){
     		leftMotors.set(leftPower);
@@ -336,10 +334,10 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public void setGyroPID(double angle) {
-    	if (!GyroSubsystem.getInstance().gyroEnabled)
-    		return;
-    	gyroPID.setSetpoint(angle);
-    	gyroPID.enable();
+    	if (GyroSubsystem.getInstance().gyroEnabled){
+	    	gyroPID.setSetpoint(angle);
+	    	gyroPID.enable();
+    	}
     }
     
     public void stopDrivePID() {
@@ -347,9 +345,8 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public void stopGyroPID() {
-    	if (!GyroSubsystem.getInstance().gyroEnabled)
-    		return;
-    	gyroPID.disable();
+    	if (GyroSubsystem.getInstance().gyroEnabled)
+    		gyroPID.disable();
     }
     
     public double getDriveSetPoint() {
@@ -357,9 +354,7 @@ public class DriveSubsystem extends BasicSubsystem {
     }
 
     public double getGyroSetPoint() {
-    	if (!GyroSubsystem.getInstance().gyroEnabled)
-    		return 0;
-    	return gyroPID.getSetpoint();
+    	return GyroSubsystem.getInstance().gyroEnabled ? gyroPID.getSetpoint() : 0;
     }
     
     public void setDriveTolerance(double feet) {
@@ -368,9 +363,8 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public void setGyroTolerance(double degrees) {
-    	if (!GyroSubsystem.getInstance().gyroEnabled)
-    		return;
-    	gyroPID.setAbsoluteTolerance(degrees);
+    	if (GyroSubsystem.getInstance().gyroEnabled)
+    		gyroPID.setAbsoluteTolerance(degrees);
     }
     
     public double getDriveTolerance() {
@@ -382,9 +376,7 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public boolean gyroPIDOnTarget() {
-    	if (!GyroSubsystem.getInstance().gyroEnabled)
-    		return false;
-    	return gyroPID.onTarget();
+    	return GyroSubsystem.getInstance().gyroEnabled ? gyroPID.onTarget() : false;
     }
     
     public void updateSmartDashboard(){

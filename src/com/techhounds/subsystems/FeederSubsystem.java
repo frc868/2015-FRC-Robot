@@ -1,6 +1,7 @@
 package com.techhounds.subsystems;
 
 import com.techhounds.MultiCANTalon;
+import com.techhounds.MultiMotor;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class FeederSubsystem extends BasicSubsystem {
     
 	/*
-	 *-----------------This Subsystem is Final Robot ONLY!---------------------------
+	 *
 	 */
 	
 	private static FeederSubsystem instance;
@@ -30,40 +31,53 @@ public class FeederSubsystem extends BasicSubsystem {
 	private double leftMotorMult = 1, rightMotorMult = 1;
 	private boolean solEnabled, motorsEnabled, leftEnabled, rightEnabled;
 	
+	private MultiMotor motorsPract;
 	private MultiCANTalon motors;
 	private AnalogInput left, right;
 	private Solenoid sol;
 	
 	private FeederSubsystem() {
 		super("ArmsSubsystem");
-		
-		if (!Robot.isFinal()){
-			solEnabled = false;
-			motorsEnabled = false;
-			leftEnabled = false;
-			rightEnabled = false;
-			return;
-		}
 					
-		if (motorsEnabled = (RobotMap.Feeder.LEFT_MOTOR != RobotMap.DOES_NOT_EXIST && 
-				RobotMap.Feeder.RIGHT_MOTOR != RobotMap.DOES_NOT_EXIST)){
-			motors = new MultiCANTalon(
-					new CANTalon[]{
-						new CANTalon(RobotMap.Feeder.LEFT_MOTOR),
-						new CANTalon(RobotMap.Feeder.RIGHT_MOTOR)},
-					new boolean[]{true, true},
-					FeedbackDevice.QuadEncoder,
-					false, false, false, false, false);
+		if (Robot.isFinal()){
+			if (motorsEnabled = (RobotMap.Feeder.LEFT_MOTOR != RobotMap.DOES_NOT_EXIST && 
+					RobotMap.Feeder.RIGHT_MOTOR != RobotMap.DOES_NOT_EXIST)){
+				motors = new MultiCANTalon(
+						new CANTalon[]{
+							new CANTalon(RobotMap.Feeder.LEFT_MOTOR),
+							new CANTalon(RobotMap.Feeder.RIGHT_MOTOR)},
+						new boolean[]{true, true},
+						FeedbackDevice.QuadEncoder,
+						false, false, false, false, false);
+			}
+					
+			if(solEnabled = RobotMap.Feeder.SOL != RobotMap.DOES_NOT_EXIST)
+				sol = new Solenoid(RobotMap.Feeder.SOL);
+			
+			if(leftEnabled = RobotMap.Feeder.LEFT_SENSOR != RobotMap.DOES_NOT_EXIST)
+				left = new AnalogInput(RobotMap.Feeder.LEFT_SENSOR);
+			
+			if(rightEnabled = RobotMap.Feeder.RIGHT_SENSOR != RobotMap.DOES_NOT_EXIST)
+				right = new AnalogInput(RobotMap.Feeder.RIGHT_SENSOR);
+		}else{
+			if (motorsEnabled = (RobotMap.Feeder.LEFT_MOTOR_PRACT != RobotMap.DOES_NOT_EXIST && 
+					RobotMap.Feeder.RIGHT_MOTOR_PRACT != RobotMap.DOES_NOT_EXIST)){
+				motorsPract = new MultiMotor(
+						new SpeedController[]{
+							new Victor(RobotMap.Feeder.LEFT_MOTOR_PRACT),
+							new Victor(RobotMap.Feeder.RIGHT_MOTOR_PRACT)},
+						new boolean[]{true, true});
+			}
+					
+			if(solEnabled = RobotMap.Feeder.SOL_PRACT != RobotMap.DOES_NOT_EXIST)
+				sol = new Solenoid(RobotMap.Feeder.SOL_PRACT);
+			
+			if(leftEnabled = RobotMap.Feeder.LEFT_SENSOR_PRACT != RobotMap.DOES_NOT_EXIST)
+				left = new AnalogInput(RobotMap.Feeder.LEFT_SENSOR_PRACT);
+			
+			if(rightEnabled = RobotMap.Feeder.RIGHT_SENSOR_PRACT != RobotMap.DOES_NOT_EXIST)
+				right = new AnalogInput(RobotMap.Feeder.RIGHT_SENSOR_PRACT);
 		}
-				
-		if(solEnabled = RobotMap.Feeder.SOL != RobotMap.DOES_NOT_EXIST)
-			sol = new Solenoid(RobotMap.Feeder.SOL);
-		
-		if(leftEnabled = RobotMap.Feeder.LEFT_SENSOR != RobotMap.DOES_NOT_EXIST)
-			left = new AnalogInput(RobotMap.Feeder.LEFT_SENSOR);
-		
-		if(rightEnabled = RobotMap.Feeder.RIGHT_SENSOR != RobotMap.DOES_NOT_EXIST)
-			right = new AnalogInput(RobotMap.Feeder.RIGHT_SENSOR);
 	}
 	
 	public static FeederSubsystem getInstance() {
@@ -73,12 +87,16 @@ public class FeederSubsystem extends BasicSubsystem {
 	}
 		
 	public double getPower() {
-		return motorsEnabled ? motors.get() : 0;
+		return motorsEnabled ? (Robot.isFinal() ? motors.get() : motorsPract.get()) : 0;
 	}
 	
 	public void setPower(double power) {
-		if (motorsEnabled)
+		if (!motorsEnabled)
+			return;
+		if (Robot.isFinal())
 			motors.set(power);
+		else
+			motorsPract.set(power);
 	}
 	
 	public boolean getPosition() {
@@ -101,24 +119,37 @@ public class FeederSubsystem extends BasicSubsystem {
 	public double getLeftDistance() {
 		double vol = getLeftSensor();
 
-		return -0.0046 * Math.pow(vol, 4) + 0.669 * Math.pow(vol, 3) - 0.2921 * Math.pow(vol, 2) + 0.1078 * vol + 2;
+		if (Robot.isFinal())
+			return -0.0046 * Math.pow(vol, 4) + 0.669 * Math.pow(vol, 3) - 0.2921 * Math.pow(vol, 2) + 0.1078 * vol + 2;
+		else
+			return -0.0046 * Math.pow(vol, 4) + 0.669 * Math.pow(vol, 3) - 0.2921 * Math.pow(vol, 2) + 0.1078 * vol + 2;
 	}
 	
 	public double getRightDistance(){
 		double vol = getRightSensor();
 
-		return -Math.pow(5, -15) * Math.pow(vol, 4) - 0.0037 * Math.pow(vol, 3) + 
+		if (Robot.isFinal())
+			return -Math.pow(5, -15) * Math.pow(vol, 4) - 0.0037 * Math.pow(vol, 3) + 
 				0.0778 * Math.pow(vol, 2) - 0.555 * vol + 1.9968;
+		else
+			return -Math.pow(5, -15) * Math.pow(vol, 4) - 0.0037 * Math.pow(vol, 3) + 
+					0.0778 * Math.pow(vol, 2) - 0.555 * vol + 1.9968;
 	}
 	
 	public boolean getRightSensorInRange(){
 //		return getRightDistance() < MIN_RIGHT_DIST;
-		return getRightSensor() > 1.7;
+		if (Robot.isFinal())
+			return getRightSensor() > 1.7;
+		else
+			return getRightSensor() > 1.7;
 	}
 	
 	public boolean getLeftSensorInRange(){
 //		return getLeftDistance() < MIN_LEFT_DIST;
-		return getLeftSensor() > 1.7;
+		if(Robot.isFinal())
+			return getLeftSensor() > 1.7;
+		else
+			return getLeftSensor() > 1.7;
 	}
 	
 	public void stopArms() {
@@ -138,4 +169,3 @@ public class FeederSubsystem extends BasicSubsystem {
         
     }
 }
-

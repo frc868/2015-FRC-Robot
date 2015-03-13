@@ -6,7 +6,7 @@ import com.techhounds.RobotMap;
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**
- *	-------------- This Subsystem is FINAL Robot ONLY! ------------------------
+ *	
  */
 public class FishingPoleSubsystem extends BasicSubsystem {
     
@@ -25,13 +25,14 @@ public class FishingPoleSubsystem extends BasicSubsystem {
 	}
 
 	private FishingPoleSubsystem(){
-		if (!Robot.isFinal()){
-			solEnabled = false;
-			return;
-		}
 		
-		if (solEnabled = RobotMap.FishingPole.SOL != RobotMap.DOES_NOT_EXIST)
-			sol = new Solenoid(RobotMap.FishingPole.SOL);
+		if (Robot.isFinal()){
+			if (solEnabled = RobotMap.FishingPole.SOL != RobotMap.DOES_NOT_EXIST)
+				sol = new Solenoid(RobotMap.FishingPole.SOL);
+		}else{
+			if (solEnabled = RobotMap.FishingPole.SOL_PRACT != RobotMap.DOES_NOT_EXIST)
+				sol = new Solenoid(RobotMap.FishingPole.SOL_PRACT);
+		}
 	}
 	
 	public void setPos(boolean pos){

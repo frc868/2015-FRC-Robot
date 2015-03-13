@@ -25,7 +25,7 @@ public class ControllerMap {
     /** TOMEE Cannot get the whole DPad */
     protected static final int[] tomee =      { 3, 2, 4, 1, 8, 6, 7, 5, 10, 9, 1, 3, 2, 5};
     
-    protected static final int[] logitech =   { 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 0, 2, 1, 3};
+    protected static final int[] logitech =   { 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 0, 2, 1, 3};	
     
     protected static final double DEADZONE = 0.05;
     
