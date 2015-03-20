@@ -26,7 +26,7 @@ public class FeederSubsystem extends BasicSubsystem {
 	
 	public static final double FEED_IN = -0.75, FEED_OUT = 0.75, STOPPED = 0;
 	public static final boolean OPEN = false, CLOSED = true;
-	public static final double MIN_RIGHT_DIST = .5, MIN_LEFT_DIST = .5;
+	public static final double MIN_RIGHT_VOLTS = 1.7, MIN_LEFT_VOLTS = 1.7;
 	
 	private double leftMotorMult = 1, rightMotorMult = 1;
 	private boolean solEnabled, motorsEnabled, leftEnabled, rightEnabled;
@@ -109,11 +109,11 @@ public class FeederSubsystem extends BasicSubsystem {
 	}
 	
 	public double getLeftSensor() {
-		return leftEnabled ? left.getVoltage() : MIN_LEFT_DIST;
+		return leftEnabled ? left.getVoltage() : MIN_LEFT_VOLTS;
 	}
 	
 	public double getRightSensor() {
-		return rightEnabled ? right.getVoltage() : MIN_RIGHT_DIST;
+		return rightEnabled ? right.getVoltage() : MIN_RIGHT_VOLTS;
 	}
 	
 	public double getLeftDistance() {
@@ -139,17 +139,17 @@ public class FeederSubsystem extends BasicSubsystem {
 	public boolean getRightSensorInRange(){
 //		return getRightDistance() < MIN_RIGHT_DIST;
 		if (Robot.isFinal())
-			return getRightSensor() > 1.7;
+			return getRightSensor() > MIN_RIGHT_VOLTS;
 		else
-			return getRightSensor() > 1.7;
+			return getRightSensor() > MIN_RIGHT_VOLTS;
 	}
 	
 	public boolean getLeftSensorInRange(){
 //		return getLeftDistance() < MIN_LEFT_DIST;
 		if(Robot.isFinal())
-			return getLeftSensor() > 1.7;
+			return getLeftSensor() > MIN_LEFT_VOLTS;
 		else
-			return getLeftSensor() > 1.7;
+			return getLeftSensor() > MIN_LEFT_VOLTS;
 	}
 	
 	public void stopArms() {

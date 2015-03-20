@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 	
 	private Command auton;
-	private static boolean finalRobot = false;
+	private static boolean finalRobot = true;
 	
 	public static boolean isFinal(){
 		return finalRobot;
@@ -42,6 +42,7 @@ public class Robot extends IterativeRobot {
     
     public void initSubsystems() {
 
+//    	Arduino.getInstance();
     	USBCameraSubsystem.getInstance();
     	GyroSubsystem.getInstance();
     	FeederSubsystem.getInstance();

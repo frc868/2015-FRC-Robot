@@ -115,7 +115,7 @@ public class ThreeToteMoveBin extends CommandGroup {
     		addSequential(new SetLift(LiftSubsystem.OPEN));
     		addParallel(new SetFeeder(FeederSubsystem.OPEN));
     		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
-    		addParallel(new AutonDrive(-3, .1, .5));
+    		addParallel(new AutonDrive(-3, .1, 1.5));
 //    		addParallel(new DriveTime(2, -.5, true));
     	}
 		addSequential(new Wink());

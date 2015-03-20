@@ -34,7 +34,8 @@ public class SetLift extends Command {
 
     protected void initialize() {
     	if (direction != null){
-    		lift.setBrake(power == 0 || direction == LiftSubsystem.STOPPED);
+//    		lift.setBrake(power == 0 || direction == LiftSubsystem.STOPPED);
+    		(new DelayBrake(.25, lift.getDirection())).start();
     		lift.setLift(direction, power);
     		lift.setCmdRunning(power != 0 && direction != LiftSubsystem.STOPPED);
     		GyroSubsystem.getInstance().resetGyro();

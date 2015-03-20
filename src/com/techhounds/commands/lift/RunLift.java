@@ -15,6 +15,7 @@ public class RunLift extends Command{
 	public RunLift() {
 		lift = LiftSubsystem.getInstance();
 		gyro = GyroSubsystem.getInstance();
+		
 		requires(lift);
 		setInterruptible(false);
 	}
@@ -24,7 +25,7 @@ public class RunLift extends Command{
 	}
 
 	protected void execute() {
-		
+	
 		if (LiftSubsystem.OP_STICK_CONTROL){
 			double pow = OI.getOperatorLeftYAxis();
 			int dir = pow != 0 ? (pow > 0 ? LiftSubsystem.DOWN : LiftSubsystem.UP) : LiftSubsystem.STOPPED;
@@ -52,7 +53,7 @@ public class RunLift extends Command{
 			lift.setBrakeHeight(0);
 		}
 		
-		if (lift.getBraked()){
+		if (lift.getBraked() && lift.LIFT_BRAKING){
 			double diff = lift.getBrakeHeight() - lift.getEncHeight();
 			double pow = diff > 0 ? diff * lift.getBrakeMult() * LiftSubsystem.LIFT_POWER : 0;
 			int dir = diff > 0 ? LiftSubsystem.UP : LiftSubsystem.DOWN;

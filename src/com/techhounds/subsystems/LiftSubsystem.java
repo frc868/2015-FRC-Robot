@@ -28,6 +28,8 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final double TWO_TOTE_HEIGHT = 2.8;
 	public static final double ONE_TOTE_HEIGHT = 1.4;
 	public static final double OFF_GROUND_HEIGHT = 0.2;
+	public static final double MAX_HEIGHT = 20;
+	public static final double ARDUINO_SCALAR = 63;
 	
 	public static final double LIFT_POWER = 1.0;
 	public static final double COUNTS_TO_FEET = (32.25 / 12) / 5752.0;
@@ -40,6 +42,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final boolean BRAKE = false, UNBRAKE = true;
 	
 	public static final boolean OP_STICK_CONTROL = true;
+	public static final boolean LIFT_BRAKING = true;
 	
 	private MultiCANTalon motors;
 	private MultiMotor motorsPract;
@@ -210,7 +213,7 @@ public class LiftSubsystem extends BasicSubsystem {
 		if (braked){
 			brakeHeight = getEncHeight();
 			if (getDirection() == DOWN){
-				brakeHeight -= .25; 
+				brakeHeight -= .4;
 				setBrakeMult(DOWN_BRAKE_MULT);
 			}else if (getDirection() == UP)
 				setBrakeMult(UP_BRAKE_MULT);
@@ -273,7 +276,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	
 	public void updateSmartDashboard() {
 //		SmartDashboard.putNumber("Lift Enc Count", getEncCount());
-//		SmartDashboard.putNumber("Lift Enc Height", getEncHeight());
+		SmartDashboard.putNumber("Lift Enc Height", getEncHeight());
 //		SmartDashboard.putBoolean("Lift Top Switch", isAtTop());
 //		SmartDashboard.putBoolean("Lift Bottom Switch", isAtBottom());
 //		SmartDashboard.putNumber("Lift Brake Height", getBrakeHeight());

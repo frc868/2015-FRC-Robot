@@ -124,7 +124,7 @@ public class ThreeTote extends CommandGroup {
     		addSequential(new SetLift(LiftSubsystem.OPEN));
     		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
     		addParallel(new SetFeeder(FeederSubsystem.OPEN));
-    		addParallel(new DriveTime(.5, -.5, true));
+    		addParallel(new AutonDrive(-3, .1, 1.5));
     	}
 		addSequential(new Wink());
 			
