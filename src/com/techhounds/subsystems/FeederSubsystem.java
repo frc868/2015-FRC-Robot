@@ -157,11 +157,11 @@ public class FeederSubsystem extends BasicSubsystem {
 	}
 	
 	public void updateSmartDashboard() {
-		SmartDashboard.putNumber("Left Feeder Sensor", getLeftSensor());
-		SmartDashboard.putNumber("Right Feeder Sensor", getRightSensor());
-		SmartDashboard.putNumber("Left Feeder Sensor Dist", getLeftDistance());
-		SmartDashboard.putNumber("Right Feeder Sensor Dist", getRightDistance());
-		SmartDashboard.putBoolean("Collector Out", getPosition());
+//		SmartDashboard.putNumber("Left Feeder Sensor", getLeftSensor());
+//		SmartDashboard.putNumber("Right Feeder Sensor", getRightSensor());
+//		SmartDashboard.putNumber("Left Feeder Sensor Dist", getLeftDistance());
+//		SmartDashboard.putNumber("Right Feeder Sensor Dist", getRightDistance());
+//		SmartDashboard.putBoolean("Collector Out", getPosition());
 //		SmartDashboard.putString("Feeder Direction", getPower() > 0 ? "OUT" : getPower() == 0 ? "STOPPED" : "IN");
 	}
 

@@ -1,6 +1,8 @@
 package com.techhounds.commands.feeder;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.techhounds.subsystems.FeederSubsystem;;
 
 /**
@@ -51,17 +53,21 @@ public class SetFeeder extends Command {
     			setPower(feed.getPower() != FeederSubsystem.STOPPED ? FeederSubsystem.STOPPED : power);
     		} else {
     			feed.setPosition(!feed.getPosition());
+    			power = feed.getPower();
     		}
     	} else {
 	    	if (power != null)
 	    		setPower(power);
+	    	else 
+	    		power = feed.getPower();
+	    	
 	    	if (position != null)
 	    		feed.setPosition(position);
     	}
     }
 
     protected void execute() {
-    	setPower(feed.getPower());
+    	setPower(power);
     }
 
     protected boolean isFinished() {
@@ -77,6 +83,9 @@ public class SetFeeder extends Command {
     }
     
     private void setPower(double power){
+    	SmartDashboard.putBoolean("Feed Left Bool", feed.getLeftSensorInRange());
+    	SmartDashboard.putBoolean("Feed Right Bool", feed.getRightSensorInRange());
+    	SmartDashboard.putNumber("Feed Power", power);
     	if (feed.getLeftSensorInRange() && feed.getRightSensorInRange() && power * FeederSubsystem.FEED_IN > 0){
     		feed.stopArms();
     	}else{

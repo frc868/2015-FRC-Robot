@@ -1,12 +1,19 @@
 package com.techhounds;
 
+import java.util.Date;
+
 import com.techhounds.commands.GoFishing;
+import com.techhounds.commands.RefreshAutoChooser;
 import com.techhounds.commands.UpdateDriverCont;
 import com.techhounds.commands.Wink;
 import com.techhounds.commands.auton.AutonChooser;
+import com.techhounds.commands.auton.AutonDrive;
 import com.techhounds.commands.auton.DriveToClosestTote;
+import com.techhounds.commands.auton.MoveToAutoZone;
+import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.feeder.SetFeeder;
 import com.techhounds.commands.lift.AddTote;
+import com.techhounds.commands.lift.AddToteOneInch;
 import com.techhounds.commands.lift.NextLevel;
 import com.techhounds.commands.lift.PutRCPassive;
 import com.techhounds.commands.lift.SetLift;
@@ -33,7 +40,7 @@ public class OI {
 	private static ControllerMap operator;
 	private static OPBoardMap operatorBoard;
 	
-	private SendableChooser autonChoice;
+	public SendableChooser autonChoice;
 	private static SendableChooser driverContChoice;
 		
 	//Driver buttons
@@ -56,7 +63,7 @@ public class OI {
 //    private final int opLiftDown = 			ControllerMap.A;		Button opSetLiftDown;
     private final int opLiftIn = 			ControllerMap.X;		Button opSetLiftIn;
     private final int opLiftOut = 			ControllerMap.B;		Button opSetLiftOut;
-	private final int opUpOneLevel = 		ControllerMap.BACK;		Button opUpLevel;
+//	private final int opUpOneLevel = 		ControllerMap.BACK;		Button opUpLevel;
 	private final int opPassiveIn =			ControllerMap.RB;		Button opPassIn;
 	private final int opPassiveOut =		ControllerMap.RT;		Button opPassOut;
 	private final int opPassiveStop = 		ControllerMap.LT;		Button opPassStop;
@@ -67,6 +74,9 @@ public class OI {
 	private final int opAllOpen = 			ControllerMap.START;	Button opOpenAll;
 	private final int opFeederOffA =		ControllerMap.LEFT;		Button opFeedOffA;
 	private final int opFeederOffB = 		ControllerMap.RIGHT;	Button opFeedOffB;
+//	private final int opGoFishingDown =		ControllerMap.DOWN;		Button opGoFishingD;
+//	private final int opGoFishingUp = 		ControllerMap.UP;		Button opGoFishingU;
+	private final int opUpInch = 			ControllerMap.BACK;		Button opUpOneInch;
 	
 	//OP Board buttons
 	private final int opBoardFeederOpen = 			OPBoardMap.FEEDER_OPEN;		Button opBoardOpenFeeder;
@@ -94,9 +104,9 @@ public class OI {
 		
 		int choice = (int) driverContChoice.getSelected();
 		
-		if (choice == 0)
+		if (choice == 1)
 			driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_DS4);
-		else if (choice == 1)
+		else if (choice == 0)
 			driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_WIN);
 		else if (choice == 2)
 			driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.LOGITECH, true);
@@ -223,8 +233,8 @@ public class OI {
         opSetLiftOut = operator.createButton(opLiftOut);
         opSetLiftOut.whenPressed(new SetLift(LiftSubsystem.OPEN));
         
-	    opUpLevel = operator.createButton(opUpOneLevel);
-	    opUpLevel.whenPressed(new NextLevel(LiftSubsystem.UP));
+//	    opUpLevel = operator.createButton(opUpOneLevel);
+//	    opUpLevel.whenPressed(new NextLevel(LiftSubsystem.UP));
 
         opPassIn = operator.createButton(opPassiveIn);
         opPassIn.whenPressed(new SetPassiveStop(PassiveSubsystem.CLOSED, 0));
@@ -263,10 +273,21 @@ public class OI {
         
         opFeedOffB = operator.createButton(opFeederOffB);
         opFeedOffB.whenPressed(new SetFeeder(FeederSubsystem.STOPPED));
+    
+//        opGoFishingD = operator.createButton(opGoFishingDown);
+//        opGoFishingD.whenPressed(new GoFishing(FishingPoleSubsystem.OUT));
+//        
+//        opGoFishingU = operator.createButton(opGoFishingUp);
+//        opGoFishingU.whenPressed(new GoFishing(FishingPoleSubsystem.IN));
+        
+        opUpOneInch = operator.createButton(opUpInch);
+        opUpOneInch.whenPressed(new AddToteOneInch());
     }
     
     public void initOPBoard() {
-    	
+    	if (true) {
+    		return;
+    	}
     	opBoardOpenFeeder = operatorBoard.createButton(opBoardFeederOpen);
     	opBoardOpenFeeder.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
     	
@@ -338,7 +359,7 @@ public class OI {
     public void initSD() {
     	
     	SmartDashboard.putData("Update Controller", new UpdateDriverCont());
-    	
+    	SmartDashboard.putData("Add Tote & 1 inch", new AddToteOneInch());
 //    	SmartDashboard.putData("Move To Zone", new MoveToAutoZone(1.5));
     	SmartDashboard.putData("Goto Closest Tote", new DriveToClosestTote());
 //    	SmartDashboard.putData("One Crate", new FirstTote());
@@ -349,12 +370,19 @@ public class OI {
 //    	SmartDashboard.putData("Reverse Three Tote, Start L", new ReverseThreeTote(true, true, true));
 //    	SmartDashboard.putData("Reverse Three Tote, Start R", new ReverseThreeTote(true, false, true));
 //    	
+    	SmartDashboard.putNumber("Controller Power", getDriverLeftYAxis());
+    	SmartDashboard.putNumber("Controller Steer", getDriverRightXAxis());
+    	SmartDashboard.putData("Toggle Fishing", new GoFishing());
+    	
+    	SmartDashboard.putData("Refresh Auto Chooser", new RefreshAutoChooser());
+    	
 //    	SmartDashboard.putData("Move Forward", new DriveTime(.75, .4, false));
 //
-//    	SmartDashboard.putData("Gyro Rotate 90", new RotateToAngle(90, 1));
+    	SmartDashboard.putData("Gyro Rotate 90", new RotateToAngle(90, 1));
 //    	SmartDashboard.putData("Gyro Rotate 270", new RotateToAngle(270, 3));
 //    	SmartDashboard.putData("Gyro Rotate 180", new RotateToAngle(180, 2));
 //    	SmartDashboard.putData("Drive PID", new AutonDrive(6.75, 3));
+    	SmartDashboard.putData("Drive PID", new AutonDrive(4, 3));
 //    	
 //    	SmartDashboard.putData("Wait Tote Lift", new WaitForToteLift());
 //    	SmartDashboard.putData("Wink", new Wink());
@@ -364,7 +392,7 @@ public class OI {
         return ((Integer) autonChoice.getSelected()).intValue();
     }
    
-    private SendableChooser createAutonChoices() {
+    public SendableChooser createAutonChoices() {
         SendableChooser send = new SendableChooser();
         String[] choices = AutonChooser.AUTON_CHOICES;
 	       
@@ -376,6 +404,8 @@ public class OI {
 	           }
 	           
 	           SmartDashboard.putData("Auton Choices", send);
+	           System.out.println("Put out chooser at " + new Date());
+	           SmartDashboard.putString("AutonInit", "Put out chooser at " + new Date());
 	       }
 	       
 	       return send;
@@ -383,8 +413,8 @@ public class OI {
     
 	private SendableChooser createDriverChoices(){
 		SendableChooser send = new SendableChooser();
-	    send.addDefault("Aryaman's SWARTZ", new Integer(0));
-	    send.addObject("Aryaman's Driver Station", new Integer(1));
+	    send.addDefault("Aryaman's Driver Station", new Integer(0));
+	    send.addObject("Aryaman's SWARTZ", new Integer(1));
 	    send.addObject("Logitech", new Integer(2));
         SmartDashboard.putData("Driver Controller", send);
 	    return send;	

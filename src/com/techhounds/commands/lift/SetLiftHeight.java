@@ -23,7 +23,6 @@ public class SetLiftHeight extends Command {
 	
     public SetLiftHeight(double dist, int direction) {
     	lift = LiftSubsystem.getInstance();
-    	requires(lift);
     	this.dist = dist;
     	this.direction = direction;
     	isAbsolute = false;
@@ -31,7 +30,6 @@ public class SetLiftHeight extends Command {
 
     public SetLiftHeight(double height){
     	lift = LiftSubsystem.getInstance();
-    	requires(lift);
     	isAbsolute = true;
     	target = height;
     }
@@ -66,10 +64,10 @@ public class SetLiftHeight extends Command {
     }
 
     protected void end() {
-		(new DelayBrake(.25, lift.getDirection(), finalHeight)).start();
+//		(new DelayBrake(.25, lift.getDirection(), finalHeight)).start();
     	lift.setLift(LiftSubsystem.STOPPED, 0);
-//    	lift.setBrake(true);
-//    	lift.setBrakeHeight(finalHeight);
+    	lift.setBrake(true);
+    	lift.setBrakeHeight(finalHeight);
     	lift.setCmdRunning(false);
     }
 

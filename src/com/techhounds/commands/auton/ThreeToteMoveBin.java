@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.command.WaitForChildren;
 
 public class ThreeToteMoveBin extends CommandGroup {
 	
-	public ThreeToteMoveBin(boolean turnAndMove) {
+	public ThreeToteMoveBin(boolean turnAndMove){
 		
 		
 		/*
@@ -48,9 +48,9 @@ public class ThreeToteMoveBin extends CommandGroup {
 		 */
 		addParallel(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
 		
-		addSequential(new RotateToAngle(55, .75));
-		addSequential(new AutonDrive(4.5, .1, 1));
-		addSequential(new RotateToAngle(-120, .75));
+		addSequential(new RotateToAngle(40, .75));
+		addSequential(new AutonDrive(2.5, .1, 1));
+		addSequential(new RotateToAngle(-80, .75));
 		
 		addParallel(new SetFeeder(FeederSubsystem.FEED_IN));
 		addParallel(new DriveToClosestTote(1));
@@ -58,6 +58,7 @@ public class ThreeToteMoveBin extends CommandGroup {
 		addSequential(new WaitForIR(6, 2, true));
 		addSequential(new DriveTime(0, 0, true));
 		addParallel(new SetFeeder(FeederSubsystem.CLOSED));
+		addSequential(new WaitCommand(.5));
 		addSequential(new SetLift(LiftSubsystem.DOWN));
 		addSequential(new WaitCommand(.1));
 		addSequential(new SetLift(LiftSubsystem.OPEN));
@@ -85,7 +86,9 @@ public class ThreeToteMoveBin extends CommandGroup {
 		 */
 		addParallel(new SetLiftHeight(LiftSubsystem.ONE_TOTE_HEIGHT));
 		addParallel(new SetFeeder(FeederSubsystem.STOPPED));
+
 		addSequential(new WaitCommand(1));
+		
 		addParallel(new SetFeeder(FeederSubsystem.FEED_IN));
 		addParallel(new DriveToClosestTote(1));
 		addSequential(new WaitCommand(1));
@@ -107,15 +110,18 @@ public class ThreeToteMoveBin extends CommandGroup {
 		//addSequential(new SetLiftHeight(LiftSubsystem.OFF_GROUND_HEIGHT));
 
 		if (turnAndMove){
-    		addSequential(new RotateToAngle(90, 1));
+    		addSequential(new RotateToAngle(95, 1));
     		addParallel(new SetFeeder(FeederSubsystem.STOPPED));
+    		addSequential(new WaitCommand(.1));
+    		addSequential(new AutonDrive(0, 0));
     		addSequential(new AutonDrive(9, 2));
+    		addSequential(new RotateToAngle(-90, 1));
     		addSequential(new SetLift(LiftSubsystem.DOWN));
     		addSequential(new WaitCommand(.1));
     		addSequential(new SetLift(LiftSubsystem.OPEN));
     		addParallel(new SetFeeder(FeederSubsystem.OPEN));
     		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
-    		addParallel(new AutonDrive(-3, .1, 1.5));
+    		addParallel(new AutonDrive(-1.5, .1, 1.5));
 //    		addParallel(new DriveTime(2, -.5, true));
     	}
 		addSequential(new Wink());

@@ -35,7 +35,10 @@ public class DriveToClosestTote extends Command {
     }
     
     protected void initialize() {
-    	
+    	badFrames = 0;
+    	finished = false;
+    	power = 0;
+    	offset = 0;
     }
 
     protected void execute() {
@@ -47,7 +50,7 @@ public class DriveToClosestTote extends Command {
     	else
     		drive.setPower(power + offset, (power - offset) * .9);
     	
-    	if (power < .1){
+    	if (power < .05){
     		badFrames++;
     		if (badFrames > 2)
     			finished = true;
@@ -60,7 +63,7 @@ public class DriveToClosestTote extends Command {
     }
 
     protected void end() {
-    	drive.setPower(.05);
+    	drive.setPower(.075);
     }
 
     protected void interrupted() {

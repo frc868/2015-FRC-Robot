@@ -4,6 +4,7 @@ import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -55,12 +56,14 @@ public class WaitForIR extends Command {
     		return false;
     	
     	if (lowTarget == null){
-    		return Math.abs(lift.getIRAvgDist() - dist) < tolerance;
+    		return Math.abs(lift.getIRDist() - dist) < tolerance;
     	}else{
-    		if (lowTarget)
-    			return lift.getIRAvgDist() < dist + tolerance;
+    		if (lowTarget){
+    			SmartDashboard.putNumber("IR Val", lift.getIRDist());
+    			return lift.getIRDist() < dist + tolerance;
+    		}
     		else
-    			return lift.getIRAvgDist() > dist - tolerance;
+    			return lift.getIRDist() > dist - tolerance;
     	}
     }
 

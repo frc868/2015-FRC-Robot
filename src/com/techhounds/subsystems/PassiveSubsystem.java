@@ -65,7 +65,7 @@ public class PassiveSubsystem extends BasicSubsystem {
 	}
 	
 	public void updateSmartDashboard() {
-		SmartDashboard.putBoolean("Passive Arms Out", getArmPosition());
+//		SmartDashboard.putBoolean("Passive Arms Out", getArmPosition());
 		SmartDashboard.putBoolean("Passive Brake Engaged", getStopPosition());
 	}
 	

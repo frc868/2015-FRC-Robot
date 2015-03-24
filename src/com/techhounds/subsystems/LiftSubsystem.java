@@ -42,7 +42,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final boolean BRAKE = false, UNBRAKE = true;
 	
 	public static final boolean OP_STICK_CONTROL = true;
-	public static final boolean LIFT_BRAKING = true;
+	public static final boolean LIFT_BRAKING = false;
 	
 	private MultiCANTalon motors;
 	private MultiMotor motorsPract;
@@ -213,7 +213,7 @@ public class LiftSubsystem extends BasicSubsystem {
 		if (braked){
 			brakeHeight = getEncHeight();
 			if (getDirection() == DOWN){
-				brakeHeight -= .4;
+				brakeHeight -= 1;
 				setBrakeMult(DOWN_BRAKE_MULT);
 			}else if (getDirection() == UP)
 				setBrakeMult(UP_BRAKE_MULT);
@@ -279,15 +279,15 @@ public class LiftSubsystem extends BasicSubsystem {
 		SmartDashboard.putNumber("Lift Enc Height", getEncHeight());
 //		SmartDashboard.putBoolean("Lift Top Switch", isAtTop());
 //		SmartDashboard.putBoolean("Lift Bottom Switch", isAtBottom());
-//		SmartDashboard.putNumber("Lift Brake Height", getBrakeHeight());
+		SmartDashboard.putNumber("Lift Brake Height", getBrakeHeight());
 //		SmartDashboard.putNumber("Lift Power", getPower());
 		SmartDashboard.putNumber("Lift IR Dist", getIRDist());
-		SmartDashboard.putNumber("Lift IR Voltage", IRSensor.getVoltage());
+//		SmartDashboard.putNumber("Lift IR Voltage", IRSensor.getVoltage());
 //		SmartDashboard.putNumber("Lift IR Avg Volt", IRSensor.getAverageVoltage());
-		SmartDashboard.putNumber("Lift IR Avd Dist", getIRAvgDist());
+//		SmartDashboard.putNumber("Lift IR Avd Dist", getIRAvgDist());
 //		SmartDashboard.putBoolean("Passive Switch", getPassiveSwitch());
 //		
-		SmartDashboard.putBoolean("Lift Arms Open", !getGrabPosition());
+//		SmartDashboard.putBoolean("Lift Arms Open", !getGrabPosition());
 //		SmartDashboard.putBoolean("Lift is Braked", getBraked());
 	}
 

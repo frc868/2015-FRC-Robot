@@ -84,7 +84,7 @@ public class RobotMap {
 		public static final int LEFT_MOTOR = 10;
 		public static final int RIGHT_MOTOR = 13;
 		public static final int SOL = 4;
-		public static final int LEFT_SENSOR = DOES_NOT_EXIST;
+		public static final int LEFT_SENSOR = 2;
 		public static final int RIGHT_SENSOR = 1;
 		
 		public static final int LEFT_MOTOR_PRACT = DOES_NOT_EXIST;

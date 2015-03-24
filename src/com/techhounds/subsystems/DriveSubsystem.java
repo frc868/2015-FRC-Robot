@@ -25,8 +25,8 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	private static DriveSubsystem instance;
 	
-	private static final double Kp = 0.1, Ki = 0, Kd = 0.05;
-	private static final double GYRO_Kp = 0.0125, GYRO_Ki = 0, GYRO_Kd = 0.015;
+	private static final double Kp = 0.25, Ki = 0, Kd = 0.05;
+	private static final double GYRO_Kp = 0.011, GYRO_Ki = 0, GYRO_Kd = 0.015;
 	
 	private boolean overrideOperatorButton, twoPersonDrive = true, isForward, isHalfSpeed;
 	private boolean leftEncEnabled, rightEncEnabled;
@@ -175,7 +175,7 @@ public class DriveSubsystem extends BasicSubsystem {
         
         if (isHalfSpeed){
         	powerMag *= .6;
-        	steerMag *= .6;
+        	steerMag *= .5;
         }else{
         	steerMag *= .75;
         }
@@ -380,7 +380,8 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public void updateSmartDashboard(){
-//        SmartDashboard.putData("drivePID", drivePID);
+        SmartDashboard.putData("drivePID", drivePID);
+        SmartDashboard.putData("gyroPID", gyroPID);
 //    	SmartDashboard.putNumber("Left Drive Power", getLeftPower());
 //    	SmartDashboard.putNumber("Right Drive Power", getRightPower());
 //    	SmartDashboard.putNumber("Left Drive Count", getLeftCount());
