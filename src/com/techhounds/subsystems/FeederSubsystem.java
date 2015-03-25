@@ -24,15 +24,17 @@ public class FeederSubsystem extends BasicSubsystem {
 	
 	private static FeederSubsystem instance;
 	
-	public static final double FEED_IN = -0.75, FEED_OUT = 0.75, STOPPED = 0;
+	public static final double FEED_IN = -0.75, FEED_OUT = 0.75, STOPPED = 0, SLOW_FEED_IN = -.3, SLOW_FEED_OUT = -.3;
 	public static final boolean OPEN = false, CLOSED = true;
 	public static final double MIN_RIGHT_VOLTS = 1.7, MIN_LEFT_VOLTS = 1.7;
 	
 	private double leftMotorMult = 1, rightMotorMult = 1;
-	private boolean solEnabled, motorsEnabled, leftEnabled, rightEnabled;
-	
-	private MultiMotor motorsPract;
-	private MultiCANTalon motors;
+	private boolean solEnabled, leftMotorEnabled, rightMotorEnabled, leftEnabled, rightEnabled;
+
+	private MultiMotor rightMotorPract;
+	private MultiMotor leftMotorPract;
+	private MultiCANTalon leftMotor;
+	private MultiCANTalon rightMotor;
 	private AnalogInput left, right;
 	private Solenoid sol;
 	
@@ -40,13 +42,20 @@ public class FeederSubsystem extends BasicSubsystem {
 		super("ArmsSubsystem");
 					
 		if (Robot.isFinal()){
-			if (motorsEnabled = (RobotMap.Feeder.LEFT_MOTOR != RobotMap.DOES_NOT_EXIST && 
-					RobotMap.Feeder.RIGHT_MOTOR != RobotMap.DOES_NOT_EXIST)){
-				motors = new MultiCANTalon(
+			if (leftMotorEnabled = RobotMap.Feeder.LEFT_MOTOR != RobotMap.DOES_NOT_EXIST){
+				leftMotor = new MultiCANTalon(
 						new CANTalon[]{
-							new CANTalon(RobotMap.Feeder.LEFT_MOTOR),
+							new CANTalon(RobotMap.Feeder.LEFT_MOTOR)},
+						new boolean[]{true},
+						FeedbackDevice.QuadEncoder,
+						false, false, false, false, false);
+			}
+			
+			if (rightMotorEnabled = RobotMap.Feeder.RIGHT_MOTOR != RobotMap.DOES_NOT_EXIST){
+				rightMotor = new MultiCANTalon(
+						new CANTalon[]{
 							new CANTalon(RobotMap.Feeder.RIGHT_MOTOR)},
-						new boolean[]{true, true},
+						new boolean[]{true},
 						FeedbackDevice.QuadEncoder,
 						false, false, false, false, false);
 			}
@@ -60,13 +69,18 @@ public class FeederSubsystem extends BasicSubsystem {
 			if(rightEnabled = RobotMap.Feeder.RIGHT_SENSOR != RobotMap.DOES_NOT_EXIST)
 				right = new AnalogInput(RobotMap.Feeder.RIGHT_SENSOR);
 		}else{
-			if (motorsEnabled = (RobotMap.Feeder.LEFT_MOTOR_PRACT != RobotMap.DOES_NOT_EXIST && 
-					RobotMap.Feeder.RIGHT_MOTOR_PRACT != RobotMap.DOES_NOT_EXIST)){
-				motorsPract = new MultiMotor(
+			if (leftMotorEnabled = RobotMap.Feeder.LEFT_MOTOR_PRACT != RobotMap.DOES_NOT_EXIST){
+				leftMotorPract = new MultiMotor(
 						new SpeedController[]{
-							new Victor(RobotMap.Feeder.LEFT_MOTOR_PRACT),
+							new Victor(RobotMap.Feeder.LEFT_MOTOR_PRACT)},
+						new boolean[]{true});
+			}
+			
+			if (rightMotorEnabled = RobotMap.Feeder.RIGHT_MOTOR_PRACT != RobotMap.DOES_NOT_EXIST){
+				rightMotorPract = new MultiMotor(
+						new SpeedController[]{
 							new Victor(RobotMap.Feeder.RIGHT_MOTOR_PRACT)},
-						new boolean[]{true, true});
+						new boolean[]{true});
 			}
 					
 			if(solEnabled = RobotMap.Feeder.SOL_PRACT != RobotMap.DOES_NOT_EXIST)
@@ -86,17 +100,55 @@ public class FeederSubsystem extends BasicSubsystem {
 		return instance;
 	}
 		
-	public double getPower() {
-		return motorsEnabled ? (Robot.isFinal() ? motors.get() : motorsPract.get()) : 0;
+	public double getLeftPower() {
+		return leftMotorEnabled ? (Robot.isFinal() ? leftMotor.get() : leftMotorPract.get()) : 0;
 	}
 	
-	public void setPower(double power) {
-		if (!motorsEnabled)
-			return;
-		if (Robot.isFinal())
-			motors.set(power);
+	public double getRightPower() {
+		return rightMotorEnabled ? (Robot.isFinal() ? rightMotor.get() : rightMotorPract.get()) : 0;
+	}
+	
+	public void setPower(double power){
+		setPower(power, power);
+	}
+	
+	public void setPower(double left, double right) {
+		
+		if (left * FEED_IN > 0)
+			left = Math.max(Math.min(left * leftMotorMult, 1), -1);
 		else
-			motorsPract.set(power);
+			left = Math.max(Math.min(left, 1), -1);
+		
+		if (right * FEED_IN > 0)
+			right = Math.max(Math.min(right * rightMotorMult, 1), -1);
+		else
+			right = Math.max(Math.min(right, 1), -1);
+		
+		if (leftMotorEnabled){
+			if (Robot.isFinal())
+				leftMotor.set(left);
+			else
+				leftMotorPract.set(left);
+		}
+		if (rightMotorEnabled){
+			if (Robot.isFinal())
+				rightMotor.set(left);
+			else
+				rightMotorPract.set(left);
+		}
+	}
+	
+	public void setPowerMults(double left, double right){
+		leftMotorMult = left;
+		rightMotorMult = right;
+	}
+	
+	public double getLeftMult(){
+		return leftMotorMult;
+	}
+	
+	public double getRightMult(){
+		return rightMotorMult;
 	}
 	
 	public boolean getPosition() {

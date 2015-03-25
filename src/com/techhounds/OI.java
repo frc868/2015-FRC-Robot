@@ -9,9 +9,9 @@ import com.techhounds.commands.Wink;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.AutonDrive;
 import com.techhounds.commands.auton.DriveToClosestTote;
-import com.techhounds.commands.auton.MoveToAutoZone;
 import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.feeder.SetFeeder;
+import com.techhounds.commands.feeder.SetFeederMult;
 import com.techhounds.commands.lift.AddTote;
 import com.techhounds.commands.lift.AddToteOneInch;
 import com.techhounds.commands.lift.NextLevel;
@@ -72,11 +72,14 @@ public class OI {
 	private final int opFeederIn =			ControllerMap.A;		Button opFeedIn;
 	private final int opFeederOut =			ControllerMap.Y;		Button opFeedOut;
 	private final int opAllOpen = 			ControllerMap.START;	Button opOpenAll;
-	private final int opFeederOffA =		ControllerMap.LEFT;		Button opFeedOffA;
-	private final int opFeederOffB = 		ControllerMap.RIGHT;	Button opFeedOffB;
+	private final int opFeederOff =			ControllerMap.DOWN;		Button opFeedOff;
 //	private final int opGoFishingDown =		ControllerMap.DOWN;		Button opGoFishingD;
 //	private final int opGoFishingUp = 		ControllerMap.UP;		Button opGoFishingU;
 	private final int opUpInch = 			ControllerMap.BACK;		Button opUpOneInch;
+	private final int opFeedSlightLeft =	ControllerMap.DIAG_UP_LEFT;	Button opFeedLittleLeft;
+	private final int opFeedSlightRight =	ControllerMap.DIAG_UP_RIGHT;Button opFeedLittleRight;
+	private final int opFeedHardLeft =		ControllerMap.LEFT;		Button opFeedLeft;
+	private final int opFeedHardRight =		ControllerMap.RIGHT;	Button opFeedRight;
 	
 	//OP Board buttons
 	private final int opBoardFeederOpen = 			OPBoardMap.FEEDER_OPEN;		Button opBoardOpenFeeder;
@@ -268,11 +271,8 @@ public class OI {
         opOpenAll.whenPressed(new SetPassiveStop(PassiveSubsystem.OPEN, 0));
         opOpenAll.whenPressed(new Wink());
         
-        opFeedOffA = operator.createButton(opFeederOffA);
-        opFeedOffA.whenPressed(new SetFeeder(FeederSubsystem.STOPPED));
-        
-        opFeedOffB = operator.createButton(opFeederOffB);
-        opFeedOffB.whenPressed(new SetFeeder(FeederSubsystem.STOPPED));
+        opFeedOff = operator.createButton(opFeederOff);
+        opFeedOff.whenPressed(new SetFeeder(FeederSubsystem.STOPPED));
     
 //        opGoFishingD = operator.createButton(opGoFishingDown);
 //        opGoFishingD.whenPressed(new GoFishing(FishingPoleSubsystem.OUT));
@@ -282,12 +282,28 @@ public class OI {
         
         opUpOneInch = operator.createButton(opUpInch);
         opUpOneInch.whenPressed(new AddToteOneInch());
+        
+        opFeedLittleLeft = operator.createButton(opFeedSlightLeft);
+        opFeedLittleLeft.whenPressed(new SetFeederMult(FeederSubsystem.STOPPED, FeederSubsystem.FEED_IN));
+        opFeedLittleLeft.whenReleased(new SetFeederMult(FeederSubsystem.FEED_IN, FeederSubsystem.FEED_IN));
+
+        opFeedLittleRight = operator.createButton(opFeedSlightRight);
+        opFeedLittleRight.whenPressed(new SetFeederMult(FeederSubsystem.FEED_IN, FeederSubsystem.STOPPED));
+        opFeedLittleRight.whenReleased(new SetFeederMult(FeederSubsystem.FEED_IN, FeederSubsystem.FEED_IN));
+
+        opFeedLeft = operator.createButton(opFeedHardLeft);
+        opFeedLeft.whenPressed(new SetFeederMult(FeederSubsystem.SLOW_FEED_OUT, FeederSubsystem.FEED_IN));
+        opFeedLeft.whenReleased(new SetFeederMult(FeederSubsystem.FEED_IN, FeederSubsystem.FEED_IN));
+
+        opFeedRight = operator.createButton(opFeedHardRight);
+        opFeedRight.whenPressed(new SetFeederMult(FeederSubsystem.FEED_IN, FeederSubsystem.SLOW_FEED_OUT));
+        opFeedRight.whenReleased(new SetFeederMult(FeederSubsystem.FEED_IN, FeederSubsystem.FEED_IN));
     }
     
     public void initOPBoard() {
-    	if (true) {
-    		return;
-    	}
+//    	if (true) {
+//    		return;
+//    	}
     	opBoardOpenFeeder = operatorBoard.createButton(opBoardFeederOpen);
     	opBoardOpenFeeder.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
     	
@@ -320,9 +336,9 @@ public class OI {
     	opBoardTakeClose.whenReleased(new SetFeeder(FeederSubsystem.STOPPED));
 
     	opBoardSpitClose = operatorBoard.createButton(opBoardCloseSpit);
-    	opBoardTakeClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
-    	opBoardTakeClose.whenPressed(new SetFeeder(FeederSubsystem.FEED_OUT));
-    	opBoardTakeClose.whenReleased(new SetFeeder(FeederSubsystem.STOPPED));
+    	opBoardSpitClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
+    	opBoardSpitClose.whenPressed(new SetFeeder(FeederSubsystem.FEED_OUT));
+    	opBoardSpitClose.whenReleased(new SetFeeder(FeederSubsystem.STOPPED));
 
     	opBoardWinky = operatorBoard.createButton(opBoardWink);
     	opBoardWinky.whenPressed(new Wink());

@@ -12,7 +12,7 @@ public class SetFeeder extends Command {
 	
 	public FeederSubsystem feed;
 	
-	public Double power;
+	public Double left, right;
 	private Boolean position, toggle;
 	
 	private SetFeeder(){
@@ -27,8 +27,13 @@ public class SetFeeder extends Command {
     }
     
     public SetFeeder(double power){
+    	this(power, power);
+    }
+    
+    public SetFeeder(double left, double right){
     	this();
-    	this.power = power;
+    	this.left = left;
+    	this.right = right;
     }
     
     public SetFeeder(boolean position){
@@ -36,38 +41,21 @@ public class SetFeeder extends Command {
     	this.position = position;
     }
     
-    public SetFeeder(boolean toggle, boolean doesntMatter) {
-    	this();
-    	this.toggle = toggle;
-    }
-    
-    public SetFeeder(boolean toggle, double direction) {
-    	this(direction);
-    	this.toggle = toggle;
-    }
-    
     protected void initialize() {
     	
-    	if(toggle != null && toggle) {
-    		if(power != null) {
-    			setPower(feed.getPower() != FeederSubsystem.STOPPED ? FeederSubsystem.STOPPED : power);
-    		} else {
-    			feed.setPosition(!feed.getPosition());
-    			power = feed.getPower();
-    		}
-    	} else {
-	    	if (power != null)
-	    		setPower(power);
-	    	else 
-	    		power = feed.getPower();
-	    	
-	    	if (position != null)
-	    		feed.setPosition(position);
+    	if (left != null)
+    		setPower(left, right);
+    	else{
+    		left = feed.getLeftPower();
+    		right = feed.getRightPower();
     	}
+    	
+    	if (position != null)
+    		feed.setPosition(position);
     }
 
     protected void execute() {
-    	setPower(power);
+    	setPower(left, right);
     }
 
     protected boolean isFinished() {
@@ -82,14 +70,16 @@ public class SetFeeder extends Command {
     	end();
     }
     
-    private void setPower(double power){
-    	SmartDashboard.putBoolean("Feed Left Bool", feed.getLeftSensorInRange());
-    	SmartDashboard.putBoolean("Feed Right Bool", feed.getRightSensorInRange());
-    	SmartDashboard.putNumber("Feed Power", power);
-    	if (feed.getLeftSensorInRange() && feed.getRightSensorInRange() && power * FeederSubsystem.FEED_IN > 0){
-    		feed.stopArms();
-    	}else{
-    		feed.setPower(power);
+    private void setPower(double left, double right){
+//    	SmartDashboard.putBoolean("Feed Left Bool", feed.getLeftSensorInRange());
+//    	SmartDashboard.putBoolean("Feed Right Bool", feed.getRightSensorInRange());
+//    	SmartDashboard.putNumber("Feed Power", left);
+    	if (feed.getLeftSensorInRange() && feed.getRightSensorInRange() && left * FeederSubsystem.FEED_IN > 0){
+    		left = 0;
     	}
+    	if (feed.getLeftSensorInRange() && feed.getRightSensorInRange() && right * FeederSubsystem.FEED_IN > 0){
+    		right = 0;
+    	}
+		feed.setPower(left, right);
     }
 }
