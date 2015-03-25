@@ -469,6 +469,7 @@ public class OI {
     }
     
     public static double getOPBoardSlider() {
+    	System.out.println("OP Height: " + operatorBoard.getSliderAxis());
     	return operatorBoard.getSliderAxis();
     }
 }

@@ -276,7 +276,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	
 	public void updateSmartDashboard() {
 //		SmartDashboard.putNumber("Lift Enc Count", getEncCount());
-		SmartDashboard.putNumber("Lift Enc Height", getEncHeight());
+		SmartDashboard.putNumber("Lift Enc Height", getEncHeight());// <---- IMPORTANT! Needed to send to opBoard
 //		SmartDashboard.putBoolean("Lift Top Switch", isAtTop());
 //		SmartDashboard.putBoolean("Lift Bottom Switch", isAtBottom());
 		SmartDashboard.putNumber("Lift Brake Height", getBrakeHeight());

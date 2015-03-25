@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 	
 	private Command auton;
-	private static boolean finalRobot = true;
+	private static boolean finalRobot = false;
 	
 	public static boolean isFinal(){
 		return finalRobot;

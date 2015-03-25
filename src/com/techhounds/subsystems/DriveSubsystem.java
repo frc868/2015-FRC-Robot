@@ -380,8 +380,10 @@ public class DriveSubsystem extends BasicSubsystem {
     }
     
     public void updateSmartDashboard(){
-        SmartDashboard.putData("drivePID", drivePID);
-        SmartDashboard.putData("gyroPID", gyroPID);
+    	if (drivePID != null)
+    		SmartDashboard.putData("drivePID", drivePID);
+    	if (gyroPID != null)
+    		SmartDashboard.putData("gyroPID", gyroPID);
 //    	SmartDashboard.putNumber("Left Drive Power", getLeftPower());
 //    	SmartDashboard.putNumber("Right Drive Power", getRightPower());
 //    	SmartDashboard.putNumber("Left Drive Count", getLeftCount());
