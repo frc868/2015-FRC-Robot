@@ -1,5 +1,6 @@
 package com.techhounds.commands.lift;
 
+import com.techhounds.OI;
 import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,8 +10,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class SetLiftHeight extends Command {
+	
+	public static double USE_SLIDE = -1;
 
 	private static final double TOLERANCE = .1;
+	
+	private boolean useSlide = false;
 	
 	private LiftSubsystem lift;
 	private double dist;
@@ -32,10 +37,14 @@ public class SetLiftHeight extends Command {
     	lift = LiftSubsystem.getInstance();
     	isAbsolute = true;
     	target = height;
+    	useSlide = target == USE_SLIDE;
     }
     
     protected void initialize() {
 
+    	if (useSlide)
+    		target = OI.getOPBoardSlider();
+    	
     	initHeight = lift.getEncHeight();
     	if (isAbsolute){
     		direction = initHeight < target ? LiftSubsystem.UP : LiftSubsystem.DOWN;
@@ -50,7 +59,7 @@ public class SetLiftHeight extends Command {
     	else if (direction == LiftSubsystem.DOWN)
     		finalHeight = initHeight - dist;
     	
-//    	SmartDashboard.putString("SetLiftHeight", "init: " + initHeight + ", isAbs: " + isAbsolute + ", dir: " + direction + ", dist: " + dist + ", Fin: " + finalHeight);
+    	SmartDashboard.putString("SetLiftHeight", "init: " + initHeight + ", isAbs: " + isAbsolute + ", dir: " + direction + ", dist: " + dist + ", Fin: " + finalHeight + ", Target: " + target);
     }
 
     protected void execute() {
@@ -60,6 +69,7 @@ public class SetLiftHeight extends Command {
     protected boolean isFinished() {
         return (direction == LiftSubsystem.UP && lift.isAtTop()) || 
         	   (direction == LiftSubsystem.DOWN && lift.isAtBottom()) ||
+        	   (direction != lift.getDirection()) ||
         	   (Math.abs(finalHeight - lift.getEncHeight()) < TOLERANCE);
     }
 

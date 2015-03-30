@@ -33,7 +33,7 @@ public class ControllerMap {
     
     public boolean eightDirectional;
     protected int[] buttonSet;
-    protected Joystick joystick;
+    public Joystick joystick;
     
     public ControllerMap(Joystick joystick){
         this(joystick, LOGITECH);

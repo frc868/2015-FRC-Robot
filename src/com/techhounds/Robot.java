@@ -19,17 +19,21 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	
+	public static Robot instance;
 	private Command auton;
-	private static boolean finalRobot = false;
+	private static boolean finalRobot = true;
 	
 	public static boolean isFinal(){
 		return finalRobot;
 	}
 	
     public void robotInit() {
+    	
+    	instance = this;
     	
     	initSubsystems();
 		OI.getInstance();
@@ -56,6 +60,7 @@ public class Robot extends IterativeRobot {
     }	
     
     public void autonomousInit() {
+		SmartDashboard.putNumber("Lift Enc Height", -1);// <---- IMPORTANT! Signals start of match to opBoard
 
     	(auton = AutonChooser.getSelected()).start();
 

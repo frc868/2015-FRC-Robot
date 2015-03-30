@@ -13,7 +13,8 @@ public class SetFeeder extends Command {
 	public FeederSubsystem feed;
 	
 	public Double left, right;
-	private Boolean position, toggle;
+	private Boolean position;
+	private boolean powSet = false;
 	
 	private SetFeeder(){
 		setInterruptible(true);
@@ -34,6 +35,7 @@ public class SetFeeder extends Command {
     	this();
     	this.left = left;
     	this.right = right;
+    	powSet = true;
     }
     
     public SetFeeder(boolean position){
@@ -43,7 +45,7 @@ public class SetFeeder extends Command {
     
     protected void initialize() {
     	
-    	if (left != null)
+    	if (powSet)
     		setPower(left, right);
     	else{
     		left = feed.getLeftPower();

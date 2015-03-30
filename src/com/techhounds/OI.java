@@ -2,6 +2,7 @@ package com.techhounds;
 
 import java.util.Date;
 
+import com.techhounds.commands.Debug;
 import com.techhounds.commands.GoFishing;
 import com.techhounds.commands.RefreshAutoChooser;
 import com.techhounds.commands.UpdateDriverCont;
@@ -25,6 +26,7 @@ import com.techhounds.subsystems.LiftSubsystem;
 import com.techhounds.subsystems.PassiveSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,7 +40,7 @@ public class OI {
 	
 	private static PlaystationMap driver;
 	private static ControllerMap operator;
-	private static OPBoardMap operatorBoard;
+	public static OPBoardMap operatorBoard;
 	
 	public SendableChooser autonChoice;
 	private static SendableChooser driverContChoice;
@@ -306,70 +308,90 @@ public class OI {
 //    	}
     	opBoardOpenFeeder = operatorBoard.createButton(opBoardFeederOpen);
     	opBoardOpenFeeder.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
+    	opBoardOpenFeeder.whenPressed(new Debug("open feed"));
     	
     	opBoardCloseFeeder = operatorBoard.createButton(opBoardFeederClose);
     	opBoardCloseFeeder.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
+    	opBoardCloseFeeder.whenPressed(new Debug("close feed"));
 
     	opBoardSpitFeeder = operatorBoard.createButton(opBoardFeederSpit);
     	opBoardSpitFeeder.whenPressed(new SetFeeder(FeederSubsystem.FEED_OUT));
     	opBoardSpitFeeder.whenReleased(new SetFeeder(FeederSubsystem.STOPPED));
+    	opBoardSpitFeeder.whenPressed(new Debug("spit feed"));
 
     	opBoardTakeFeeder = operatorBoard.createButton(opBoardFeederTake);
     	opBoardTakeFeeder.whenPressed(new SetFeeder(FeederSubsystem.FEED_IN));
     	opBoardTakeFeeder.whenReleased(new SetFeeder(FeederSubsystem.STOPPED));
+    	opBoardTakeFeeder.whenPressed(new Debug("take feed"));
 
     	opBoardAllOpen = operatorBoard.createButton(opBoardOpenAll);
     	opBoardAllOpen.whenPressed(new SetLift(LiftSubsystem.OPEN));
     	opBoardAllOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
     	opBoardAllOpen.whenPressed(new SetPassiveStop(PassiveSubsystem.OPEN, 0));
     	opBoardAllOpen.whenPressed(new Wink());
+    	opBoardAllOpen.whenPressed(new Debug("open all"));
 
     	opBoardRcToPassive = operatorBoard.createButton(opBoardRCPassive);
     	opBoardRcToPassive.whenPressed(new PutRCPassive());
+    	opBoardRcToPassive.whenPressed(new Debug("rc to pass"));
 
     	opBoardToteAdd = operatorBoard.createButton(opBoardAddTote);
     	opBoardToteAdd.whenPressed(new AddTote());
+    	opBoardToteAdd.whenPressed(new Debug("add tote"));
 
     	opBoardTakeClose = operatorBoard.createButton(opBoardCloseTake);
     	opBoardTakeClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
     	opBoardTakeClose.whenPressed(new SetFeeder(FeederSubsystem.FEED_IN));
     	opBoardTakeClose.whenReleased(new SetFeeder(FeederSubsystem.STOPPED));
+    	opBoardTakeClose.whenPressed(new Debug("take close"));
 
     	opBoardSpitClose = operatorBoard.createButton(opBoardCloseSpit);
     	opBoardSpitClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
     	opBoardSpitClose.whenPressed(new SetFeeder(FeederSubsystem.FEED_OUT));
     	opBoardSpitClose.whenReleased(new SetFeeder(FeederSubsystem.STOPPED));
+    	opBoardSpitClose.whenPressed(new Debug("spit close"));
 
     	opBoardWinky = operatorBoard.createButton(opBoardWink);
     	opBoardWinky.whenPressed(new Wink());
+    	opBoardWinky.whenPressed(new Debug("wink"));
 
     	opBoardFishing = operatorBoard.createButton(opBoardLetsFish);
     	opBoardFishing.whenPressed(new GoFishing(FishingPoleSubsystem.OUT));
     	opBoardFishing.whenReleased(new GoFishing(FishingPoleSubsystem.IN));
+    	opBoardFishing.whenPressed(new Debug("fish"));
 
     	opBoardOpenLift = operatorBoard.createButton(opBoardLiftOpen);
     	opBoardOpenLift.whenPressed(new SetLift(LiftSubsystem.OPEN));
+    	opBoardOpenLift.whenPressed(new Debug("open lift"));
 
     	opBoardCloseLift = operatorBoard.createButton(opBoardLiftClose);
     	opBoardCloseLift.whenPressed(new SetLift(LiftSubsystem.CLOSED));
+    	opBoardCloseLift.whenPressed(new Debug("close lift"));
 
     	opBoardPasOpen = operatorBoard.createButton(opBoardPassOpen);
     	opBoardPasOpen.whenPressed(new SetPassiveStop(PassiveSubsystem.OPEN, 0));
+    	opBoardPasOpen.whenPressed(new Debug("pass open"));
     	
     	opBoardPasClose = operatorBoard.createButton(opBoardPassClose);
     	opBoardPasClose.whenPressed(new SetPassiveStop(PassiveSubsystem.CLOSED, 0));
+    	opBoardPasClose.whenPressed(new Debug("pass close"));
 
     	opBoardPasBreak = operatorBoard.createButton(opBoardPassBrek);
     	opBoardPasBreak.whenPressed(new SetPassiveStop(false, true));
+    	opBoardPasBreak.whenPressed(new Debug("pass brake"));
 
     	opBoardDownLevel = operatorBoard.createButton(opBoardLevelDo);
     	opBoardDownLevel.whenPressed(new NextLevel(LiftSubsystem.DOWN));
+    	opBoardDownLevel.whenPressed(new Debug("down level"));
 
     	opBoardUpLevel = operatorBoard.createButton(opBoardLevelUp);
     	opBoardUpLevel.whenPressed(new NextLevel(LiftSubsystem.UP));
+    	opBoardUpLevel.whenPressed(new Debug("up level"));
     	
     	opBoardSlider = operatorBoard.createButton(opBoardSlide);
-    	opBoardSlider.whenReleased(new SetLiftHeight(OI.getOPBoardSlider()));
+    	opBoardSlider.whileHeld(new SetLiftHeight(SetLiftHeight.USE_SLIDE));
+    	opBoardSlider.whenReleased(new SetLiftHeight(SetLiftHeight.USE_SLIDE));
+    	opBoardSlider.whenPressed(new Debug("slide"));
     }
     
     public void initSD() {
@@ -377,31 +399,18 @@ public class OI {
     	SmartDashboard.putData("Update Controller", new UpdateDriverCont());
     	SmartDashboard.putData("Add Tote & 1 inch", new AddToteOneInch());
 //    	SmartDashboard.putData("Move To Zone", new MoveToAutoZone(1.5));
-    	SmartDashboard.putData("Goto Closest Tote", new DriveToClosestTote());
-//    	SmartDashboard.putData("One Crate", new FirstTote());
-//    	SmartDashboard.putData("Next Crate", new NextTote(false));
-//    	SmartDashboard.putData("Final Crate", new NextTote(true));
-//    	SmartDashboard.putData("Two Tote", new TwoTote(true, 2));
-//    	SmartDashboard.putData("Three Tote", new ThreeTote(true, 2));
-//    	SmartDashboard.putData("Reverse Three Tote, Start L", new ReverseThreeTote(true, true, true));
-//    	SmartDashboard.putData("Reverse Three Tote, Start R", new ReverseThreeTote(true, false, true));
-//    	
-    	SmartDashboard.putNumber("Controller Power", getDriverLeftYAxis());
-    	SmartDashboard.putNumber("Controller Steer", getDriverRightXAxis());
+    	SmartDashboard.putData("Goto Closest Tote", new DriveToClosestTote());    	
+//    	SmartDashboard.putNumber("Controller Power", getDriverLeftYAxis());
+//    	SmartDashboard.putNumber("Controller Steer", getDriverRightXAxis());
     	SmartDashboard.putData("Toggle Fishing", new GoFishing());
     	
     	SmartDashboard.putData("Refresh Auto Chooser", new RefreshAutoChooser());
-    	
-//    	SmartDashboard.putData("Move Forward", new DriveTime(.75, .4, false));
-//
+
     	SmartDashboard.putData("Gyro Rotate 90", new RotateToAngle(90, 1));
-//    	SmartDashboard.putData("Gyro Rotate 270", new RotateToAngle(270, 3));
-//    	SmartDashboard.putData("Gyro Rotate 180", new RotateToAngle(180, 2));
-//    	SmartDashboard.putData("Drive PID", new AutonDrive(6.75, 3));
     	SmartDashboard.putData("Drive PID", new AutonDrive(4, 3));
-//    	
-//    	SmartDashboard.putData("Wait Tote Lift", new WaitForToteLift());
-//    	SmartDashboard.putData("Wink", new Wink());
+    	
+    	SmartDashboard.putBoolean("Slide Pressed", opBoardSlider.get());
+   
     }
     
     public int getAutonChoice() {
@@ -469,7 +478,7 @@ public class OI {
     }
     
     public static double getOPBoardSlider() {
-    	System.out.println("OP Height: " + operatorBoard.getSliderAxis());
-    	return operatorBoard.getSliderAxis();
+//    	System.out.println("OP Height: " + operatorBoard.getSliderAxis());
+    	return (operatorBoard.getSliderAxis() + 1) * 2;
     }
 }
