@@ -2,6 +2,7 @@ package com.techhounds.commands;
 
 import com.techhounds.OI;
 import com.techhounds.subsystems.BasicSubsystem;
+import com.techhounds.subsystems.CameraSubsystem;
 import com.techhounds.subsystems.LEDSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -39,6 +40,8 @@ public class UpdateDashboard extends Command {
 			SmartDashboard.putNumber("Slide 0", joystick.getRawAxis(0));
 	    	SmartDashboard.putNumber("Axis Count", joystick.getAxisCount());
 	    	SmartDashboard.putNumber("Slide val", OI.getOPBoardSlider());
+	    	SmartDashboard.putNumber("Camera Pow", CameraSubsystem.getInstance().getDistValue());
+	    	SmartDashboard.putNumber("Camera Steer", CameraSubsystem.getInstance().getOffsetValue());
 			timer.reset();
 		}
 	}

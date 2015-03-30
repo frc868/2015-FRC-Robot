@@ -7,6 +7,7 @@ import com.techhounds.commands.driving.ManualTurn;
 import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.driving.WaitForIR;
 import com.techhounds.commands.feeder.SetFeeder;
+import com.techhounds.commands.feeder.SetFeederMult;
 import com.techhounds.commands.lift.SetLift;
 import com.techhounds.commands.lift.SetLiftHeight;
 import com.techhounds.commands.lift.WaitForLiftSwitch;
@@ -22,7 +23,7 @@ public class ThreeToteMoveTwoBin extends CommandGroup {
 	
 	public ThreeToteMoveTwoBin(boolean turnAndMove) {
 		
-		
+		addSequential(new SetFeederMult(FeederSubsystem.FEED_IN, FeederSubsystem.FEED_IN));
 		/*
 		 * Drive to Tote.
 		 * Wait till Tote is 6 inches away

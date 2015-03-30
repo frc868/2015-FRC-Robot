@@ -24,7 +24,7 @@ public class FeederSubsystem extends BasicSubsystem {
 	
 	private static FeederSubsystem instance;
 	
-	public static final double FEED_IN = -0.75, FEED_OUT = 0.75, STOPPED = 0, SLOW_FEED_IN = -.3, SLOW_FEED_OUT = -.3;
+	public static final double FEED_IN = -0.75, FEED_OUT = 0.75, STOPPED = 0, SLOW_FEED_IN = -.3, SLOW_FEED_OUT = .3;
 	public static final boolean OPEN = false, CLOSED = true;
 	public static final double MIN_RIGHT_VOLTS = 1.7, MIN_LEFT_VOLTS = 1.7;
 	
@@ -132,15 +132,15 @@ public class FeederSubsystem extends BasicSubsystem {
 		}
 		if (rightMotorEnabled){
 			if (Robot.isFinal())
-				rightMotor.set(left);
+				rightMotor.set(-right);
 			else
-				rightMotorPract.set(left);
+				rightMotorPract.set(-right);
 		}
 	}
 	
 	public void setPowerMults(double left, double right){
-		leftMotorMult = left;
-		rightMotorMult = right;
+		leftMotorMult = right;//   <---- I know, just dont touch it
+		rightMotorMult = left;
 	}
 	
 	public double getLeftMult(){
@@ -215,6 +215,7 @@ public class FeederSubsystem extends BasicSubsystem {
 //		SmartDashboard.putNumber("Right Feeder Sensor Dist", getRightDistance());
 //		SmartDashboard.putBoolean("Collector Out", getPosition());
 //		SmartDashboard.putString("Feeder Direction", getPower() > 0 ? "OUT" : getPower() == 0 ? "STOPPED" : "IN");
+		SmartDashboard.putString("Feed Mults", leftMotorMult + ", " + rightMotorMult);
 	}
 
     public void initDefaultCommand() {

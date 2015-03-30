@@ -25,6 +25,7 @@ public class SetLiftHeight extends Command {
 	
 	private boolean isAbsolute;
 	private double target;
+	private Boolean downIsGood;
 	
     public SetLiftHeight(double dist, int direction) {
     	lift = LiftSubsystem.getInstance();
@@ -38,6 +39,14 @@ public class SetLiftHeight extends Command {
     	isAbsolute = true;
     	target = height;
     	useSlide = target == USE_SLIDE;
+    }
+    
+    public SetLiftHeight(double height, boolean downIsGood){
+    	lift = LiftSubsystem.getInstance();
+    	isAbsolute = true;
+    	target = height;
+    	useSlide = target == USE_SLIDE;
+    	this.downIsGood = downIsGood;
     }
     
     protected void initialize() {
@@ -67,6 +76,21 @@ public class SetLiftHeight extends Command {
     }
 
     protected boolean isFinished() {
+    	
+    	if (downIsGood != null){
+    		if(downIsGood){
+    			return (direction == LiftSubsystem.UP && lift.isAtTop()) || 
+    	        	   (direction == LiftSubsystem.DOWN && lift.isAtBottom()) ||
+    	        	   (direction != lift.getDirection()) || 
+    	        	   (lift.getEncHeight() < finalHeight);
+    		}
+    		
+    		return (direction == LiftSubsystem.UP && lift.isAtTop()) || 
+    	        	   (direction == LiftSubsystem.DOWN && lift.isAtBottom()) ||
+    	        	   (direction != lift.getDirection()) ||
+    	        	   (lift.getEncHeight() > finalHeight);
+    	}
+    	
         return (direction == LiftSubsystem.UP && lift.isAtTop()) || 
         	   (direction == LiftSubsystem.DOWN && lift.isAtBottom()) ||
         	   (direction != lift.getDirection()) ||
