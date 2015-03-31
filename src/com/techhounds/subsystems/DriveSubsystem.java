@@ -148,7 +148,7 @@ public class DriveSubsystem extends BasicSubsystem {
     	double onePower = OI.getDriverLeftYAxis(), oneSteer = OI.getDriverRightXAxis(), 
     			twoPower = OI.getOperatorRightYAxis(), twoSteer = OI.getOperatorRightXAxis();
     	
-    	if (!getTwoPersonDrive()){
+    	if (!getTwoPersonDrive() || OI.opFeedMode){
 	        powerMag = onePower;
 	        steerMag = oneSteer;
 	        posPower = powerMag >= 0;

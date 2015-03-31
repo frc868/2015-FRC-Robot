@@ -1,8 +1,10 @@
 
 package com.techhounds;
 
+import com.techhounds.commands.SetOpFeedMode;
 import com.techhounds.commands.UpdateDashboard;
 import com.techhounds.commands.auton.AutonChooser;
+import com.techhounds.commands.feeder.OpFeederMultControl;
 import com.techhounds.subsystems.BinSubsystem;
 import com.techhounds.subsystems.CameraSubsystem;
 import com.techhounds.subsystems.CompSubsystem;
@@ -74,6 +76,8 @@ public class Robot extends IterativeRobot {
     	if(auton != null)
     		auton.cancel();
     	
+    	OpFeederMultControl.getInstance().start();
+    	
 		System.out.println("*******\n"+
 							"TEAM 868 CAN TELEOP NOW!\n" +
 							"*******");
@@ -85,6 +89,8 @@ public class Robot extends IterativeRobot {
     	
     	if(auton != null)
     		auton.cancel();
+    	
+    	OpFeederMultControl.getInstance().cancel();
     	
     	LEDSubsystem.getInstance().standby();
     }
