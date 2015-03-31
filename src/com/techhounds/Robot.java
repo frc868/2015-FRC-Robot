@@ -39,6 +39,7 @@ public class Robot extends IterativeRobot {
     	
     	initSubsystems();
 		OI.getInstance();
+		SmartDashboard.putNumber("VisionMode", 0);
 		(new UpdateDashboard()).start();
 		
 		System.out.println("*******\n"+
@@ -63,7 +64,7 @@ public class Robot extends IterativeRobot {
     
     public void autonomousInit() {
 		SmartDashboard.putNumber("Lift Enc Height", -1);// <---- IMPORTANT! Signals start of match to opBoard
-
+		SmartDashboard.putNumber("VisionMode", 1);
     	(auton = AutonChooser.getSelected()).start();
 
     	System.out.println("*******\n"+
@@ -76,6 +77,7 @@ public class Robot extends IterativeRobot {
     	if(auton != null)
     		auton.cancel();
     	
+    	SmartDashboard.putNumber("VisionMode", 2);
     	OpFeederMultControl.getInstance().start();
     	
 		System.out.println("*******\n"+
@@ -90,6 +92,7 @@ public class Robot extends IterativeRobot {
     	if(auton != null)
     		auton.cancel();
     	
+    	SmartDashboard.putNumber("VisionMode", 0);
     	OpFeederMultControl.getInstance().cancel();
     	
     	LEDSubsystem.getInstance().standby();

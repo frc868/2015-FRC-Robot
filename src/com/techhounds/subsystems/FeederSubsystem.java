@@ -38,6 +38,8 @@ public class FeederSubsystem extends BasicSubsystem {
 	private AnalogInput left, right;
 	private Solenoid sol;
 	
+	private double leftPow = 0, rightPow = 0;
+	
 	private FeederSubsystem() {
 		super("ArmsSubsystem");
 					
@@ -101,11 +103,11 @@ public class FeederSubsystem extends BasicSubsystem {
 	}
 		
 	public double getLeftPower() {
-		return leftMotorEnabled ? (Robot.isFinal() ? leftMotor.get() : leftMotorPract.get()) : 0;
+		return leftMotorEnabled ? leftPow : 0;
 	}
 	
 	public double getRightPower() {
-		return rightMotorEnabled ? (Robot.isFinal() ? rightMotor.get() : rightMotorPract.get()) : 0;
+		return rightMotorEnabled ? rightPow : 0;
 	}
 	
 	public void setPower(double power){
@@ -113,6 +115,9 @@ public class FeederSubsystem extends BasicSubsystem {
 	}
 	
 	public void setPower(double left, double right) {
+		
+		leftPow = left;
+		rightPow = right;
 		
 		if (left * FEED_IN > 0)
 			left = Math.max(Math.min(left * leftMotorMult, 1), -1);

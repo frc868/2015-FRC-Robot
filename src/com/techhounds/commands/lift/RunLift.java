@@ -34,10 +34,12 @@ public class RunLift extends Command{
 			if (pow != 0 || !lift.getCmdRunning()){
 			
 				lift.setLift(dir, pow);
-				if (pow != 0){
-					lift.setBrake(false);
-				}else if (!lift.getBraked()){
-					lift.setBrake(true);
+				if(LiftSubsystem.LIFT_BRAKING){
+					if (pow != 0){
+						lift.setBrake(false);
+					}else if (!lift.getBraked()){
+						lift.setBrake(true);
+					}
 				}
 			}
 		}

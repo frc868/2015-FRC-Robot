@@ -398,7 +398,8 @@ public class OI {
     	opBoardPasClose.whenPressed(new Debug("pass close"));
 
     	opBoardPasBreak = operatorBoard.createButton(opBoardPassBrek);
-    	opBoardPasBreak.whenPressed(new SetPassiveStop(false, true));
+    	opBoardPasBreak.whenPressed(new SetPassiveStop(PassiveSubsystem.STOPPED));
+    	opBoardPasBreak.whenReleased(new SetPassiveStop(PassiveSubsystem.FREE));
     	opBoardPasBreak.whenPressed(new Debug("pass brake"));
 
     	opBoardDownLevel = operatorBoard.createButton(opBoardLevelDo);
