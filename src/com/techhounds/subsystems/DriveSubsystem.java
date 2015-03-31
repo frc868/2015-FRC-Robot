@@ -148,6 +148,8 @@ public class DriveSubsystem extends BasicSubsystem {
     	double onePower = OI.getDriverLeftYAxis(), oneSteer = OI.getDriverRightXAxis(), 
     			twoPower = OI.getOperatorRightYAxis(), twoSteer = OI.getOperatorRightXAxis();
     	
+    	SmartDashboard.putString("Drive vals raw", onePower + ", " + oneSteer);
+    	
     	if (!getTwoPersonDrive() || OI.opFeedMode){
 	        powerMag = onePower;
 	        steerMag = oneSteer;
@@ -188,7 +190,7 @@ public class DriveSubsystem extends BasicSubsystem {
         double left = powerMag + steerMag;
         double right = powerMag - steerMag;
         
-        SmartDashboard.putString("Power Values", "Left: " + left + " Right: " + right);
+        SmartDashboard.putString("Drive vals adj", left + ", " + right);
         
         setPower(left, right);
 	}
