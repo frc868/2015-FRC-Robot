@@ -22,7 +22,7 @@ public class SetBrake extends Command {
     protected void initialize() {
     	lift.setBrake(braking);
     	if (braking){
-        	lift.setLift(lift.STOPPED, 0);
+        	lift.setLift(LiftSubsystem.STOPPED, 0);
     		lift.setBrakeHeight(lift.getEncHeight());
     	}
     }

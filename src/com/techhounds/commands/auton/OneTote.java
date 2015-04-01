@@ -1,13 +1,10 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.commands.Wink;
-import com.techhounds.commands.driving.DriveTime;
-import com.techhounds.commands.driving.ManualTurn;
 import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.driving.WaitForIR;
 import com.techhounds.commands.lift.SetLift;
 import com.techhounds.commands.lift.SetLiftHeight;
-import com.techhounds.commands.lift.WaitForLiftSwitch;
 import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

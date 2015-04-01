@@ -2,7 +2,6 @@ package com.techhounds.commands.driving;
 
 import com.techhounds.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * @author Shaurya Doger

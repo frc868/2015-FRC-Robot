@@ -5,7 +5,6 @@ import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class CompSubsystem extends Subsystem {
@@ -14,6 +13,7 @@ public class CompSubsystem extends Subsystem {
 	
 	private Compressor comp;
 	
+	@SuppressWarnings("unused")
 	private boolean compEnabled;
 	
 	private CompSubsystem() {

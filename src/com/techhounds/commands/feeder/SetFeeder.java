@@ -1,7 +1,6 @@
 package com.techhounds.commands.feeder;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.techhounds.subsystems.FeederSubsystem;;
 

@@ -1,9 +1,7 @@
 package com.techhounds.commands.auton;
 
-import com.techhounds.commands.Debug;
 import com.techhounds.commands.Wink;
 import com.techhounds.commands.driving.DriveTime;
-import com.techhounds.commands.driving.ManualTurn;
 import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.driving.WaitForIR;
 import com.techhounds.commands.feeder.SetFeeder;
@@ -14,10 +12,8 @@ import com.techhounds.commands.lift.WaitForLiftSwitch;
 import com.techhounds.subsystems.FeederSubsystem;
 import com.techhounds.subsystems.LiftSubsystem;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
-import edu.wpi.first.wpilibj.command.WaitForChildren;
 
 public class ThreeTote extends CommandGroup {
 	

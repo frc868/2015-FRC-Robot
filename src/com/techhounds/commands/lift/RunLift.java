@@ -3,7 +3,6 @@ package com.techhounds.commands.lift;
 import com.techhounds.OI;
 import com.techhounds.subsystems.GyroSubsystem;
 import com.techhounds.subsystems.LiftSubsystem;
-import com.techhounds.subsystems.PassiveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 

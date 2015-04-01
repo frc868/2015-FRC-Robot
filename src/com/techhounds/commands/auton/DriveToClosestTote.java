@@ -5,7 +5,6 @@ import com.techhounds.subsystems.CameraSubsystem;
 import com.techhounds.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Anonymous :(

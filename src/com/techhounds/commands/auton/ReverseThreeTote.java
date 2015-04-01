@@ -11,7 +11,6 @@ import com.techhounds.commands.lift.WaitForLiftSwitch;
 import com.techhounds.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *

@@ -13,7 +13,6 @@ import com.techhounds.commands.auton.AutonDrive;
 import com.techhounds.commands.auton.DriveToClosestTote;
 import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.feeder.SetFeeder;
-import com.techhounds.commands.feeder.SetFeederMult;
 import com.techhounds.commands.lift.AddTote;
 import com.techhounds.commands.lift.AddToteOneInch;
 import com.techhounds.commands.lift.NextLevel;
@@ -28,7 +27,6 @@ import com.techhounds.subsystems.LiftSubsystem;
 import com.techhounds.subsystems.PassiveSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

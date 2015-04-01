@@ -18,8 +18,8 @@ public class AutonChooser {
 		"2 Tote",
 		"1 Bin 1 Tote",
 		"1 Tote",
-		"1 Bin",
-		"1 Bin from Step",
+		"1 Bin Left",
+		"1 Bin Right",
 		"Drive Forward",
 		"Do Nothing"};
 
@@ -34,8 +34,8 @@ public class AutonChooser {
 				new TwoTote(true, 2),
 				new BinAndTote(),
 				new OneTote(),
-				new OneBin(),
-				new StepBin(),
+				new OneBin(true),
+				new OneBin(false),
 				new AutonDrive(8.5, 3),
 				new DoNothing()
 		};
