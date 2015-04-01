@@ -137,7 +137,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public boolean getPassiveSwitch(){
-		return passCheckEnabled ? !checkPassive.get() : false;
+		return passCheckEnabled ? (!checkPassive.get() && getGrabPosition() == CLOSED) : false;
 	}
 	
 	public double getPower() {
