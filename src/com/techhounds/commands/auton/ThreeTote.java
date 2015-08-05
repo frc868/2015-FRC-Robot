@@ -53,7 +53,7 @@ public class ThreeTote extends CommandGroup {
 		addSequential(new WaitForIR(6, 2, true));
 		addSequential(new DriveTime(0, 0, true));
 		addParallel(new SetFeeder(FeederSubsystem.CLOSED));
-		addSequential(new SetLift(LiftSubsystem.DOWN));
+		addSequential(new SetLift(LiftSubsystem.Action.DOWN));
 		addSequential(new WaitCommand(.1));
 		addSequential(new SetLift(LiftSubsystem.OPEN));
 //		addSequential(new WaitForIR(3, 2, true));
@@ -65,7 +65,7 @@ public class ThreeTote extends CommandGroup {
 		 * Then once it is down, close the Lift.
 		 */
 //		addParallel(new SetFeeder(FeederSubsystem.STOPPED));
-		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
+		addSequential(new WaitForLiftSwitch(LiftSubsystem.Action.DOWN));
 		addSequential(new SetLift(LiftSubsystem.CLOSED));
 		addParallel(new SetFeeder(FeederSubsystem.OPEN));
 		addSequential(new WaitCommand(.1));
@@ -116,10 +116,10 @@ public class ThreeTote extends CommandGroup {
     		addSequential(new RotateToAngle(90, 1));
     		addParallel(new SetFeeder(FeederSubsystem.STOPPED));
     		addSequential(new AutonDrive(9, 2));
-    		addSequential(new SetLift(LiftSubsystem.DOWN));
+    		addSequential(new SetLift(LiftSubsystem.Action.DOWN));
     		addSequential(new WaitCommand(.1));
     		addSequential(new SetLift(LiftSubsystem.OPEN));
-    		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
+    		addSequential(new WaitForLiftSwitch(LiftSubsystem.Action.DOWN));
     		addParallel(new SetFeeder(FeederSubsystem.OPEN));
     		addParallel(new AutonDrive(-3, .1, 1.5));
     	}

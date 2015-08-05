@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class FeederSubsystem extends BasicSubsystem {
     
 	/*
-	 *
+	 *IF you turn the feeder wheels on, and then try to switch the direction it doesnt work
 	 */
 	
 	private static FeederSubsystem instance;

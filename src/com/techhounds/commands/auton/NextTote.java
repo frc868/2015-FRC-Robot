@@ -21,8 +21,8 @@ public class NextTote extends CommandGroup {
 		addSequential(new WaitForIR(6, 2, true, 1));
     	
     	addSequential(new SetLift(LiftSubsystem.OPEN));
-    	addSequential(new SetLift(LiftSubsystem.DOWN));
-    	addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
+    	addSequential(new SetLift(LiftSubsystem.Action.DOWN));
+    	addSequential(new WaitForLiftSwitch(LiftSubsystem.Action.DOWN));
     	
     	addSequential(new WaitCommand(.3));
     	addSequential(new SetLift(LiftSubsystem.CLOSED));

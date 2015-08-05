@@ -11,8 +11,10 @@ import com.techhounds.commands.Wink;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.AutonDrive;
 import com.techhounds.commands.auton.DriveToClosestTote;
+import com.techhounds.commands.auton.KeepToteIn;
 import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.feeder.SetFeeder;
+import com.techhounds.commands.feeder.SetFeederNormal;
 import com.techhounds.commands.lift.AddTote;
 import com.techhounds.commands.lift.AddToteOneInch;
 import com.techhounds.commands.lift.NextLevel;
@@ -70,13 +72,14 @@ public class OI {
 //	private final int opUpOneLevel = 		ControllerMap.BACK;		Button opUpLevel;
 //	private final int opPassiveIn =			ControllerMap.RB;		Button opPassIn;
 //	private final int opPassiveOut =		ControllerMap.RT;		Button opPassOut;
-    private final int opPassiveToggle = 	ControllerMap.RB;		Button opPassTogg;
+    private final int opPassiveToggle = 	ControllerMap.LB;		Button opPassTogg;
 	private final int opPassiveStop = 		ControllerMap.LT;		Button opPassStop;
-	private final int opFeederClose =		ControllerMap.LB;		Button opFeedClose;
+	private final int opFeederClose =		ControllerMap.RB;		Button opFeedClose;
 //	private final int opFeederOpen =		ControllerMap.LB;		Button opFeedOpen;
 	private final int opFeederIn =			ControllerMap.A;		Button opFeedIn;
 	private final int opFeederOut =			ControllerMap.Y;		Button opFeedOut;
-//	private final int opAllOpen = 			ControllerMap.START;	Button opOpenAll;
+	private final int opAllOpen = 			ControllerMap.RT;	Button opOpenAll;
+	private final int opAddTote =			ControllerMap.UP;		Button opToteAdd;
 	private final int opFeederOff =			ControllerMap.DOWN;		Button opFeedOff;
 //	private final int opGoFishingDown =		ControllerMap.DOWN;		Button opGoFishingD;
 //	private final int opGoFishingUp = 		ControllerMap.UP;		Button opGoFishingU;
@@ -86,31 +89,9 @@ public class OI {
 //	private final int opFeedHardLeft =		ControllerMap.LEFT;		Button opFeedLeft;
 //	private final int opFeedHardRight =		ControllerMap.RIGHT;	Button opFeedRight;
 	private final int opSetFeedMode = 		ControllerMap.START;	Button opSetFeed;
-	private final int opSetDriveMode = 		ControllerMap.BACK;		Button opSetDrive;
-	private final int opSetBrake = 			ControllerMap.RT;		Button opBrake;
-	
-	//OP Board buttons
-	private final int opBoardFeederOpen = 			OPBoardMap.FEEDER_OPEN;		Button opBoardOpenFeeder;
-	private final int opBoardFeederClose = 			OPBoardMap.FEEDER_CLOSE;	Button opBoardCloseFeeder;
-	private final int opBoardFeederSpit =			OPBoardMap.FEEDER_SPIT; 	Button opBoardSpitFeeder;
-	private final int opBoardFeederTake = 			OPBoardMap.FEEDER_TAKE; 	Button opBoardTakeFeeder;
-	private final int opBoardOpenAll = 				OPBoardMap.OPEN_ALL;		Button opBoardAllOpen;
-	private final int opBoardRCPassive = 			OPBoardMap.RC_TO_PASSIVE;	Button opBoardRcToPassive;
-	private final int opBoardAddTote =				OPBoardMap.ADD_TOTE; 		Button opBoardToteAdd;
-	private final int opBoardCloseTake = 			OPBoardMap.CLOSE_TAKE;	 	Button opBoardTakeClose;
-	private final int opBoardCloseSpit = 			OPBoardMap.CLOSE_SPIT;		Button opBoardSpitClose;
-	private final int opBoardWink = 				OPBoardMap.WINK;			Button opBoardWinky;
-	private final int opBoardLetsFish =				OPBoardMap.FISHING; 		Button opBoardFishing;
-	private final int opBoardLiftOpen = 			OPBoardMap.LIFT_OPEN; 		Button opBoardOpenLift;
-	private final int opBoardLiftClose = 			OPBoardMap.LIFT_CLOSE;		Button opBoardCloseLift;
-	private final int opBoardPassOpen = 			OPBoardMap.PASSIVE_OPEN;	Button opBoardPasOpen;
-	private final int opBoardPassClose =			OPBoardMap.PASSIVE_CLOSE; 	Button opBoardPasClose;
-	private final int opBoardPassBrek = 			OPBoardMap.PASSIVE_BREAK; 	Button opBoardPasBreak;
-	private final int opBoardLevelDo = 				OPBoardMap.DOWN_TOTE_LEVEL;	Button opBoardDownLevel;
-	private final int opBoardLevelUp =				OPBoardMap.UP_TOTE_LEVEL; 	Button opBoardUpLevel;
-	private final int opBoardSlide =				OPBoardMap.SLIDER; 			Button opBoardSlider;
+//	private final int opSetDriveMode = 		ControllerMap.BACK;		Button opSetDrive;
+//	private final int opSetBrake = 			ControllerMap.RT;		Button opBrake;
 
-	
 	public static void updateDriverCont(){
 		
 		int choice = (int) driverContChoice.getSelected();
@@ -165,10 +146,8 @@ public class OI {
 		
 		updateDriverCont();
 		operator = new ControllerMap(new Joystick(RobotMap.OPERATOR_PORT), ControllerMap.LOGITECH, true);
-		operatorBoard = new OPBoardMap(new Joystick(RobotMap.OPERATOR_BOARD_PORT));
 		
     	initOperator();
-    	initOPBoard();
     	initSD();
 	}
 	
@@ -181,12 +160,12 @@ public class OI {
     public static void initDriver() {
 
         setLiftUp = driver.createButton(liftUp);
-        setLiftUp.whenPressed(new SetLift(LiftSubsystem.UP));
-        setLiftUp.whenReleased(new SetLift(LiftSubsystem.STOPPED));
+        setLiftUp.whenPressed(new SetLift(LiftSubsystem.Action.UP));
+        setLiftUp.whenReleased(new SetLift(LiftSubsystem.Action.STOPPED));
         
         setLiftDown = driver.createButton(liftDown);
-        setLiftDown.whenPressed(new SetLift(LiftSubsystem.DOWN));
-        setLiftDown.whenReleased(new SetLift(LiftSubsystem.STOPPED));
+        setLiftDown.whenPressed(new SetLift(LiftSubsystem.Action.DOWN));
+        setLiftDown.whenReleased(new SetLift(LiftSubsystem.Action.STOPPED));
 
         setLiftIn = driver.createButton(liftIn);
         setLiftIn.whenPressed(new SetLift(LiftSubsystem.CLOSED));
@@ -205,18 +184,18 @@ public class OI {
         passStop.whenReleased(new SetPassiveStop(PassiveSubsystem.FREE));
         
         feedClose = driver.createButton(feederClose);
-        feedClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
+        feedClose.whenPressed(new SetFeederNormal(FeederSubsystem.CLOSED));
         
         feedOpen = driver.createButton(feederOpen);
-        feedOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
+        feedOpen.whenPressed(new SetFeederNormal(FeederSubsystem.OPEN));
         
         feedIn = driver.createButton(feederIn);
-        feedIn.whenPressed(new SetFeeder(FeederSubsystem.FEED_IN));
-        feedIn.whenReleased(new SetFeeder(0));
+        feedIn.whenPressed(new SetFeederNormal(FeederSubsystem.FEED_IN));
+        feedIn.whenReleased(new SetFeederNormal(0));
         
         feedOut = driver.createButton(feederOut);
-        feedOut.whenPressed(new SetFeeder(FeederSubsystem.FEED_OUT));
-        feedOut.whenReleased(new SetFeeder(0));
+        feedOut.whenPressed(new SetFeederNormal(FeederSubsystem.FEED_OUT));
+        feedOut.whenReleased(new SetFeederNormal(0));
 
         openAll = driver.createButton(allOpen);
         openAll.whenPressed(new SetLift(LiftSubsystem.OPEN));
@@ -261,29 +240,35 @@ public class OI {
         opPassStop.whenReleased(new SetPassiveStop(PassiveSubsystem.FREE));
         
         opFeedClose = operator.createButton(opFeederClose);
-        opFeedClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
-        opFeedClose.whenReleased(new SetFeeder(FeederSubsystem.OPEN));
+        opFeedClose.whenPressed(new SetFeederNormal(FeederSubsystem.CLOSED));
+        opFeedClose.whenReleased(new SetFeederNormal(FeederSubsystem.OPEN));
         
 //        opFeedOpen = operator.createButton(opFeederOpen);
 //        opFeedOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
 //        opFeedOpen.whenReleased(new SetFeeder(FeederSubsystem.CLOSED));
         
+        
+        
+        
+    
         opFeedIn = operator.createButton(opFeederIn);
-        opFeedIn.whenPressed(new SetFeeder(FeederSubsystem.FEED_IN));
-        opFeedIn.whenReleased(new SetFeeder(0));
+        opFeedIn.whenPressed(new SetFeederNormal(FeederSubsystem.FEED_IN));
+//        opFeedIn.whileHeld(new SetFeederNormal(FeederSubsystem.FEED_IN));
+        opFeedIn.whenReleased(new SetFeederNormal(0, true));
         
         opFeedOut = operator.createButton(opFeederOut);
-        opFeedOut.whenPressed(new SetFeeder(FeederSubsystem.FEED_OUT));
-        opFeedOut.whenReleased(new SetFeeder(0));
+        opFeedOut.whenPressed(new SetFeederNormal(FeederSubsystem.FEED_OUT));
+        opFeedOut.whenReleased(new SetFeederNormal(0, true));
         
-//        opOpenAll = operator.createButton(opAllOpen);
-//        opOpenAll.whenPressed(new SetLift(LiftSubsystem.OPEN));
-//        opOpenAll.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
-//        opOpenAll.whenPressed(new SetPassiveStop(PassiveSubsystem.OPEN, 0));
-//        opOpenAll.whenPressed(new Wink());
+        opOpenAll = operator.createButton(opAllOpen);
+        opOpenAll.whenPressed(new SetLift(LiftSubsystem.OPEN));
+        opOpenAll.whenPressed(new SetFeederNormal(FeederSubsystem.OPEN));
+        opOpenAll.whenPressed(new SetPassiveStop(PassiveSubsystem.OPEN, 0));
+        opOpenAll.whenPressed(new Wink());
+        opOpenAll.whenReleased(new SetPassiveStop(PassiveSubsystem.CLOSED, 0));
         
         opFeedOff = operator.createButton(opFeederOff);
-        opFeedOff.whenPressed(new SetFeeder(FeederSubsystem.STOPPED));
+        opFeedOff.whenPressed(new SetFeederNormal(FeederSubsystem.STOPPED, true));
     
 //        opGoFishingD = operator.createButton(opGoFishingDown);
 //        opGoFishingD.whenPressed(new GoFishing(FishingPoleSubsystem.OUT));
@@ -313,123 +298,38 @@ public class OI {
         opSetFeed = operator.createButton(opSetFeedMode);
         opSetFeed.whenPressed(new SetOpFeedMode(true));
         
-        opSetDrive = operator.createButton(opSetDriveMode);
-        opSetDrive.whenPressed(new SetOpFeedMode(false));
+//        opSetDrive = operator.createButton(opSetDriveMode);
+//        opSetDrive.whenPressed(new SetOpFeedMode(false));
+//        
+//        opBrake = operator.createButton(opSetBrake);
+//        opBrake.whenPressed(new SetBrake(true));
+//        opBrake.whenReleased(new SetBrake(false));
         
-        opBrake = operator.createButton(opSetBrake);
-        opBrake.whenPressed(new SetBrake(true));
-        opBrake.whenReleased(new SetBrake(false));
-    }
-    
-    public void initOPBoard() {
-//    	if (true) {
-//    		return;
-//    	}
-    	opBoardOpenFeeder = operatorBoard.createButton(opBoardFeederOpen);
-    	opBoardOpenFeeder.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
-    	opBoardOpenFeeder.whenPressed(new Debug("open feed"));
-    	
-    	opBoardCloseFeeder = operatorBoard.createButton(opBoardFeederClose);
-    	opBoardCloseFeeder.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
-    	opBoardCloseFeeder.whenPressed(new Debug("close feed"));
-
-    	opBoardSpitFeeder = operatorBoard.createButton(opBoardFeederSpit);
-    	opBoardSpitFeeder.whenPressed(new SetFeeder(FeederSubsystem.FEED_OUT));
-    	opBoardSpitFeeder.whenReleased(new SetFeeder(FeederSubsystem.STOPPED));
-    	opBoardSpitFeeder.whenPressed(new Debug("spit feed"));
-
-    	opBoardTakeFeeder = operatorBoard.createButton(opBoardFeederTake);
-    	opBoardTakeFeeder.whenPressed(new SetFeeder(FeederSubsystem.FEED_IN));
-    	opBoardTakeFeeder.whenReleased(new SetFeeder(FeederSubsystem.STOPPED));
-    	opBoardTakeFeeder.whenPressed(new Debug("take feed"));
-
-    	opBoardAllOpen = operatorBoard.createButton(opBoardOpenAll);
-    	opBoardAllOpen.whenPressed(new SetLift(LiftSubsystem.OPEN));
-    	opBoardAllOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
-    	opBoardAllOpen.whenPressed(new SetPassiveStop(PassiveSubsystem.OPEN, 0));
-    	opBoardAllOpen.whenPressed(new Wink());
-    	opBoardAllOpen.whenPressed(new Debug("open all"));
-
-    	opBoardRcToPassive = operatorBoard.createButton(opBoardRCPassive);
-    	opBoardRcToPassive.whenPressed(new PutRCPassive());
-    	opBoardRcToPassive.whenPressed(new Debug("rc to pass"));
-
-    	opBoardToteAdd = operatorBoard.createButton(opBoardAddTote);
-    	opBoardToteAdd.whenPressed(new AddTote());
-    	opBoardToteAdd.whenPressed(new Debug("add tote"));
-
-    	opBoardTakeClose = operatorBoard.createButton(opBoardCloseTake);
-    	opBoardTakeClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
-    	opBoardTakeClose.whenPressed(new SetFeeder(FeederSubsystem.FEED_IN));
-    	opBoardTakeClose.whenReleased(new SetFeeder(FeederSubsystem.STOPPED));
-    	opBoardTakeClose.whenPressed(new Debug("take close"));
-
-    	opBoardSpitClose = operatorBoard.createButton(opBoardCloseSpit);
-    	opBoardSpitClose.whenPressed(new SetFeeder(FeederSubsystem.CLOSED));
-    	opBoardSpitClose.whenPressed(new SetFeeder(FeederSubsystem.FEED_OUT));
-    	opBoardSpitClose.whenReleased(new SetFeeder(FeederSubsystem.STOPPED));
-    	opBoardSpitClose.whenPressed(new Debug("spit close"));
-
-    	opBoardWinky = operatorBoard.createButton(opBoardWink);
-    	opBoardWinky.whenPressed(new Wink());
-    	opBoardWinky.whenPressed(new Debug("wink"));
-
-    	opBoardFishing = operatorBoard.createButton(opBoardLetsFish);
-    	opBoardFishing.whenPressed(new GoFishing(FishingPoleSubsystem.OUT));
-    	opBoardFishing.whenReleased(new GoFishing(FishingPoleSubsystem.IN));
-    	opBoardFishing.whenPressed(new Debug("fish"));
-
-    	opBoardOpenLift = operatorBoard.createButton(opBoardLiftOpen);
-    	opBoardOpenLift.whenPressed(new SetLift(LiftSubsystem.OPEN));
-    	opBoardOpenLift.whenPressed(new Debug("open lift"));
-
-    	opBoardCloseLift = operatorBoard.createButton(opBoardLiftClose);
-    	opBoardCloseLift.whenPressed(new SetLift(LiftSubsystem.CLOSED));
-    	opBoardCloseLift.whenPressed(new Debug("close lift"));
-
-    	opBoardPasOpen = operatorBoard.createButton(opBoardPassOpen);
-    	opBoardPasOpen.whenPressed(new SetPassiveStop(PassiveSubsystem.OPEN, 0));
-    	opBoardPasOpen.whenPressed(new Debug("pass open"));
-    	
-    	opBoardPasClose = operatorBoard.createButton(opBoardPassClose);
-    	opBoardPasClose.whenPressed(new SetPassiveStop(PassiveSubsystem.CLOSED, 0));
-    	opBoardPasClose.whenPressed(new Debug("pass close"));
-
-    	opBoardPasBreak = operatorBoard.createButton(opBoardPassBrek);
-    	opBoardPasBreak.whenPressed(new SetPassiveStop(PassiveSubsystem.STOPPED));
-    	opBoardPasBreak.whenReleased(new SetPassiveStop(PassiveSubsystem.FREE));
-    	opBoardPasBreak.whenPressed(new Debug("pass brake"));
-
-    	opBoardDownLevel = operatorBoard.createButton(opBoardLevelDo);
-    	opBoardDownLevel.whenPressed(new NextLevel(LiftSubsystem.DOWN));
-    	opBoardDownLevel.whenPressed(new Debug("down level"));
-
-    	opBoardUpLevel = operatorBoard.createButton(opBoardLevelUp);
-    	opBoardUpLevel.whenPressed(new NextLevel(LiftSubsystem.UP));
-    	opBoardUpLevel.whenPressed(new Debug("up level"));
-    	
-    	opBoardSlider = operatorBoard.createButton(opBoardSlide);
-    	opBoardSlider.whileHeld(new SetLiftHeight(SetLiftHeight.USE_SLIDE));
-    	opBoardSlider.whenReleased(new SetLiftHeight(SetLiftHeight.USE_SLIDE));
-    	opBoardSlider.whenPressed(new Debug("slide"));
+        opToteAdd = operator.createButton(opAddTote);
+        opToteAdd.whenPressed(new AddTote());
     }
     
     public void initSD() {
     	
     	SmartDashboard.putData("Update Controller", new UpdateDriverCont());
-    	SmartDashboard.putData("Add Tote & 1 inch", new AddToteOneInch());
+    	
+    	SmartDashboard.putData("Add Tote", new AddTote());
+    	SmartDashboard.putData("Keep Tote In", new KeepToteIn());
 //    	SmartDashboard.putData("Move To Zone", new MoveToAutoZone(1.5));
     	SmartDashboard.putData("Goto Closest Tote", new DriveToClosestTote());    	
 //    	SmartDashboard.putNumber("Controller Power", getDriverLeftYAxis());
 //    	SmartDashboard.putNumber("Controller Steer", getDriverRightXAxis());
     	SmartDashboard.putData("Toggle Fishing", new GoFishing());
+
+    	SmartDashboard.putData("Lift to 1 ft", new SetLiftHeight(1));
+    	SmartDashboard.putData("Lift to 1.5 ft", new SetLiftHeight(1.5));
+    	SmartDashboard.putData("Lift to 2 ft", new SetLiftHeight(2));
+    	SmartDashboard.putData("Lift to 2.5 ft", new SetLiftHeight(2.5));
     	
     	SmartDashboard.putData("Refresh Auto Chooser", new RefreshAutoChooser());
 
     	SmartDashboard.putData("Gyro Rotate 90", new RotateToAngle(90, 1));
     	SmartDashboard.putData("Drive PID", new AutonDrive(4, 3));
-    	
-    	SmartDashboard.putBoolean("Slide Pressed", opBoardSlider.get());
    
     }
     

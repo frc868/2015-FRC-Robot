@@ -30,15 +30,11 @@ public class UpdateDashboard extends Command {
 
 	protected void execute() {
 		
-		Joystick joystick = OI.operatorBoard.joystick;
 		
 		if(timer.get() >= 0.35) {
 			for(BasicSubsystem sub : BasicSubsystem.subsystems)
 				sub.updateSmartDashboard();
 			LEDSubsystem.getInstance().standby();
-			SmartDashboard.putNumber("Slide 0", joystick.getRawAxis(0));
-	    	SmartDashboard.putNumber("Axis Count", joystick.getAxisCount());
-	    	SmartDashboard.putNumber("Slide val", OI.getOPBoardSlider());
 	    	SmartDashboard.putNumber("Camera Pow", CameraSubsystem.getInstance().getDistValue());
 	    	SmartDashboard.putNumber("Camera Steer", CameraSubsystem.getInstance().getOffsetValue());
 			timer.reset();

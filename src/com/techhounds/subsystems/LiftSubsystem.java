@@ -29,7 +29,6 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final double ONE_TOTE_HEIGHT = 1.4;
 	public static final double OFF_GROUND_HEIGHT = 0.2;
 	public static final double MAX_HEIGHT = 20;
-	public static final double ARDUINO_SCALAR = 63;
 	
 	public static final double LIFT_POWER = 1.0;
 	public static final double COUNTS_TO_FEET = (32.25 / 12) / 5752.0;
@@ -37,11 +36,15 @@ public class LiftSubsystem extends BasicSubsystem {
 	public static final double UP_BRAKE_MULT = 10;
 	public static final double DOWN_BRAKE_MULT = 4; 
 			
-	public static final int UP = 1, DOWN = 2, STOPPED = 3;
+	public enum Action {
+		UP, DOWN, STOPPED
+	}
+	
 	public static final boolean CLOSED = true, OPEN = false;
 	public static final boolean BRAKE = false, UNBRAKE = true;
 	
-	public static final boolean OP_STICK_CONTROL = true;
+	public static boolean OP_STICK_CONTROL = true;
+	public static boolean DRIVER_CONTROL = false;
 	public static final boolean LIFT_BRAKING = false;
 	
 	private MultiCANTalon motors;
@@ -51,15 +54,14 @@ public class LiftSubsystem extends BasicSubsystem {
 	private AnalogInput IRSensor;
 	private Encoder enc;
 	
-	private boolean cmdRunning = false;
 	private double IRBadCount = 0;
 	private double lastIRVal = 0;
 	private double brakeMult = 10;
 	private double brakeHeight = 0;
-	private boolean watchForTilt = true;
 	private boolean braked = false;
 	private double power = 0;
-	private int direction = STOPPED;
+	private Action direction = Action.STOPPED;
+	
 	private boolean motorsEnabled, grabSolEnabled, topEnabled, bottomEnabled, encEnabled, IREnabled, passCheckEnabled;
 	
 	private LiftSubsystem() {
@@ -82,6 +84,8 @@ public class LiftSubsystem extends BasicSubsystem {
 				bottomEnabled = true;
 			}
 			
+			
+			
 			if (grabSolEnabled = RobotMap.Lift.GRAB_SOL != RobotMap.DOES_NOT_EXIST)
 				grabSol = new Solenoid(RobotMap.Lift.GRAB_SOL);
 	
@@ -90,7 +94,7 @@ public class LiftSubsystem extends BasicSubsystem {
 			
 			if (passCheckEnabled = RobotMap.Lift.PASSIVE_LIMIT != RobotMap.DOES_NOT_EXIST)
 				checkPassive = new DigitalInput(RobotMap.Lift.PASSIVE_LIMIT);
-		}else{
+		} else{
 			if (motorsEnabled = (RobotMap.Lift.MOTOR_1_PRACT != RobotMap.DOES_NOT_EXIST &&
 					RobotMap.Lift.MOTOR_2_PRACT != RobotMap.DOES_NOT_EXIST))
 				motorsPract = new MultiMotor(
@@ -144,12 +148,12 @@ public class LiftSubsystem extends BasicSubsystem {
 		return motorsEnabled ? (Robot.isFinal() ? Math.abs(motors.get()) : Math.abs(motorsPract.get())) : 0;
 	}
 	
-	public int getDirection(){
+	public Action getDirection(){
 		return direction;
 	}
 	
 	public void setPower() {
-		if ((isAtTop() && getDirection() == UP) || (isAtBottom() && getDirection() == DOWN))//should be redundant
+		if ((isAtTop() && getDirection() == Action.UP) || (isAtBottom() && getDirection() == Action.DOWN))//should be redundant
 			power = 0;
 		
 		if (!motorsEnabled)
@@ -160,13 +164,13 @@ public class LiftSubsystem extends BasicSubsystem {
 			motorsPract.set(power);
 	}
 	
-	public void setLift(int dir, double power) {
+	public void setLift(Action dir, double power) {
 		
 		power = Math.max(Math.min(power, 1), 0);
 		
-		if (dir == UP){
+		if (dir == Action.UP){
 			power *= -1;
-		}else if (dir == STOPPED){
+		}else if (dir == Action.STOPPED){
 			power = 0;
 		}
 		
@@ -175,7 +179,7 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public void stopLift() {
-		setLift(STOPPED, 0);
+		setLift(Action.STOPPED, 0);
 	}
 	
 	public boolean getGrabPosition() {
@@ -212,10 +216,10 @@ public class LiftSubsystem extends BasicSubsystem {
 		braked = isBraked;
 		if (braked){
 			brakeHeight = getEncHeight();
-			if (getDirection() == DOWN){
+			if (getDirection() == Action.DOWN){
 				brakeHeight -= 1;
 				setBrakeMult(DOWN_BRAKE_MULT);
-			}else if (getDirection() == UP)
+			}else if (getDirection() == Action.UP)
 				setBrakeMult(UP_BRAKE_MULT);
 		}
 	}
@@ -237,12 +241,12 @@ public class LiftSubsystem extends BasicSubsystem {
 	}
 	
 	public double getIRDist(){
-		return IREnabled ? voltsToDist(IRSensor.getVoltage()) : 0;
+		return IREnabled ? distance(IRSensor.getVoltage()) : 0;
 	}
 	
 	public double getIRAvgDist(){
 		if (IREnabled){
-			double val = voltsToDist(IRSensor.getVoltage());
+			double val = distance(IRSensor.getVoltage());
 			if (val / lastIRVal > 1.25 || val / lastIRVal < .75){
 				val = lastIRVal;
 				IRBadCount++;
@@ -251,56 +255,31 @@ public class LiftSubsystem extends BasicSubsystem {
 			
 			if (IRBadCount > 3){
 				IRBadCount = 0;
-				return lastIRVal = voltsToDist(IRSensor.getVoltage());
+				return lastIRVal = distance(IRSensor.getVoltage());
 			}else
 				return val;
 		}
 		return 0;
 	}
 	
-	private double voltsToDist(double volts){
-		return 1.3958 * volts * volts * volts * volts +
-				-13.74 * volts * volts * volts +
-				49.609 * volts * volts +
+	private double distance(double volts){
+		return 1.3958 * Math.pow(volts, 4) +
+				-13.74 * Math.pow(volts, 3) +
+				49.609 * Math.pow(volts, 2) +
 				-80.118 * volts +
 				53.37;
 	}
-
-	public void setCmdRunning(boolean running){
-		cmdRunning = running; 
-	}
-	
-	public boolean getCmdRunning(){
-		return cmdRunning;
-	}
 	
 	public void updateSmartDashboard() {
-//		SmartDashboard.putNumber("Lift Enc Count", getEncCount());
-//		SmartDashboard.putNumber("Lift Enc Height", Math.max(0, getEncHeight()));// <---- IMPORTANT! Needed to send to opBoard
 		SmartDashboard.putNumber("Lift Enc Height", Robot.instance.isEnabled() ? Math.max(getEncHeight(), 0) : -1);// <---- IMPORTANT! Needed to send to opBoard
-//		SmartDashboard.putBoolean("Lift Top Switch", isAtTop());
-//		SmartDashboard.putBoolean("Lift Bottom Switch", isAtBottom());
 		SmartDashboard.putNumber("Lift Brake Height", getBrakeHeight());
-//		SmartDashboard.putNumber("Lift Power", getPower());
 		SmartDashboard.putNumber("Lift IR Dist", getIRDist());
-//		SmartDashboard.putNumber("Lift IR Voltage", IRSensor.getVoltage());
-//		SmartDashboard.putNumber("Lift IR Avg Volt", IRSensor.getAverageVoltage());
-//		SmartDashboard.putNumber("Lift IR Avd Dist", getIRAvgDist());
-//		SmartDashboard.putBoolean("Passive Switch", getPassiveSwitch());
-//		
-//		SmartDashboard.putBoolean("Lift Arms Open", !getGrabPosition());
-//		SmartDashboard.putBoolean("Lift is Braked", getBraked());
+
+		SmartDashboard.putBoolean("Lift is Bottom", isAtBottom());
+		SmartDashboard.putBoolean("Lift is Top", isAtTop());
 	}
 
 	protected void initDefaultCommand() {
-		setDefaultCommand(new RunLift());		
-	}
-
-	public boolean getWatchForTilt() {
-		return watchForTilt;
-	}
-
-	public void setWatchForTilt(boolean watchForTilt) {
-		this.watchForTilt = watchForTilt;
+		setDefaultCommand(new com.techhounds.commands.lift.RunLift());		
 	}
 }

@@ -1,4 +1,4 @@
-package com.techhounds.commands.lift;
+package com.techhounds.commands.liftold;
 
 import com.techhounds.OI;
 import com.techhounds.subsystems.GyroSubsystem;
@@ -14,8 +14,9 @@ public class RunLift extends Command{
 	public RunLift() {
 		lift = LiftSubsystem.getInstance();
 		gyro = GyroSubsystem.getInstance();
-		setInterruptible(true);
+		
 		requires(lift);
+		setInterruptible(false);
 	}
 
 	protected void initialize() {
@@ -23,23 +24,27 @@ public class RunLift extends Command{
 	}
 
 	protected void execute() {
-		
-		double power = OI.getOperatorLeftYAxis();
-		
-		if(LiftSubsystem.OP_STICK_CONTROL = power > .1 || power < -.1) {
+	
+		if (LiftSubsystem.OP_STICK_CONTROL){
+			double pow = OI.getOperatorLeftYAxis();
+			int dir = pow != 0 ? (pow > 0 ? LiftSubsystem.DOWN : LiftSubsystem.UP) : LiftSubsystem.STOPPED;
+			pow = Math.abs(pow);
 			
-			LiftSubsystem.DRIVER_CONTROL = false;
-			LiftSubsystem.Action action = power != 0 ? (power > 0.1 ? LiftSubsystem.Action.DOWN : 
-				(power < 0.1 ? LiftSubsystem.Action.UP : LiftSubsystem.Action.STOPPED)) : LiftSubsystem.Action.STOPPED;
+			if (pow != 0 || !lift.getCmdRunning()){
 			
-			lift.setLift(action, Math.abs(power > .1 || power < -.1 ? power : 0));
-
-		}else if(!LiftSubsystem.DRIVER_CONTROL){
-			lift.stopLift();
+				lift.setLift(dir, pow);
+				if(LiftSubsystem.LIFT_BRAKING){
+					if (pow != 0){
+						lift.setBrake(false);
+					}else if (!lift.getBraked()){
+						lift.setBrake(true);
+					}
+				}
+			}
 		}
 		
-		if ((lift.getDirection() == LiftSubsystem.Action.UP && !lift.isAtTop()) ||
-				(lift.getDirection() == LiftSubsystem.Action.DOWN && !lift.isAtBottom())){
+		if ((lift.getDirection() == LiftSubsystem.UP && !lift.isAtTop()) ||
+				(lift.getDirection() == LiftSubsystem.DOWN && !lift.isAtBottom())){
 		} else {
 			lift.stopLift();
 		}
@@ -52,7 +57,12 @@ public class RunLift extends Command{
 		if (lift.getBraked()){
 			double diff = lift.getBrakeHeight() - lift.getEncHeight();
 			double pow = diff > 0 ? diff * lift.getBrakeMult() * LiftSubsystem.LIFT_POWER : 0;
-			lift.setLift(diff > 0 ? LiftSubsystem.Action.DOWN : LiftSubsystem.Action.UP, pow);
+			int dir = diff > 0 ? LiftSubsystem.UP : LiftSubsystem.DOWN;
+			lift.setLift(dir, pow);
+		}
+		
+		if(lift.getDirection() == LiftSubsystem.DOWN && gyro.getTilt() > 5 && lift.getWatchForTilt()) {
+			lift.stopLift();
 		}
 			
 		lift.setPower();

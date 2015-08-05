@@ -169,8 +169,8 @@ public class DriveSubsystem extends BasicSubsystem {
         powerMag = Math.abs(powerMag);
         steerMag = Math.abs(steerMag);
         
-        powerMag *= powerMag * powerMag;
-        steerMag *= steerMag * steerMag;
+//        powerMag *= powerMag * powerMag;
+//        steerMag *= steerMag * steerMag;
         
         if (!isForward)
         	powerMag *= -1;
@@ -386,8 +386,9 @@ public class DriveSubsystem extends BasicSubsystem {
     		SmartDashboard.putData("drivePID", drivePID);
     	if (gyroPID != null)
     		SmartDashboard.putData("gyroPID", gyroPID);
-//    	SmartDashboard.putNumber("Left Drive Power", getLeftPower());
-//    	SmartDashboard.putNumber("Right Drive Power", getRightPower());
+    	
+    	SmartDashboard.putNumber("Left Drive Power", getLeftPower());
+    	SmartDashboard.putNumber("Right Drive Power", getRightPower());
 //    	SmartDashboard.putNumber("Left Drive Count", getLeftCount());
 //    	SmartDashboard.putNumber("Right Drive Count", getRightCount());
 //    	SmartDashboard.putNumber("Left Drive Dist", getLeftDistance());

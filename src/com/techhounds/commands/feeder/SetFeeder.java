@@ -14,9 +14,11 @@ public class SetFeeder extends Command {
 	public Double left, right;
 	private Boolean position;
 	private boolean powSet = false;
+	public Integer stuff;
 	
 	private SetFeeder(){
 		setInterruptible(true);
+		stuff = null;
     	feed = FeederSubsystem.getInstance();
     	requires(feed);
 	}
@@ -42,25 +44,34 @@ public class SetFeeder extends Command {
     	this.position = position;
     }
     
+    public SetFeeder(int thisEndsCommand) {
+    	this();
+    	stuff = thisEndsCommand;
+    }
+    
     protected void initialize() {
     	
-    	if (powSet)
-    		setPower(left, right);
-    	else{
-    		left = feed.getLeftPower();
-    		right = feed.getRightPower();
+    	if(stuff != null) {
+	    	if (powSet)
+	    		setPower(left, right);
+	    	else{
+	    		left = feed.getLeftPower();
+	    		right = feed.getRightPower();
+	    	}
+	    	
+	    	if (position != null)
+	    		feed.setPosition(position);
     	}
-    	
-    	if (position != null)
-    		feed.setPosition(position);
     }
 
     protected void execute() {
-    	setPower(left, right);
+    	
+    	if(stuff != null)
+    		setPower(left, right);
     }
 
     protected boolean isFinished() {
-        return false;
+        return false || stuff != null;
     }
 
     protected void end() {

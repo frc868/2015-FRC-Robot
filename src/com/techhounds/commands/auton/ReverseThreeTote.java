@@ -25,8 +25,8 @@ public class ReverseThreeTote extends CommandGroup {
     		addParallel(new DriveTime(1, .4, false));
     		addSequential(new WaitForIR(6, 2, true, .5));
     		addSequential(new DriveTime(0, 0, true));
-    		addSequential(new SetLift(LiftSubsystem.DOWN));
-    		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
+    		addSequential(new SetLift(LiftSubsystem.Action.DOWN));
+    		addSequential(new WaitForLiftSwitch(LiftSubsystem.Action.DOWN));
     	}else{
 	    	//knock bin out of way
 	    	addSequential(new ManualTurn(.6, .55, !startAngleLeft));
@@ -39,8 +39,8 @@ public class ReverseThreeTote extends CommandGroup {
     		addSequential(new RotateToAngle(-90, 1));
 //    		addSequential(new MoveToAutoZone(true));							//should change to drivePID
     		addSequential(new AutonDrive(9, 2));
-    		addSequential(new SetLift(LiftSubsystem.DOWN));								//''
-    		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
+    		addSequential(new SetLift(LiftSubsystem.Action.DOWN));								//''
+    		addSequential(new WaitForLiftSwitch(LiftSubsystem.Action.DOWN));
     		addSequential(new SetLift(LiftSubsystem.OPEN));
     		addSequential(new DriveTime(.1, -.4, true));
     		addSequential(new Wink());

@@ -1,4 +1,4 @@
-package com.techhounds.commands.lift;
+package com.techhounds.commands.liftold;
 
 import com.techhounds.subsystems.LiftSubsystem;
 
@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class NextLevel extends Command {
 
 	private LiftSubsystem lift;
-	private LiftSubsystem.Action dir;
+	private int dir;
 	
-    public NextLevel(LiftSubsystem.Action direction) {
+    public NextLevel(int direction) {
     	lift = LiftSubsystem.getInstance();
     	dir = direction;
     }
@@ -20,7 +20,7 @@ public class NextLevel extends Command {
     protected void initialize() {
 		double val = lift.getEncHeight();
 		
-    	if (dir == LiftSubsystem.Action.UP){
+    	if (dir == LiftSubsystem.UP){
     		if (val < LiftSubsystem.OFF_GROUND_HEIGHT){
     			(new SetLiftHeight(LiftSubsystem.OFF_GROUND_HEIGHT)).start();
     		}else if (val < LiftSubsystem.ONE_TOTE_HEIGHT){
@@ -30,7 +30,7 @@ public class NextLevel extends Command {
     		}else if (val < LiftSubsystem.THREE_TOTE_HEIGHT){
     			(new SetLiftHeight(LiftSubsystem.THREE_TOTE_HEIGHT)).start();
     		}
-    	}else if (dir == LiftSubsystem.Action.DOWN){
+    	}else if (dir == LiftSubsystem.DOWN){
     		if (val > LiftSubsystem.THREE_TOTE_HEIGHT){
     			(new SetLiftHeight(LiftSubsystem.THREE_TOTE_HEIGHT)).start();
     		}else if (val > LiftSubsystem.TWO_TOTE_HEIGHT){

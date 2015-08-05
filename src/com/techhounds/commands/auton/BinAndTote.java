@@ -28,10 +28,10 @@ public class BinAndTote extends CommandGroup {
 //		addSequential(new WaitForIR(6, 2, true, .5));
 //		addSequential(new DriveTime(0, 0, true));
 		addParallel(new SetFeeder(FeederSubsystem.FEED_IN, FeederSubsystem.CLOSED));
-		addSequential(new SetLift(LiftSubsystem.DOWN));
+		addSequential(new SetLift(LiftSubsystem.Action.DOWN));
 		addSequential(new WaitCommand(.5));
 		addSequential(new SetLift(LiftSubsystem.OPEN));
-		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
+		addSequential(new WaitForLiftSwitch(LiftSubsystem.Action.DOWN));
 		addParallel(new SetFeeder(FeederSubsystem.STOPPED, FeederSubsystem.OPEN));
     	
     	//grab first tote

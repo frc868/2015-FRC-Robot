@@ -21,7 +21,7 @@ public class RobotMap {
 		public static final int RIGHT_MOTOR_1 = 18;
 		public static final int RIGHT_MOTOR_2 = 14;
 		public static final int LEFT_MOTOR_1 = 12;
-		public static final int LEFT_MOTOR_2 = 16;
+		public static final int LEFT_MOTOR_2 = 19;
 		
 		public static final int LEFT_ENC = DOES_NOT_EXIST;
 		public static final int RIGHT_ENC = DOES_NOT_EXIST;

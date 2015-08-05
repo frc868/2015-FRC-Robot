@@ -1,4 +1,4 @@
-package com.techhounds.commands.lift;
+package com.techhounds.commands.liftold;
 
 import com.techhounds.subsystems.LiftSubsystem;
 
@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class WaitForLiftSwitch extends Command {
 
 	private LiftSubsystem lift;
-	private LiftSubsystem.Action dir;
+	private int dir;
 	
-    public WaitForLiftSwitch(LiftSubsystem.Action direction) {
+    public WaitForLiftSwitch(int direction) {
     	lift = LiftSubsystem.getInstance();
     	dir = direction;
     }
@@ -26,7 +26,7 @@ public class WaitForLiftSwitch extends Command {
     }
 
     protected boolean isFinished() {
-        return dir == LiftSubsystem.Action.UP ? lift.isAtTop() : lift.isAtBottom();
+        return dir == LiftSubsystem.UP ? lift.isAtTop() : lift.isAtBottom();
     }
 
     protected void end() {

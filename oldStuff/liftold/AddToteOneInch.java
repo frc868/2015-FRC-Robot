@@ -1,4 +1,4 @@
-package com.techhounds.commands.lift;
+package com.techhounds.commands.liftold;
 
 import com.techhounds.subsystems.LiftSubsystem;
 
@@ -9,10 +9,10 @@ public class AddToteOneInch extends CommandGroup {
 
 	public AddToteOneInch() {
 		
-		addSequential(new SetLift(LiftSubsystem.Action.DOWN));
+		addSequential(new SetLift(LiftSubsystem.DOWN));
 		addSequential(new WaitCommand(.1));
 		addSequential(new SetLift(LiftSubsystem.OPEN));
-		addSequential(new WaitForLiftSwitch(LiftSubsystem.Action.DOWN));
+		addSequential(new WaitForLiftSwitch(LiftSubsystem.DOWN));
 		addSequential(new WaitCommand(.15));
 		addSequential(new SetLift(LiftSubsystem.CLOSED));
 		addSequential(new SetLiftHeight(.2));
