@@ -29,6 +29,7 @@ public class RunLift extends Command{
 		if(LiftSubsystem.OP_STICK_CONTROL = power > .1 || power < -.1) {
 			
 			LiftSubsystem.DRIVER_CONTROL = false;
+			AddTote.getInstance().cancel();
 			LiftSubsystem.Action action = power != 0 ? (power > 0.1 ? LiftSubsystem.Action.DOWN : 
 				(power < 0.1 ? LiftSubsystem.Action.UP : LiftSubsystem.Action.STOPPED)) : LiftSubsystem.Action.STOPPED;
 			

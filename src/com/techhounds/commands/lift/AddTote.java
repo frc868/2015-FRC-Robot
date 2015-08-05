@@ -10,6 +10,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class AddTote extends CommandGroup {
+	public static AddTote instance;;
+	
+	public static AddTote getInstance(){
+		if(instance == null){
+			instance = new AddTote();
+		}
+		return instance;
+	}
 
 	public AddTote() {
 		this.setInterruptible(false);

@@ -306,7 +306,7 @@ public class OI {
 //        opBrake.whenReleased(new SetBrake(false));
         
         opToteAdd = operator.createButton(opAddTote);
-        opToteAdd.whenPressed(new AddTote());
+        opToteAdd.whenPressed(AddTote.getInstance());
     }
     
     public void initSD() {
