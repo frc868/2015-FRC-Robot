@@ -1,5 +1,8 @@
 package com.techhounds;
 
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -19,12 +22,14 @@ public class ControllerMap {
     		DIAG_UP_LEFT = 29, DIAG_DOWN_RIGHT = 30, DIAG_DOWN_LEFT = 31;
                 
     //These are also magic numbers
-    public static final int LOGITECH = 0, TOMEE = 1;
+    public static final int LOGITECH = 0, TOMEE = 1, XBOX = 2;
     
     /** TOMEE Cannot get the whole DPad */
     protected static final int[] tomee =      { 3, 2, 4, 1, 8, 6, 7, 5, 10, 9, 1, 3, 2, 5};
     
     protected static final int[] logitech =   { 2, 3, 1, 4, 6, 8, 5, 7, 10, 9, 0, 2, 1, 3};	
+    
+    protected static final int[] xbox360 = { 1, 2, 3, 4, 6, -1, 5, -1, 8, 7, 0, 4, 1, 5};
     
     protected static final double DEADZONE = 0.05;
     
@@ -46,6 +51,8 @@ public class ControllerMap {
     protected ControllerMap(int type){
     	if(type == TOMEE)
             buttonSet = tomee;
+        else if(type == XBOX)
+        	buttonSet = xbox360;
         else
             buttonSet = logitech;
         
@@ -85,11 +92,57 @@ public class ControllerMap {
     	return val;
     }
     
+    public void startRumble() { 
+    	if(buttonSet != xbox360)
+    		return;
+    	
+    	joystick.setRumble(RumbleType.kLeftRumble, 1); 
+    	joystick.setRumble(RumbleType.kRightRumble, 1);
+    	
+    } 
+    
+    public void stopRumble() { 
+    	if(buttonSet != xbox360) 
+    		return; 
+    	
+    	joystick.setRumble(RumbleType.kLeftRumble, 0); 
+    	joystick.setRumble(RumbleType.kRightRumble, 0); 
+    }
+    
+  
     public Button createButton(int buttonID){
     	if (buttonID == UP || buttonID == DOWN || buttonID == LEFT || buttonID == RIGHT ||
     		buttonID == DIAG_DOWN_LEFT || buttonID == DIAG_DOWN_RIGHT || buttonID == DIAG_UP_LEFT|| buttonID == DIAG_UP_RIGHT)
     		return new DPadButton(buttonID);
+    	
+    	if(type == XBOX && (buttonID == LT || buttonID == RT)) {
+    		return new TriggerButton(buttonID);
+    	}
+    	
         return new JoystickButton(joystick, buttonSet[buttonID]);
+    }
+    
+    protected class TriggerButton extends Button {
+    	
+    	private Hand hand;
+    	
+    	private TriggerButton(int buttonID) {
+    		if(buttonID == LT)
+    			hand = Hand.kLeft;
+    		else if(buttonID == RT)
+    			hand = Hand.kRight;
+    		else
+    			hand = null;
+    	}
+    	
+    	public boolean get() {
+    		if(hand == Hand.kLeft)
+    			return joystick.getRawAxis(2) > .6;
+    		else if(hand == Hand.kRight)
+    			return joystick.getRawAxis(3) > .6;
+    		else
+    			return false;
+    	}
     }
     
     protected class DPadButton extends Button {

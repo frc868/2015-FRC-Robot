@@ -42,6 +42,9 @@ public class DriveSubsystem extends BasicSubsystem {
 	private final double GYRO_MAX_STEP = .2;
 	private final double MAX_CHANGE_UP = .1;
 	private final double MAX_CHANGE_DOWN = .1;
+	private final double POW_MIN = .1;
+	private final double STEER_MIN = .15;
+	private final double DEAD_ZONE = .15;
 	
 	private double driveTolerance;
 
@@ -144,6 +147,20 @@ public class DriveSubsystem extends BasicSubsystem {
 	public void driveWithGamepad() {
 		double powerMag, steerMag;
     	boolean posPower, posSteer;
+    	//double pow = SmartDashboard.getNumber("V * I^2");
+    	//double steer = SmartDashboard.getNumber("FANCY NAME FOR A COW");
+    	double pow = -OI.getDriverLeftYAxis();
+    	double steer = OI.getDriverRightXAxis();
+    	SmartDashboard.putNumber("Raw Power", pow);
+    	SmartDashboard.putNumber("Raw Steer", steer);
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     	
     	double onePower = OI.getDriverLeftYAxis(), oneSteer = OI.getDriverRightXAxis(), 
     			twoPower = OI.getOperatorRightYAxis(), twoSteer = OI.getOperatorRightXAxis();
@@ -169,8 +186,8 @@ public class DriveSubsystem extends BasicSubsystem {
         powerMag = Math.abs(powerMag);
         steerMag = Math.abs(steerMag);
         
-//        powerMag *= powerMag * powerMag;
-//        steerMag *= steerMag * steerMag;
+        powerMag *= powerMag * powerMag;
+        steerMag *= steerMag * steerMag;
         
         if (!isForward)
         	powerMag *= -1;
@@ -188,12 +205,42 @@ public class DriveSubsystem extends BasicSubsystem {
         	steerMag *= -1;
         
         double left = powerMag + steerMag;
-        double right = powerMag - steerMag;
+    	        double right = powerMag - steerMag;
         
         SmartDashboard.putString("Drive vals adj", left + ", " + right);
         
+    	
+    /*		pow = applyLinearScalar(pow, POW_MIN);
+    		//steer = applyLinearScalar(steer, STEER_MIN);
+    	SmartDashboard.putNumber("refined power", pow);
+    	SmartDashboard.putNumber("refined steer", steer);
+    	double left = pow + steer;
+    	double right = pow - steer;
+    	SmartDashboard.putNumber("RIght: ", right);
+    	SmartDashboard.putNumber("Left: ", left);*/
         setPower(left, right);
 	}
+	
+	public double applyLinearScalar(double input, double minVal){
+		if(Math.abs(input) <= DEAD_ZONE){
+			return 0;
+		}
+		if(Math.abs(input) <= minVal){
+			return minVal * (Math.abs(input)/input);
+		}
+		return (1-minVal) * input + (minVal * (Math.abs(input)/input));
+	}
+	public double applyQuadraticScalar(double input, double minVal){
+		if(Math.abs(input) <= DEAD_ZONE){
+			return 0;
+		}else if(Math.abs(input) <= minVal){
+			return minVal;
+		}else{
+				return (Math.abs(input)/input) * Math.sqrt(.9) * Math.pow(input, 2) + .1;
+			
+		}
+	}
+	
 	
 	public double getLeftDistance(){
 		return leftEncEnabled ? (Robot.isFinal() ? leftMotors.getDistance() : leftEnc.getDistance()) : 0;

@@ -40,8 +40,8 @@ public class OI {
 	
 	private static OI instance;
 	
-	private static PlaystationMap driver;
-	private static ControllerMap operator;
+	public static ControllerMap driver;
+	public static ControllerMap operator;
 	public static OPBoardMap operatorBoard;
 	
 	public static boolean opFeedMode = true;
@@ -63,7 +63,7 @@ public class OI {
 	private static int feederOut;		static Button feedOut;
 	private static int allOpen;			static Button openAll;
 	private static int wink;			static Button winky;
-	
+	private static int addTote; 		static Button toteAdd;
     //Tweaker buttons
 //    private final int opLiftUp = 			ControllerMap.Y;		Button opSetLiftUp;
 //    private final int opLiftDown = 			ControllerMap.A;		Button opSetLiftDown;
@@ -89,7 +89,7 @@ public class OI {
 //	private final int opFeedHardLeft =		ControllerMap.LEFT;		Button opFeedLeft;
 //	private final int opFeedHardRight =		ControllerMap.RIGHT;	Button opFeedRight;
 	private final int opSetFeedMode = 		ControllerMap.START;	Button opSetFeed;
-//	private final int opSetDriveMode = 		ControllerMap.BACK;		Button opSetDrive;
+	private final int opSetDriveMode = 		ControllerMap.BACK;		Button opSetDrive;
 //	private final int opSetBrake = 			ControllerMap.RT;		Button opBrake;
 
 	public static void updateDriverCont(){
@@ -97,13 +97,13 @@ public class OI {
 		int choice = (int) driverContChoice.getSelected();
 		
 		if (choice == 1)
-			driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_DS4);
+			driver = new ControllerMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.XBOX);
 		else if (choice == 0)
 			driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_WIN);
 		else if (choice == 2)
 			driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.LOGITECH, true);
 		
-		if (driver.type == PlaystationMap.LOGITECH){
+		if (driver.type == PlaystationMap.LOGITECH || driver.type == ControllerMap.XBOX){
 			
 			liftUp = 			ControllerMap.Y;
 			liftDown = 			ControllerMap.A;
@@ -118,6 +118,7 @@ public class OI {
 			feederOut =			ControllerMap.RT;
 			allOpen = 			ControllerMap.START;
 			wink = 				ControllerMap.BACK;
+			addTote = 			ControllerMap.DOWN;
 			
 		}else{
 
@@ -134,6 +135,7 @@ public class OI {
 			feederOut =			PlaystationMap.R2;
 			allOpen = 			PlaystationMap.OPTIONS;
 			wink = 				PlaystationMap.SHARE;
+			addTote = 			PlaystationMap.DOWN;
 		}
 		
 		initDriver();
@@ -191,7 +193,7 @@ public class OI {
         
         feedIn = driver.createButton(feederIn);
         feedIn.whenPressed(new SetFeederNormal(FeederSubsystem.FEED_IN));
-        feedIn.whenReleased(new SetFeederNormal(0));
+        feedIn.whenReleased(new SetFeederNormal(0, true));
         
         feedOut = driver.createButton(feederOut);
         feedOut.whenPressed(new SetFeederNormal(FeederSubsystem.FEED_OUT));
@@ -205,6 +207,9 @@ public class OI {
         
         winky = driver.createButton(wink);
         winky.whenPressed(new Wink());
+        
+        toteAdd = driver.createButton(addTote);
+        toteAdd.whenPressed(new AddTote());
     }
     
     public void initOperator() {
@@ -247,18 +252,13 @@ public class OI {
 //        opFeedOpen.whenPressed(new SetFeeder(FeederSubsystem.OPEN));
 //        opFeedOpen.whenReleased(new SetFeeder(FeederSubsystem.CLOSED));
         
-        
-        
-        
-    
         opFeedIn = operator.createButton(opFeederIn);
         opFeedIn.whenPressed(new SetFeederNormal(FeederSubsystem.FEED_IN));
-//        opFeedIn.whileHeld(new SetFeederNormal(FeederSubsystem.FEED_IN));
         opFeedIn.whenReleased(new SetFeederNormal(0, true));
         
         opFeedOut = operator.createButton(opFeederOut);
         opFeedOut.whenPressed(new SetFeederNormal(FeederSubsystem.FEED_OUT));
-        opFeedOut.whenReleased(new SetFeederNormal(0, true));
+        opFeedOut.whenReleased(new SetFeederNormal(0));
         
         opOpenAll = operator.createButton(opAllOpen);
         opOpenAll.whenPressed(new SetLift(LiftSubsystem.OPEN));
@@ -268,7 +268,7 @@ public class OI {
         opOpenAll.whenReleased(new SetPassiveStop(PassiveSubsystem.CLOSED, 0));
         
         opFeedOff = operator.createButton(opFeederOff);
-        opFeedOff.whenPressed(new SetFeederNormal(FeederSubsystem.STOPPED, true));
+        opFeedOff.whenPressed(new SetFeederNormal(FeederSubsystem.STOPPED));
     
 //        opGoFishingD = operator.createButton(opGoFishingDown);
 //        opGoFishingD.whenPressed(new GoFishing(FishingPoleSubsystem.OUT));
@@ -298,8 +298,8 @@ public class OI {
         opSetFeed = operator.createButton(opSetFeedMode);
         opSetFeed.whenPressed(new SetOpFeedMode(true));
         
-//        opSetDrive = operator.createButton(opSetDriveMode);
-//        opSetDrive.whenPressed(new SetOpFeedMode(false));
+        opSetDrive = operator.createButton(opSetDriveMode);
+        opSetDrive.whenPressed(new SetOpFeedMode(false));
 //        
 //        opBrake = operator.createButton(opSetBrake);
 //        opBrake.whenPressed(new SetBrake(true));
@@ -330,6 +330,8 @@ public class OI {
 
     	SmartDashboard.putData("Gyro Rotate 90", new RotateToAngle(90, 1));
     	SmartDashboard.putData("Drive PID", new AutonDrive(4, 3));
+    	SmartDashboard.putNumber("V * I^2", 0);
+    	SmartDashboard.putNumber("FANCY NAME FOR A COW",0);
    
     }
     
@@ -358,9 +360,10 @@ public class OI {
     
 	private SendableChooser createDriverChoices(){
 		SendableChooser send = new SendableChooser();
-	    send.addDefault("Aryaman's Driver Station", new Integer(0));
-	    send.addObject("Aryaman's SWARTZ", new Integer(1));
+	    send.addDefault("Controller of DEATH", new Integer(0));
+	    send.addObject("XBox", new Integer(1));
 	    send.addObject("Logitech", new Integer(2));
+	    SmartDashboard.putNumber("Date Time", System.currentTimeMillis());
         SmartDashboard.putData("Driver Controller", send);
 	    return send;	
 	}
