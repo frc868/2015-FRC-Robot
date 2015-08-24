@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Robot-2015
+Bundle-SymbolicName: Robot-2015
+Bundle-Version: 1.0.0.qualifier
