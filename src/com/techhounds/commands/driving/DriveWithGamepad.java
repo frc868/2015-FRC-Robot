@@ -16,12 +16,65 @@ public class DriveWithGamepad extends Command {
     	requires(drive);
     }
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     protected void initialize() {
-    	
+    	drive.setPower(.1);
+    	delay(1);
+    	drive.setPower(0);
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     protected void execute() {
-    	drive.driveWithGamepad();
+    	
+    	drive.gamePadDrive();
     }
 
     protected boolean isFinished() {
@@ -34,5 +87,13 @@ public class DriveWithGamepad extends Command {
 
     protected void interrupted() {
     	
+    }
+    public void delay(long num){
+    	try {
+			Thread.sleep(num);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }

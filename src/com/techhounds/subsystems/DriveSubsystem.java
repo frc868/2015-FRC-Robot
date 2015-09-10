@@ -142,8 +142,60 @@ public class DriveSubsystem extends BasicSubsystem {
 			instance = new DriveSubsystem();
 		return instance;
 	}
+	public double getLeftXAxis(){
+		return OI.getDriverleftXAxis();
+	}
+	public double getRightXAxis(){
+		return OI.getDriverRightXAxis();
+	}
+	public double getLeftYAxis(){
+		return OI.getDriverLeftYAxis();
+	}
+	public double getRightYAxis(){
+		return OI.getDriverRightYAxis();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//If you have questions about this, ask Evan <3 <3 <3 XOXO
+	public void gamePadDrive(){
+		double right = getRightYAxis();
+		double left = getLeftYAxis();
+		setPower(right, left);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void driveWithGamepad() {
 		double powerMag, steerMag;
     	boolean posPower, posSteer;
