@@ -70,4 +70,16 @@ public class MultiMotor implements SpeedController {
     public void pidWrite(double output) {
         set(output);
     }
+
+	@Override
+	public void setInverted(boolean isInverted) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean getInverted() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
