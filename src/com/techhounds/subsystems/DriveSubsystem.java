@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
@@ -103,6 +104,18 @@ public class DriveSubsystem extends BasicSubsystem {
 				new PIDSource() {
 					public double pidGet() {
 						return getAvgDistance();
+					}
+
+					@Override
+					public void setPIDSourceType(PIDSourceType pidSource) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public PIDSourceType getPIDSourceType() {
+						// TODO Auto-generated method stub
+						return null;
 					}
 				}, 
 				new PIDOutput() {

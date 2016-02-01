@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -193,6 +194,18 @@ public final class GyroItg3200 {
 		@Override
 		public double pidGet() {
 			return getAngle();
+		}
+
+		@Override
+		public void setPIDSourceType(PIDSourceType pidSource) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public PIDSourceType getPIDSourceType() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 	

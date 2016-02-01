@@ -4,6 +4,7 @@ import com.techhounds.subsystems.DriveSubsystem;
 import com.techhounds.subsystems.GyroSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RotateToAngle extends Command {
 
@@ -25,6 +26,7 @@ public class RotateToAngle extends Command {
 	
 	@Override
 	protected void initialize() {
+		
 		drive.setGyroPID(gyro.getRotation() + angle);
 	}
 

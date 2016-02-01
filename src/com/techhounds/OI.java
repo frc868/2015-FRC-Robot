@@ -11,7 +11,6 @@ import com.techhounds.commands.Wink;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.AutonDrive;
 import com.techhounds.commands.auton.DriveToClosestTote;
-import com.techhounds.commands.auton.KeepToteIn;
 import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.feeder.SetFeeder;
 import com.techhounds.commands.feeder.SetFeederNormal;
@@ -314,7 +313,6 @@ public class OI {
     	SmartDashboard.putData("Update Controller", new UpdateDriverCont());
     	
     	SmartDashboard.putData("Add Tote", new AddTote());
-    	SmartDashboard.putData("Keep Tote In", new KeepToteIn());
 //    	SmartDashboard.putData("Move To Zone", new MoveToAutoZone(1.5));
     	SmartDashboard.putData("Goto Closest Tote", new DriveToClosestTote());    	
 //    	SmartDashboard.putNumber("Controller Power", getDriverLeftYAxis());
@@ -328,8 +326,10 @@ public class OI {
     	
     	SmartDashboard.putData("Refresh Auto Chooser", new RefreshAutoChooser());
 
+    	
     	SmartDashboard.putData("Gyro Rotate 90", new RotateToAngle(90, 1));
     	SmartDashboard.putData("Drive PID", new AutonDrive(4, 3));
+    	SmartDashboard.putData("Rotate to Angle", new RotateToAngle(45, 1));
    
     }
     

@@ -1,8 +1,8 @@
 package com.techhounds;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.SpeedController;
 
 public class MultiCANTalon implements SpeedController{
@@ -23,9 +23,9 @@ public class MultiCANTalon implements SpeedController{
 		motors[0].ConfigRevLimitSwitchNormallyOpen(!backReversed);
 		motors[0].setFeedbackDevice(enc);
 		motors[0].reverseSensor(encReversed);
-		motors[0].changeControlMode(ControlMode.PercentVbus);
+		motors[0].changeControlMode(TalonControlMode.PercentVbus);
 		for (int i = 1; i < motors.length; i++){
-			motors[i].changeControlMode(CANTalon.ControlMode.Follower);
+			motors[i].changeControlMode(CANTalon.TalonControlMode.Follower);
 			motors[i].set(motors[0].getDeviceID());
 			motors[i].reverseOutput(inverted[i]);
 		}
@@ -45,7 +45,7 @@ public class MultiCANTalon implements SpeedController{
 	}
 
 	public void set(double power) {
-		motors[0].changeControlMode(ControlMode.PercentVbus);
+		motors[0].changeControlMode(TalonControlMode.PercentVbus);
 		power = Math.max(Math.min(power, 1), -1);
 		power = inverted[0] ? -power : power;
 		motors[0].set(power);
@@ -62,12 +62,12 @@ public class MultiCANTalon implements SpeedController{
 	}
 	
 	public void setPID(double P, double I, double D){
-		motors[0].changeControlMode(ControlMode.Position);
+		motors[0].changeControlMode(TalonControlMode.Position);
 		motors[0].setPID(P, I, D);
 	}
 	
 	public void setPIDSetpoint(double setpoint){
-		motors[0].changeControlMode(ControlMode.Position);
+		motors[0].changeControlMode(TalonControlMode.Position);
 		motors[0].set(setpoint * COUNTS_PER_FEET);
 	}
 	
@@ -108,5 +108,17 @@ public class MultiCANTalon implements SpeedController{
 	
 	public void resetEnc() {
 		setEncDistance(0);
+	}
+
+	@Override
+	public void setInverted(boolean isInverted) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean getInverted() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -37,7 +37,6 @@ public class AutonChooser {
 				new OneTote(),
 				new OneBin(true),
 				new OneBin(false),
-				new BinAndUp(),
 				new AutonDrive(8.5, 3),
 				new DoNothing()
 		};

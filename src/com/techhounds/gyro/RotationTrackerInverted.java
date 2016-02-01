@@ -33,6 +33,8 @@
 
 package com.techhounds.gyro;
 
+import edu.wpi.first.wpilibj.PIDSourceType;
+
 /**
  * A class to "software correct" a gyro that is mounted upside down.
  * 
@@ -94,6 +96,18 @@ public final class RotationTrackerInverted implements RotationTracker {
 	@Override
 	public void zero() {
 		m_rotationTracker.zero();
+	}
+
+	@Override
+	public void setPIDSourceType(PIDSourceType pidSource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public PIDSourceType getPIDSourceType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
