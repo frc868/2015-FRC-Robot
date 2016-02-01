@@ -6,6 +6,7 @@ import com.techhounds.OI;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 import com.techhounds.commands.driving.DriveWithGamepad;
+import com.techhounds.gyro.RotationTracker;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
@@ -27,7 +28,11 @@ public class DriveSubsystem extends BasicSubsystem {
 	private static DriveSubsystem instance;
 	
 	private static final double Kp = 0.25, Ki = 0, Kd = 0.05;
-	private static final double GYRO_Kp = 0.011, GYRO_Ki = 0, GYRO_Kd = 0.015;
+	public static final double GYRO_Kp = 0.011;
+
+	public static final double GYRO_Ki = 0;
+
+	public static final double GYRO_Kd = 0.015;
 	
 	private boolean overrideOperatorButton, twoPersonDrive = true, isForward, isHalfSpeed;
 	private boolean leftEncEnabled, rightEncEnabled;
@@ -40,7 +45,7 @@ public class DriveSubsystem extends BasicSubsystem {
 	
 	private final double COUNTS_TO_FEET = (81.0 / 12.0) / 50850;
 	private final double COUNTS_TO_FEET_PRACT = 1;
-	private final double GYRO_MAX_STEP = .2;
+	public final double GYRO_MAX_STEP = .2;
 	private final double MAX_CHANGE_UP = .1;
 	private final double MAX_CHANGE_DOWN = .1;
 	private final double POW_MIN = .1;
@@ -48,6 +53,8 @@ public class DriveSubsystem extends BasicSubsystem {
 	private final double DEAD_ZONE = .15;
 	
 	private double driveTolerance;
+	
+	private RotationTracker gyroTracker; 
 
 	private DriveSubsystem() {
 		super("DriveSubsystem");
@@ -128,15 +135,17 @@ public class DriveSubsystem extends BasicSubsystem {
 					}
 				});
 		drivePID.setOutputRange(-1, 1);
-		drivePID.setAbsoluteTolerance(1);
+		drivePID.setAbsoluteTolerance(2);
 //		SmartDashboard.putData("DrivePID", drivePID);
 		
-		if (GyroSubsystem.getInstance().gyroEnabled){
+		gyroTracker = GyroSubsystem.getInstance().getRotationTracker();
+		if (false){//GyroSubsystem.getInstance().gyroEnabled){
 			gyroPID = new PIDController(
 				GYRO_Kp, GYRO_Ki, GYRO_Kd,
-				GyroSubsystem.getInstance().getRotationTracker(),
+				gyroTracker,
 				new PIDOutput() {
 					public void pidWrite(double output) {
+						SmartDashboard.putNumber("GyroPID RAW Output", output);
 						output = Math.max(Math.min(getLeftPower() + GYRO_MAX_STEP , output), getLeftPower() - GYRO_MAX_STEP);
 						setPower(output, -output);
 					}
@@ -144,7 +153,7 @@ public class DriveSubsystem extends BasicSubsystem {
 			gyroPID.setOutputRange(-.75, .75);
 			gyroPID.setAbsoluteTolerance(3);
 //			SmartDashboard.putData("GyroPID", gyroPID);
-		}
+	}
 		
 		// Default Half Speed
 		setHalfSpeed(true);
@@ -501,6 +510,7 @@ public class DriveSubsystem extends BasicSubsystem {
     	
     	SmartDashboard.putNumber("Left Drive Power", getLeftPower());
     	SmartDashboard.putNumber("Right Drive Power", getRightPower());
+//    	SmartDashboard.putNumber("Gyro PID Angle", gyroTracker.pidGet());
 //    	SmartDashboard.putNumber("Left Drive Count", getLeftCount());
 //    	SmartDashboard.putNumber("Right Drive Count", getRightCount());
 //    	SmartDashboard.putNumber("Left Drive Dist", getLeftDistance());

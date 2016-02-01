@@ -32,6 +32,12 @@ public class CameraSubsystem extends BasicSubsystem {
 		return enabled ? SmartDashboard.getNumber("Tote Dist Factor", 0) : 0;
 	}
 	
+	public double getTargetAngle(){
+		return enabled ? SmartDashboard.getNumber("OffCenterDegreesX", 
+				GyroSubsystem.getInstance().getRotation()) : 
+			GyroSubsystem.getInstance().getRotation();
+	}
+	
     public void initDefaultCommand() {
 
     }

@@ -74,7 +74,7 @@ public class DriveWithGamepad extends Command {
     
     protected void execute() {
     	
-    	drive.gamePadDrive();
+    	drive.driveWithGamepad();
     }
 
     protected boolean isFinished() {

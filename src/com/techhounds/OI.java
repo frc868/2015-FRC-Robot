@@ -8,10 +8,12 @@ import com.techhounds.commands.RefreshAutoChooser;
 import com.techhounds.commands.SetOpFeedMode;
 import com.techhounds.commands.UpdateDriverCont;
 import com.techhounds.commands.Wink;
+import com.techhounds.commands.auton.AttackTarget;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.AutonDrive;
 import com.techhounds.commands.auton.DriveToClosestTote;
 import com.techhounds.commands.auton.KeepToteIn;
+import com.techhounds.commands.driving.DriveTime;
 import com.techhounds.commands.driving.RotateToAngle;
 import com.techhounds.commands.feeder.SetFeeder;
 import com.techhounds.commands.feeder.SetFeederNormal;
@@ -30,6 +32,7 @@ import com.techhounds.subsystems.PassiveSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -96,11 +99,11 @@ public class OI {
 		
 		int choice = (int) driverContChoice.getSelected();
 		
-		if (choice == 1)
-			driver = new ControllerMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.XBOX);
-		else if (choice == 0)
-			driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_WIN);
-		else if (choice == 2)
+		//if (choice == 1)
+		//	driver = new ControllerMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.XBOX);
+		//else if (choice == 0)
+		//	driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), PlaystationMap.PS4_WIN);
+		//else if (choice == 2)
 			driver = new PlaystationMap(new Joystick(RobotMap.DRIVER_PORT), ControllerMap.LOGITECH, true);
 		
 		if (driver.type == PlaystationMap.LOGITECH || driver.type == ControllerMap.XBOX){
@@ -162,12 +165,14 @@ public class OI {
     public static void initDriver() {
 
         setLiftUp = driver.createButton(liftUp);
-        setLiftUp.whenPressed(new SetLift(LiftSubsystem.Action.UP));
-        setLiftUp.whenReleased(new SetLift(LiftSubsystem.Action.STOPPED));
+        setLiftUp.whenPressed(new AttackTarget());
+        
+        CommandGroup cg = new CommandGroup();
+        cg.addSequential(new DriveTime(3, 1, true));
+        cg.addSequential(new AttackTarget());
         
         setLiftDown = driver.createButton(liftDown);
-        setLiftDown.whenPressed(new SetLift(LiftSubsystem.Action.DOWN));
-        setLiftDown.whenReleased(new SetLift(LiftSubsystem.Action.STOPPED));
+        setLiftDown.whenPressed(cg);
 
         setLiftIn = driver.createButton(liftIn);
         setLiftIn.whenPressed(new SetLift(LiftSubsystem.CLOSED));
@@ -327,6 +332,11 @@ public class OI {
     	SmartDashboard.putData("Lift to 2.5 ft", new SetLiftHeight(2.5));
     	
     	SmartDashboard.putData("Refresh Auto Chooser", new RefreshAutoChooser());
+    	
+    	SmartDashboard.putData("Attack the Tower 1", AttackTarget.createSequence(1));
+    	SmartDashboard.putData("Attack the Tower 2", AttackTarget.createSequence(2));
+    	SmartDashboard.putData("Attack the Tower 3", AttackTarget.createSequence(3));
+    	SmartDashboard.putData("Attack the Tower", new AttackTarget());
 
     	SmartDashboard.putData("Gyro Rotate 90", new RotateToAngle(90, 1));
     	SmartDashboard.putData("Drive PID", new AutonDrive(4, 3));
